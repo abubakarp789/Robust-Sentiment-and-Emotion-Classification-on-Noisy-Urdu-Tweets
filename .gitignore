@@ -1,0 +1,7 @@
+# Dataset files are too large for GitHub (100MB limit)
+*.csv
+*.xlsx
+
+# Temporary Word files
+~$*.docx
+~$*.doc
