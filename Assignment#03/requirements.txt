@@ -1,0 +1,38 @@
+# Core
+pandas>=2.0
+numpy>=1.24,<2.0
+scipy>=1.10
+matplotlib>=3.7
+seaborn>=0.12
+wordcloud>=1.9
+arabic-reshaper>=3.0
+python-bidi>=0.4
+
+# NLP Preprocessing
+emoji>=2.0
+regex>=2023.0
+
+# Machine Learning
+scikit-learn>=1.3
+joblib>=1.3
+
+# Deep Learning (PyTorch with CUDA 12.x for RTX 5070 Ti)
+# Install separately with the correct index URL:
+#   pip install torch --index-url https://download.pytorch.org/whl/cu124
+torch>=2.4
+
+# Transformers
+transformers>=4.40
+datasets>=2.18
+accelerate>=0.30
+sentencepiece>=0.2
+tokenizers>=0.19
+safetensors>=0.4
+
+# Utilities
+tqdm>=4.65
+openpyxl>=3.1
+python-docx>=1.1
+ipywidgets>=8.0
+ipykernel>=6.25
+nbformat>=5.9

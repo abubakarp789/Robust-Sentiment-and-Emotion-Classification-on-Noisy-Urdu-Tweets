@@ -1,3 +1,36 @@
 # Temporary Word files
 ~$*.docx
 ~$*.doc
+
+# Python build artefacts
+__pycache__/
+*.pyc
+*.pyo
+.ipynb_checkpoints/
+.venv/
+venv/
+.env
+
+# Claude Code local workspace
+.claude/
+
+# ───────────────────────────────────────────────────────────────
+# Assignment#03 — heavy / regeneratable artefacts (NOT tracked)
+# ───────────────────────────────────────────────────────────────
+
+# Pretrained fastText Urdu vectors (~679 MB, re-downloadable from URL in config.py)
+Assignment#03/outputs/embeddings/
+
+# Cached preprocessed splits and intermediate parquets (re-creatable in seconds)
+Assignment#03/outputs/cache/
+
+# Trained model checkpoints (~18 GB — far too big for git/LFS)
+#   - classical: lr_*.joblib, svm_*.joblib, tfidf_*.joblib
+#   - deep:      cnn_*.pt, bilstm_*.pt
+#   - transformer: mbert_*/, xlm-r_*/, urdu-roberta_*/
+Assignment#03/outputs/models/
+
+# Keep these (small, important for graders):
+#   Assignment#03/outputs/figures/   ← all PNG plots
+#   Assignment#03/outputs/results/   ← prediction CSVs + leaderboards
+#   Assignment#03/report/            ← .md / .docx / .tex / .filled.md
