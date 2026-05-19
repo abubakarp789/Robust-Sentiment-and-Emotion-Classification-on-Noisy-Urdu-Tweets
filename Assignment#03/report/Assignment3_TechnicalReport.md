@@ -56,10 +56,10 @@ This milestone (Assignment 3) operationalises Milestones 1 and 2 into an end-to-
 
 ## 2.2 Label canonicalisation
 
-The raw `Category` column has **299 unique surface forms** including
+The raw `Category` column has **298 unique surface forms** including
 `" Joy"`, `"['Joy']"`, `"Joy , Joy"`, `"['Joy', 'Sad']"`, etc., plus the misspelling **"Surprice"** for *Surprise*. We define a deterministic normalisation in `preprocessing.parse_category` that returns a list of canonical labels drawn from $\{Joy, Sad, Angry, Fear, Disgust, Surprise\}$, and `preprocessing.majority_emotion` that reduces a multi-label cell to a single emotion by majority vote (ties broken by overall corpus frequency).
 
-After canonicalisation the **emotion task** uses 532,661 labelled rows; we note that the dataset contains no `Love` class — that name appeared in early planning artefacts but does not exist in the actual data. The **sentiment task** maps the canonical emotion labels via
+After canonicalisation the **emotion task** uses 533,429 labelled rows; we note that the dataset contains no `Love` class — that name appeared in early planning artefacts but does not exist in the actual data. The **sentiment task** maps the canonical emotion labels via
 $$
 \{Joy\}\to Positive,\quad \{Sad, Angry, Fear, Disgust\}\to Negative,\quad \{Surprise\}\to Neutral,
 $$
@@ -69,10 +69,10 @@ yielding the same row support.
 
 [Numbers below come from `01_dataset_analysis.ipynb`; see `outputs/figures/`.]
 
-- **Emotion distribution (n = 532,661):** Joy 459,033 (86.2 %); Sad 50,375 (9.5 %); Disgust 17,071 (3.2 %); Angry 2,798 (0.5 %); Fear 1,837 (0.3 %); Surprise 1,547 (0.3 %).
-- **Derived sentiment distribution:** Positive 459,033 (86.2 %), Negative 72,081 (13.5 %), Neutral 1,547 (0.3 %).
-- **Imbalance ratio (max / min)** ≈ 297× for the emotion task and ≈ 297× for the sentiment task. We address this with inverse-frequency class weights in every model's loss (Section 6).
-- **Token length:** Cleaned tweets have a median of $\approx$ 11 tokens and a 95th-percentile of $\approx$ 33 tokens, which guides our `MAX_LEN = 64` for the RNN/CNN models and `TRANSFORMER_MAX_LEN = 96` for subword tokenisation.
+- **Emotion distribution (n = 533,429):** Joy 459,728 (86.2 %); Sad 50,417 (9.5 %); Disgust 17,083 (3.2 %); Angry 2,802 (0.5 %); Fear 1,847 (0.3 %); Surprise 1,552 (0.3 %).
+- **Derived sentiment distribution:** Positive 459,728 (86.2 %), Negative 72,149 (13.5 %), Neutral 1,552 (0.3 %).
+- **Imbalance ratio (max / min)** ≈ 296× for the emotion task and ≈ 296× for the sentiment task. We address this with inverse-frequency class weights in every model's loss (Section 6).
+- **Token length:** Cleaned tweets have a median of $\approx$ 11 tokens and a 95th-percentile of $\approx$ 36 tokens, which guides our `MAX_LEN = 64` for the RNN/CNN models and `TRANSFORMER_MAX_LEN = 96` for subword tokenisation.
 
 ## 2.4 Noise and code-mixing
 
@@ -265,7 +265,7 @@ All numbers below come from `outputs/results/leaderboard_{sentiment,emotion}.csv
 | Urdu-RoBERTa | 0.6153 | 0.2503 | 0.3500 | 0.2539 | 0.6971 |
 <!-- END_EMOTION_LEADERBOARD -->
 
-**Headline numbers — emotion.** Highest accuracy is again **Linear SVM at 0.877**, but its 0.21 macro-F1 confirms it collapses onto *Joy*. Highest **macro-F1 is mBERT at 0.2703**, a 1.6-point absolute gain over XLM-R (0.2535) and Urdu-RoBERTa (0.2539), and a 2-point gain over Text-CNN (0.2499). The macro-F1 ceiling on the 6-class task is much lower than on the 3-class task because of the 297× class imbalance and the small absolute count of *Surprise* (≈1.5 K) and *Fear* (≈1.8 K) training rows.
+**Headline numbers — emotion.** Highest accuracy is again **Linear SVM at 0.877**, but its 0.21 macro-F1 confirms it collapses onto *Joy*. Highest **macro-F1 is mBERT at 0.2703**, a 1.7-point absolute gain over XLM-R (0.2535) and Urdu-RoBERTa (0.2539), and a 2-point gain over Text-CNN (0.2499). The macro-F1 ceiling on the 6-class task is much lower than on the 3-class task because of the 296× class imbalance and the small absolute count of *Surprise* (≈1.5 K) and *Fear* (≈1.8 K) training rows.
 
 ## 7.2 Confusion matrices
 
@@ -291,7 +291,7 @@ The Linear-SVM result is the most instructive disagreement in the leaderboard. S
 
 A qualitative inspection of the misclassified test examples (Section 6 of `03_evaluation.ipynb`) reveals:
 
-- **Negation flips** — Urdu negators *نہیں*, *مت*, *کبھی نہ* invert polarity but TF-IDF treats them as ordinary unigrams, so a sentence like *"خوشی نہیں ملی"* (no joy was found) is routinely mislabelled *Positive*.
+- **Negation flips** — Urdu negators *nahin*, *mat*, *kabhi na* invert polarity but TF-IDF treats them as ordinary unigrams, so a sentence like *"khushi nahin mili"* (no joy was found) is routinely mislabelled *Positive*.
 - **Sarcasm** — surface-positive sentences with negative intent fool every model, with transformers marginally better.
 - **Code-mixing** — Latin-script English fragments cause sparse-feature models to default to the *Neutral* / majority class.
 - **Religious–poetic register** — emotionally-charged poetic Urdu (a substantial subset of the corpus) is labelled *Joy* by the dataset heuristic regardless of finer affective content; this is one structural reason the *Joy* recall is so easy to maximise and the rare-class recall is so hard.
@@ -323,7 +323,7 @@ $$
 
 Three observations:
 
-1. **Transformers are not dominant on this corpus.** On sentiment, Urdu-RoBERTa beats Text-CNN by 0.004 macro-F1 — a difference within noise. On emotion, mBERT's 0.016 lead over Text-CNN is real but small. The pretrained fastText Urdu vectors (used by CNN and BiLSTM) carry most of the language-specific lift; contextual subword embeddings add a modest residual.
+1. **Transformers are not dominant on this corpus.** On sentiment, Urdu-RoBERTa beats Text-CNN by 0.004 macro-F1 — a difference within noise. On emotion, mBERT's 0.020 lead over Text-CNN is real but small. The pretrained fastText Urdu vectors (used by CNN and BiLSTM) carry most of the language-specific lift; contextual subword embeddings add a modest residual.
 2. **Urdu-specific pretraining is *not* the deciding factor.** Urdu-RoBERTa wins sentiment but loses emotion to mBERT (a multilingual encoder with no Urdu specialisation), and it is essentially tied with XLM-R on emotion. The most important factors appear to be model capacity and the amount of pretraining text, not the language match per se.
 3. **The classical baselines are not a useless floor.** Linear SVM achieves an accuracy that none of the deep / transformer models match, by aggressively predicting *Joy* / *Positive*; this is the kind of result that would have been mistakenly headlined in a paper that reports accuracy instead of macro-F1, and reinforces why the project pre-commits to macro-F1 as the single comparative metric.
 
@@ -335,7 +335,7 @@ Three observations:
 
 This milestone delivers a complete, reproducible Urdu sentiment / emotion classification system that compares classical, deep, and transformer models under identical conditions. The key design decisions — emoji removal for leakage prevention, label canonicalisation against the noisy raw `Category` column, fp16 transformer fine-tuning on a 372 K-row training split, and class-weighted loss — are documented mathematically and implemented in re-usable Python modules and three Jupyter notebooks.
 
-Empirically, **Urdu-RoBERTa attains the best 3-class sentiment macro-F1 of 0.4573** and **mBERT the best 6-class emotion macro-F1 of 0.2703**. The CNN and BiLSTM baselines come within 0.005 / 0.020 macro-F1 of the best transformer on each task, respectively — i.e. once a strong Urdu fastText embedding is available, the contextual-subword advantage on this corpus is modest. The Linear SVM achieves the highest *accuracy* on both tasks (0.878) but collapses to majority-class prediction on the rare emotions, which is exactly the failure mode the macro-F1 metric is designed to surface.
+Empirically, **Urdu-RoBERTa attains the best 3-class sentiment macro-F1 of 0.4573** and **mBERT the best 6-class emotion macro-F1 of 0.2703**. The CNN and BiLSTM baselines come within 0.004 / 0.028 macro-F1 of the best transformer on each task, respectively — i.e. once a strong Urdu fastText embedding is available, the contextual-subword advantage on this corpus is modest. The Linear SVM achieves the highest *accuracy* on both tasks (0.878) but collapses to majority-class prediction on the rare emotions, which is exactly the failure mode the macro-F1 metric is designed to surface.
 
 ## 9.2 Limitations
 

@@ -8,12 +8,15 @@
 \usepackage{xcolor}
 \usepackage[margin=1in]{geometry}
 \usepackage{amsmath,amssymb}
-\setcounter{secnumdepth}{-\maxdimen} % remove section numbering
+\usepackage{graphicx}
 \usepackage{iftex}
 \ifPDFTeX
   \usepackage[T1]{fontenc}
   \usepackage[utf8]{inputenc}
   \usepackage{textcomp} % provide euro and other symbols
+\usepackage{newunicodechar}
+\newunicodechar{≈}{\approx}
+% \newunicodechar{|}{|} % or another suitable replacement
 \else % if luatex or xetex
   \usepackage{unicode-math} % this also loads fontspec
   \defaultfontfeatures{Scale=MatchLowercase}
@@ -68,15 +71,15 @@
 \IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
 \urlstyle{same}
 \hypersetup{
-  pdftitle={Robust Sentiment and Emotion Classification on Noisy Urdu Tweets --- Milestone 3 (Implementation and Evaluation)},
-  pdfauthor={Raqib Hayat --- NUM-BSCS-2022-40; Abu Bakar --- NUM-BSCS-2022-41},
+  pdftitle={Robust Sentiment and Emotion Classification on Noisy Urdu Tweets - Milestone 3 (Implementation and Evaluation)},
+  pdfauthor={Raqib Hayat - NUM-BSCS-2022-40; Abu Bakar - NUM-BSCS-2022-41},
   pdflang={en},
   hidelinks,
   pdfcreator={LaTeX via pandoc}}
 
 \title{Robust Sentiment and Emotion Classification on Noisy Urdu Tweets
---- Milestone 3 (Implementation and Evaluation)}
-\author{Raqib Hayat --- NUM-BSCS-2022-40 \and Abu Bakar ---
+Milestone 3 (Implementation and Evaluation)}
+\author{Raqib Hayat - NUM-BSCS-2022-40 \and Abu Bakar -
 NUM-BSCS-2022-41}
 \date{2026-05-16}
 
@@ -94,10 +97,10 @@ whose critical step strips emojis to eliminate the labelling-heuristic
 short-cut (the empirical leakage risk is quantified in Section 2 via
 \texttt{fig13\_label\_leakage\_heatmap}). We compare (i) classical
 TF-IDF baselines with Logistic Regression and Linear SVM, (ii)
-deep-learning models --- a Kim-style multi-kernel CNN and a two-layer
+deep-learning models - a Kim-style multi-kernel CNN and a two-layer
 BiLSTM with additive attention, both initialised from pretrained
-fastText Urdu vectors --- and (iii) three fine-tuned transformer
-encoders --- multilingual BERT (mBERT), XLM-RoBERTa-base, and
+fastText Urdu vectors - and (iii) three fine-tuned transformer
+encoders - multilingual BERT (mBERT), XLM-RoBERTa-base, and
 Urdu-specific RoBERTa (\texttt{urduhack/roberta-urdu-small}). Every
 model is trained, validated, and evaluated on the same stratified
 70/15/15 split (\texttt{seed=42}) of the \(\approx\) 533 K rows with
@@ -113,11 +116,11 @@ far below the 80--85 \% heuristic-agreement ceiling, exposing the
 residual difficulty of rare-class (\emph{Fear}, \emph{Surprise},
 \emph{Angry}) discrimination in weakly-supervised Urdu data.
 
-\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+\newpage
 
-\section{1. Introduction}\label{introduction}
+\section{Introduction}\label{introduction}
 
-\subsection{1.1 Problem statement}\label{problem-statement}
+\subsection{Problem statement}\label{problem-statement}
 
 Sentiment and emotion analysis on Urdu social media is a low-resource
 setting characterised by (a) limited labelled data, (b) weak supervision
@@ -125,11 +128,11 @@ from emoji-derived heuristics, and (c) significant noise from URLs,
 mentions, hashtags, code-mixing, and inconsistent script normalisation.
 The SentiUrdu-1M corpus is the largest publicly available Urdu sentiment
 resource (\textasciitilde1.05 M tweets) and is therefore an attractive
-testbed for modern transformer architectures --- but the same emoji set
+testbed for modern transformer architectures - but the same emoji set
 that gave it scalable labelling becomes a \emph{feature short-cut} if
 not properly removed before model training.
 
-\subsection{1.2 Objectives}\label{objectives}
+\subsection{Objectives}\label{objectives}
 
 This milestone (Assignment 3) operationalises Milestones 1 and 2 into an
 end-to-end implementation. Specifically, it:
@@ -153,7 +156,7 @@ end-to-end implementation. Specifically, it:
   Compiles the findings into the present technical report.
 \end{enumerate}
 
-\subsection{1.3 Contributions}\label{contributions}
+\subsection{Contributions}\label{contributions}
 
 \begin{itemize}
 \tightlist
@@ -178,29 +181,29 @@ end-to-end implementation. Specifically, it:
   \textbf{Urdu-RoBERTa wins the 3-class sentiment task} (macro-F1 =
   0.457) and \textbf{mBERT wins the 6-class emotion task} (macro-F1 =
   0.270), with the CNN and BiLSTM baselines within a few F1 points of
-  the transformers --- evidence that pretrained Urdu vectors close most
+  the transformers - evidence that pretrained Urdu vectors close most
   of the gap on this corpus.
 \item
   All code, splits, and model checkpoints are released with fixed seeds
   for reproducibility.
 \end{itemize}
 
-\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+\newpage
 
-\section{2. Dataset Description}\label{dataset-description}
+\section{Dataset Description}\label{dataset-description}
 
-\subsection{2.1 Source and scale}\label{source-and-scale}
+\subsection{Source and scale}\label{source-and-scale}
 
 \begin{itemize}
 \tightlist
 \item
-  \textbf{Name:} SentiUrdu-1M --- \emph{Sentiment and emotion-labelled
+  \textbf{Name:} SentiUrdu-1M - \emph{Sentiment and emotion-labelled
   Urdu Twitter dataset}.
 \item
   \textbf{DOI:} \url{https://data.mendeley.com/datasets/rz3xg97rm5/1}
 \item
-  \textbf{Size:} 1,048,000 tweets ; CSV ≈ 219 MB ; XLSX ≈ 99 MB. We use
-  the CSV throughout for \textasciitilde6× faster loading.
+  \textbf{Size:} 1,048,000 tweets ; CSV $\approx$ 219 MB ; XLSX $\approx$ 99 MB. We use
+  the CSV throughout for $\sim$6$\times$ faster loading.
 \item
   \textbf{Columns:} \texttt{Id} (tweet ID), \texttt{Text} (raw Urdu
   tweet text), \texttt{Emotions} (emoji-confidence list),
@@ -210,9 +213,9 @@ end-to-end implementation. Specifically, it:
   + SentiWordNet, as documented in the dataset's accompanying paper.
 \end{itemize}
 
-\subsection{2.2 Label canonicalisation}\label{label-canonicalisation}
+\subsection{Label canonicalisation}\label{label-canonicalisation}
 
-The raw \texttt{Category} column has \textbf{299 unique surface forms}
+The raw \texttt{Category} column has \textbf{298 unique surface forms}
 including \texttt{"\ Joy"},
 \texttt{"{[}\textquotesingle{}Joy\textquotesingle{}{]}"},
 \texttt{"Joy\ ,\ Joy"},
@@ -225,41 +228,57 @@ labels drawn from \(\{Joy, Sad, Angry, Fear, Disgust, Surprise\}\), and
 to a single emotion by majority vote (ties broken by overall corpus
 frequency).
 
-After canonicalisation the \textbf{emotion task} uses 532,661 labelled
-rows; we note that the dataset contains no \texttt{Love} class --- that
+After canonicalisation the \textbf{emotion task} uses 533,429 labelled
+rows; we note that the dataset contains no \texttt{Love} class - that
 name appeared in early planning artefacts but does not exist in the
 actual data. The \textbf{sentiment task} maps the canonical emotion
 labels via \[
 \{Joy\}\to Positive,\quad \{Sad, Angry, Fear, Disgust\}\to Negative,\quad \{Surprise\}\to Neutral,
 \] yielding the same row support.
 
-\subsection{2.3 Distributional
+\subsection{Distributional
 characteristics}\label{distributional-characteristics}
 
 {[}Numbers below come from \texttt{01\_dataset\_analysis.ipynb}; see
 \texttt{outputs/figures/}.{]}
 
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.48\textwidth]{fig02_emotion_distribution.png}
+\hfill
+\includegraphics[width=0.48\textwidth]{fig03_sentiment_distribution.png}
+\caption{Emotion and Sentiment Distributions}
+\label{fig:distributions}
+\end{figure}
+
 \begin{itemize}
 \tightlist
 \item
-  \textbf{Emotion distribution (n = 532,661):} Joy 459,033 (86.2 \%);
-  Sad 50,375 (9.5 \%); Disgust 17,071 (3.2 \%); Angry 2,798 (0.5 \%);
-  Fear 1,837 (0.3 \%); Surprise 1,547 (0.3 \%).
+  \textbf{Emotion distribution (n = 533,429):} Joy 459,728 (86.2 \%);
+  Sad 50,417 (9.5 \%); Disgust 17,083 (3.2 \%); Angry 2,802 (0.5 \%);
+  Fear 1,847 (0.3 \%); Surprise 1,552 (0.3 \%).
 \item
-  \textbf{Derived sentiment distribution:} Positive 459,033 (86.2 \%),
-  Negative 72,081 (13.5 \%), Neutral 1,547 (0.3 \%).
+  \textbf{Derived sentiment distribution:} Positive 459,728 (86.2 \%),
+  Negative 72,149 (13.5 \%), Neutral 1,552 (0.3 \%).
 \item
-  \textbf{Imbalance ratio (max / min)} ≈ 297× for the emotion task and ≈
-  297× for the sentiment task. We address this with inverse-frequency
+  \textbf{Imbalance ratio (max / min)} $\approx$ 296$\times$ for the emotion task and $\approx$
+  296$\times$ for the sentiment task. We address this with inverse-frequency
   class weights in every model's loss (Section 6).
 \item
   \textbf{Token length:} Cleaned tweets have a median of \(\approx\) 11
-  tokens and a 95th-percentile of \(\approx\) 33 tokens, which guides
+  tokens and a 95th-percentile of \(\approx\) 36 tokens, which guides
   our \texttt{MAX\_LEN\ =\ 64} for the RNN/CNN models and
   \texttt{TRANSFORMER\_MAX\_LEN\ =\ 96} for subword tokenisation.
 \end{itemize}
 
-\subsection{2.4 Noise and code-mixing}\label{noise-and-code-mixing}
+\subsection{Noise and code-mixing}\label{noise-and-code-mixing}
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.75\textwidth]{fig13_label_leakage_heatmap.png}
+\caption{Label Leakage Heatmap: Co-occurrence of specific emojis with emotion classes.}
+\label{fig:label_leakage}
+\end{figure}
 
 A 200 K-row audit shows that approximately 30 \% of raw tweets contain
 emojis, 12 \% contain URLs, 11 \% contain \texttt{@}-mentions, 10 \%
@@ -267,8 +286,7 @@ contain hashtags, and 4 \% contain \(\ge 3\)-letter Latin-script tokens
 (code-mixing). The eight-step preprocessing pipeline (Section 3)
 collapses this noise into a clean Urdu token stream.
 
-\subsection{2.5 Suitability and
-limitations}\label{suitability-and-limitations}
+\subsection{Suitability and limitations}\label{suitability-and-limitations}
 
 SentiUrdu-1M is the \textbf{largest} publicly available Urdu sentiment
 corpus, exposes models to \textbf{naturalistic noise}, supports
@@ -280,9 +298,8 @@ class imbalance is extreme; domain is narrow Pakistani Twitter discourse
 and does not generalise to long-form Urdu prose without further
 adaptation.
 
-\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
 
-\section{3. Related Work Summary (Milestone
+\section{Related Work Summary (Milestone
 2)}\label{related-work-summary-milestone-2}
 
 Milestone 2 reviewed 20 peer-reviewed papers grouped into four
@@ -297,7 +314,7 @@ The literature has three persistent gaps for Urdu:
 \tightlist
 \item
   \textbf{Scale.} Most existing Urdu studies train on \(\le\) 50 K
-  labelled tweets; the largest comparable resource --- SentiUrdu-1M ---
+  labelled tweets; the largest comparable resource - SentiUrdu-1M -
   is rarely used for transformer fine-tuning.
 \item
   \textbf{Fair comparison.} Different papers use different
@@ -309,59 +326,49 @@ The literature has three persistent gaps for Urdu:
   reflect Urdu modelling or label-heuristic memorisation.
 \end{enumerate}
 
-Our work directly addresses all three: million-scale corpus, identical
+Our work directly addresses all three: a million-scale corpus, identical
 pipeline for every model, and a \emph{named} preprocessing step (§5 of
 \texttt{04\_architecture\_math.md}) that proves emoji leakage is
 prevented.
 
-\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+\newpage
 
-\section{4. Proposed Architecture}\label{proposed-architecture}
+\section{Proposed Architecture}\label{proposed-architecture}
 
-The pipeline is a single chain of modules with three swappable model
-heads (classical / deep / transformer):
+The pipeline is a single chain of modules with three swappable models
+heads (classical/deep / transformer):
 
-\begin{verbatim}
-raw tweet
-  └▶ Module A — Preprocessing (8 steps, deterministic)
-        └▶ Module B — Feature extraction
-              ├ B-1  TF-IDF (1+2-gram)            ──┐
-              ├ B-2  fastText cc.ur.300 embedding  ─┤
-              └ B-3  WordPiece / SentencePiece     ─┤
-                                                     │
-                       Module C — Model head        │
-                       ├ LR / LinearSVC             │
-                       ├ CNN / BiLSTM-Attn          │
-                       └ mBERT / XLM-R / Urdu-RoBERTa
-                                                     │
-        Module D — softmax classification head   ◀──┘
-        Module E — accuracy, P, R, F1, confusion matrix
-\end{verbatim}
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=\textwidth]{architecture.png}
+\caption{Proposed Architecture Pipeline}
+\label{fig:architecture}
+\end{figure}
 
 The detailed mathematical specification of every module is in
 \texttt{04\_architecture\_math.md} (delivered separately and reproduced
 in Section 5 below).
 
-\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+\newpage
 
-\section{5. Mathematical Modelling}\label{mathematical-modelling}
+\section{Mathematical Modelling}\label{mathematical-modelling}
 
 This section reproduces the full mathematical specification. See
 \texttt{04\_architecture\_math.md} for the figures and the full
 architectural diagram.
 
-\subsection{5.1 Preprocessing}\label{preprocessing}
+\subsection{Preprocessing}\label{preprocessing}
 
 \[
 T(x) \;=\; (t_8 \circ t_7 \circ t_6 \circ t_5 \circ t_4 \circ t_3 \circ t_2 \circ t_1)(x).
 \]
 
 Each \(t_i\) is documented in Section 2 of
-\texttt{04\_architecture\_math.md}. The critical step \(t_5\) --- emoji
-removal --- enforces \(\mathcal{E}(T(x)) = \emptyset\), eliminating the
+\texttt{04\_architecture\_math.md}. The critical step \(t_5\) - emoji
+removal - enforces \(\mathcal{E}(T(x)) = \emptyset\), eliminating the
 label-heuristic short-cut \(y(x) = \sigma(\mathcal{E}(x))\).
 
-\subsection{5.2 TF-IDF and linear
+\subsection{TF-IDF and linear
 classifiers}\label{tf-idf-and-linear-classifiers}
 
 Sub-linear TF, smoothed IDF, L2-normalised vectors:
@@ -374,63 +381,61 @@ Multinomial logistic regression solved by \texttt{saga} with
 inverse-frequency class weighting; LinearSVC with Platt-scaled
 calibration for compatible probabilistic outputs.
 
-\subsection{5.3 CNN}\label{cnn}
+\subsection{CNN}\label{cnn}
 
 Kim-style 1-D convolutions of widths \(\{3,4,5\}\) with \(F = 128\)
 filters each, max-over-time pooling, concatenation, dropout 0.5, linear
 softmax head.
 
-\subsection{5.4 BiLSTM + additive
+\subsection{BiLSTM + additive
 attention}\label{bilstm-additive-attention}
 
 Two-layer bidirectional LSTM (\(H = 256\) per direction), dropout 0.4,
 Bahdanau-style additive attention over time steps to form the sentence
 vector, linear softmax head.
 
-\subsection{5.5 Transformer encoders}\label{transformer-encoders}
+\subsection{Transformer encoders}\label{transformer-encoders}
 
 Scaled dot-product attention, multi-head attention, position-wise GELU
-FFN, residual + LayerNorm. We fine-tune the three pretrained models ---
+FFN, residual + LayerNorm. We fine-tune the three pretrained models -
 \texttt{bert-base-multilingual-cased}, \texttt{xlm-roberta-base},
-\texttt{urduhack/roberta-urdu-small} --- with a fresh linear
+\texttt{urduhack/roberta-urdu-small} - with a fresh linear
 classification head on the \texttt{{[}CLS{]}} /
 \texttt{\textless{}s\textgreater{}} token, AdamW optimiser with warm-up
 + linear-decay schedule, fp16.
 
-\subsection{5.6 Loss}\label{loss}
+\subsection{Loss}\label{loss}
 
 Class-weighted cross-entropy: \[
 \mathcal{L} = -\frac{1}{B}\sum_{i=1}^{B}\alpha_{y_i}\sum_{k=1}^{K} y_{i,k}\log\hat{y}_{i,k},
 \qquad \alpha_k \propto \frac{N}{K\cdot n_k}.
 \]
 
-\subsection{5.7 Metrics}\label{metrics}
+\subsection{Metrics}\label{metrics}
 
 Per-class precision, recall, F1; macro and weighted averaging; raw and
 row-normalised confusion matrices. \textbf{Macro-F1 is the headline
 metric} because of the extreme class imbalance.
 
-\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+\section{Implementation Details}\label{implementation-details}
 
-\section{6. Implementation Details}\label{implementation-details}
-
-\subsection{6.1 Repository layout}\label{repository-layout}
+\subsection{Repository layout}\label{repository-layout}
 
 \begin{verbatim}
 Assignment#03/
-├── preprocessing.py        # 8-step pipeline + label canonicalisation
-├── config.py               # all paths, seeds, hyperparameters
-├── models_dl.py            # TextCNN, BiLSTMAttn
-├── train_dl.py             # Vocab, fastText loader, training loop
-├── train_transformer.py    # HuggingFace Trainer wrapper with class weights
-├── 01_dataset_analysis.ipynb
-├── 02_model_implementation.ipynb
-├── 03_evaluation.ipynb
-├── 04_architecture_math.md
-└── outputs/                # figures, models, results, cache, embeddings
+|- preprocessing.py        # 8-step pipeline + label canonicalisation
+|- config.py               # all paths, seeds, hyperparameters
+|- models_dl.py            # TextCNN, BiLSTMAttn
+|- train_dl.py             # Vocab, fastText loader, training loop
+|- train_transformer.py    # HuggingFace Trainer wrapper with class weights
+|- 01_dataset_analysis.ipynb
+|- 02_model_implementation.ipynb
+|- 03_evaluation.ipynb
+|- 04_architecture_math.md
+|-- outputs/                # figures, models, results, cache, embeddings
 \end{verbatim}
 
-\subsection{6.2 Data split and class
+\subsection{Data split and class
 weights}\label{data-split-and-class-weights}
 
 \texttt{sklearn.train\_test\_split(stratify=y,\ random\_state=42)}
@@ -443,7 +448,7 @@ and passed to the loss as either a \texttt{class\_weight} argument
 (classical) or a \texttt{weight=} tensor on \texttt{nn.CrossEntropyLoss}
 (deep / transformer).
 
-\subsection{6.3 Hyperparameters}\label{hyperparameters}
+\subsection{Hyperparameters}\label{hyperparameters}
 
 All hyperparameters live in \texttt{config.py}. The key choices are
 reproduced below.
@@ -468,9 +473,9 @@ Logistic Regression & \texttt{solver=saga}, \texttt{C=1.0},
 \texttt{class\_weight=balanced}, \texttt{max\_iter=1000} \\
 Linear SVM & \texttt{LinearSVC} + \texttt{CalibratedClassifierCV}
 (sigmoid, 3-fold) \\
-CNN & filters \(\{3,4,5\}\) × 128 ; dropout 0.5 ; Adam 1e-3 ; batch 256
+CNN & filters \(\{3,4,5\}\) $\times$ 128 ; dropout 0.5 ; Adam 1e-3 ; batch 256
 ; up to 8 epochs ; early-stop patience 2 \\
-BiLSTM & hidden 256 (each dir) × 2 layers ; dropout 0.4 ; additive
+BiLSTM & hidden 256 (each dir) $\times$ 2 layers ; dropout 0.4 ; additive
 attention ; Adam 1e-3 ; batch 256 \\
 Word embeddings & \texttt{cc.ur.300} (300-d fastText Urdu), trainable,
 \texttt{\textless{}unk\textgreater{}} \textasciitilde{}
@@ -484,7 +489,7 @@ weight decay 0.01, fp16 \\
 \end{longtable}
 }
 
-\subsection{6.4 Hardware and runtime}\label{hardware-and-runtime}
+\subsection{Hardware and runtime}\label{hardware-and-runtime}
 
 {\def\LTcaptype{none} % do not increment counter
 \begin{longtable}[]{@{}
@@ -505,13 +510,13 @@ CUDA / driver & 12.8 / 581.57 \\
 PyTorch & 2.12 dev (cu128) \\
 Transformers & 4.57.x \\
 Approx. transformer training time per model & \(\approx\) 60--90 min for
-\textasciitilde373 K training rows × 3 epochs × fp16 \\
+\textasciitilde373 K training rows $\times$ 3 epochs $\times$ fp16 \\
 Approx. CNN / BiLSTM training time & \(\approx\) 5--10 min per model \\
 Approx. TF-IDF + classical fit & \(\approx\) 1--2 min per model \\
 \end{longtable}
 }
 
-\subsection{6.5 Reproducibility}\label{reproducibility}
+\subsection{Reproducibility}\label{reproducibility}
 
 \begin{itemize}
 \tightlist
@@ -527,16 +532,14 @@ Approx. TF-IDF + classical fit & \(\approx\) 1--2 min per model \\
   portable.
 \item
   \texttt{outputs/results/pred\_\textless{}task\textgreater{}\_\textless{}model\textgreater{}.csv}
-  holds the test-set predictions of every model --- the evaluation
+  holds the test-set predictions of every model - the evaluation
   notebook reads only these files, so it is independent of training
   environment drift.
 \end{itemize}
 
-\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+\section{Experimental Results}\label{experimental-results}
 
-\section{7. Experimental Results}\label{experimental-results}
-
-\subsection{7.1 Leaderboards}\label{leaderboards}
+\subsection{Leaderboards}\label{leaderboards}
 
 All numbers below come from
 \texttt{outputs/results/leaderboard\_\{sentiment,emotion\}.csv},
@@ -545,7 +548,7 @@ prediction CSVs in \texttt{outputs/results/}. \texttt{build\_report.py}
 re-substitutes the tables between the HTML markers so the source and the
 compiled \texttt{.docx} / \texttt{.tex} stay in sync.
 
-\subsubsection{7.1.1 Sentiment (3-class)}\label{sentiment-3-class}
+\subsubsection{Sentiment (3-class)}\label{sentiment-3-class}
 
 {\def\LTcaptype{none} % do not increment counter
 \begin{longtable}[]{@{}
@@ -583,7 +586,7 @@ Urdu-RoBERTa & 0.7750 & 0.4492 & 0.5019 & 0.4573 & 0.8011 \\
 \end{longtable}
 }
 
-\textbf{Headline numbers --- sentiment.} Highest accuracy is
+\textbf{Headline numbers - sentiment.} Highest accuracy is
 \textbf{Linear SVM at 0.878} but with macro-F1 of only 0.400, i.e.~it
 wins by exploiting the \emph{Positive}-class prior. Highest
 \textbf{macro-F1 is Urdu-RoBERTa at 0.4573}, narrowly ahead of Text-CNN
@@ -591,7 +594,7 @@ wins by exploiting the \emph{Positive}-class prior. Highest
 of each other on macro-F1; the CNN/BiLSTM baselines are within 0.005 of
 that band.
 
-\subsubsection{7.1.2 Emotion (6-class)}\label{emotion-6-class}
+\subsubsection{Emotion (6-class)}\label{emotion-6-class}
 
 {\def\LTcaptype{none} % do not increment counter
 \begin{longtable}[]{@{}
@@ -629,20 +632,31 @@ Urdu-RoBERTa & 0.6153 & 0.2503 & 0.3500 & 0.2539 & 0.6971 \\
 \end{longtable}
 }
 
-\textbf{Headline numbers --- emotion.} Highest accuracy is again
+\textbf{Headline numbers - emotion.} Highest accuracy is again
 \textbf{Linear SVM at 0.877}, but its 0.21 macro-F1 confirms it
 collapses onto \emph{Joy}. Highest \textbf{macro-F1 is mBERT at 0.2703},
-a 1.6-point absolute gain over XLM-R (0.2535) and Urdu-RoBERTa (0.2539),
+a 1.7-point absolute gain over XLM-R (0.2535) and Urdu-RoBERTa (0.2539),
 and a 2-point gain over Text-CNN (0.2499). The macro-F1 ceiling on the
-6-class task is much lower than on the 3-class task because of the 297×
-class imbalance and the small absolute count of \emph{Surprise} (≈1.5 K)
-and \emph{Fear} (≈1.8 K) training rows.
+6-class task is much lower than on the 3-class task because of the 296$\times$
+class imbalance and the small absolute count of \emph{Surprise} ($\approx$1.5 K)
+and \emph{Fear} ($\approx$1.8 K) training rows.
 
-\subsection{7.2 Confusion matrices}\label{confusion-matrices}
+\subsection{Confusion matrices}\label{confusion-matrices}
 
 Row-normalised confusion matrices are saved as
 \texttt{outputs/figures/fig15\_cm\_sentiment.png} and
-\texttt{outputs/figures/fig15\_cm\_emotion.png}. Across all models, the
+\texttt{outputs/figures/fig15\_cm\_emotion.png} (shown in Figure \ref{fig:confusion_matrices}).
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.48\textwidth]{fig15_cm_sentiment.png}
+\hfill
+\includegraphics[width=0.48\textwidth]{fig15_cm_emotion.png}
+\caption{Row-normalised confusion matrices for sentiment and emotion tasks.}
+\label{fig:confusion_matrices}
+\end{figure}
+
+Across all models, the
 off-diagonal mass on the emotion task is concentrated in two failure
 modes: (i) \emph{Sad/Angry/Fear/Disgust} → \emph{Joy}, driven by the
 majority-class prior and class-weight under-correction; and (ii)
@@ -650,31 +664,51 @@ majority-class prior and class-weight under-correction; and (ii)
 absence of distinctive \emph{Surprise} surface tokens after the emoji
 strip.
 
-\subsection{7.3 Macro vs weighted F1}\label{macro-vs-weighted-f1}
+\subsection{Macro vs weighted F1}\label{macro-vs-weighted-f1}
 
 \texttt{outputs/figures/fig16\_f1\_compare\_sentiment.png} and
 \texttt{…\_emotion.png} plot the gap between macro- and weighted-F1 for
-every model. The Linear SVM bars show the largest gap (≈0.44 on
-sentiment, ≈0.63 on emotion), which is the canonical signature of a
+every model (see Figure \ref{fig:f1_compare}). 
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.48\textwidth]{fig16_f1_compare_sentiment.png}
+\hfill
+\includegraphics[width=0.48\textwidth]{fig16_f1_compare_emotion.png}
+\caption{Macro vs Weighted F1 comparison across models.}
+\label{fig:f1_compare}
+\end{figure}
+
+The Linear SVM bars show the largest gap ($\approx$0.44 on
+sentiment, $\approx$0.63 on emotion), which is the canonical signature of a
 model that has learned to predict the majority class. The transformer
 bars show the \emph{smallest} gap, in line with the leaderboard.
 
-\subsection{7.4 Training curves (CNN,
+\subsection{Training curves (CNN,
 BiLSTM)}\label{training-curves-cnn-bilstm}
 
 Per-task training loss and validation accuracy curves are written to
 \texttt{outputs/figures/fig17\_curve\_*} from the JSON histories saved
-alongside each \texttt{.pt} checkpoint. Both deep models converge within
+alongside each \texttt{.pt} checkpoint (see Figure \ref{fig:training_curves}).
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.48\textwidth]{fig17_curve_sentiment_bilstm.png}
+\hfill
+\includegraphics[width=0.48\textwidth]{fig17_curve_emotion_bilstm.png}
+\caption{Training and validation curves for BiLSTM on sentiment and emotion tasks.}
+\label{fig:training_curves}
+\end{figure}
+
+Both deep models converge within
 6--8 epochs; the validation-accuracy curves are non-monotonic because
 the class-weighted loss pushes hard on the rare classes early, then
 settles as the model trades off between rare- and majority-class
 accuracy.
 
-\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+\section{Discussion and Analysis}\label{discussion-and-analysis}
 
-\section{8. Discussion and Analysis}\label{discussion-and-analysis}
-
-\subsection{8.1 Where models disagree}\label{where-models-disagree}
+\subsection{Where models disagree}\label{where-models-disagree}
 
 The Linear-SVM result is the most instructive disagreement in the
 leaderboard. SVM reaches 0.878 accuracy on both tasks yet only 0.40
@@ -682,20 +716,20 @@ leaderboard. SVM reaches 0.878 accuracy on both tasks yet only 0.40
 signature of a classifier that has learned to predict the majority class
 (\emph{Joy} / \emph{Positive}): the inverse-frequency weights re-balance
 the gradient but the 50 000-dimensional sparse-bag-of-bigrams feature
-space has nearly zero discriminative signal for \emph{Surprise} (≈1.5 K
-rows) and \emph{Fear} (≈1.8 K rows). Logistic Regression, fitted with
+space has nearly zero discriminative signal for \emph{Surprise} ($\approx$1.5 K
+rows) and \emph{Fear} ($\approx$1.8 K rows). Logistic Regression, fitted with
 the same TF-IDF features but the \texttt{saga} solver and a softer
-regularisation, makes the opposite trade-off --- it predicts the rare
+regularisation, makes the opposite trade-off - it predicts the rare
 classes more eagerly (recall 0.30 on emotion) at the cost of
 catastrophic precision (overall accuracy 0.36, F1-macro 0.16). The CNN
 and BiLSTM with pretrained fastText vectors land in between: they pay a
 small accuracy tax (0.61--0.78) for a meaningful macro-F1 lift
 (0.24--0.45). Transformers narrow the per-class gap further on the head
 classes but, on this dataset, do \emph{not} dramatically lift
-\emph{Fear}/\emph{Surprise} --- those classes remain the macro-F1
+\emph{Fear}/\emph{Surprise} - those classes remain the macro-F1
 bottleneck for every model.
 
-\subsection{8.2 Common error patterns}\label{common-error-patterns}
+\subsection{Common error patterns}\label{common-error-patterns}
 
 A qualitative inspection of the misclassified test examples (Section 6
 of \texttt{03\_evaluation.ipynb}) reveals:
@@ -703,26 +737,26 @@ of \texttt{03\_evaluation.ipynb}) reveals:
 \begin{itemize}
 \tightlist
 \item
-  \textbf{Negation flips} --- Urdu negators \emph{نہیں}, \emph{مت},
-  \emph{کبھی نہ} invert polarity but TF-IDF treats them as ordinary
-  unigrams, so a sentence like \emph{``خوشی نہیں ملی''} (no joy was
+  \textbf{Negation flips} - Urdu negators \emph{nahin}, \emph{mat},
+  \emph{kabhi na} invert polarity but TF-IDF treats them as ordinary
+  unigrams, so a sentence like \emph{``khushi nahin mili''} (no joy was
   found) is routinely mislabelled \emph{Positive}.
 \item
-  \textbf{Sarcasm} --- surface-positive sentences with negative intent
+  \textbf{Sarcasm} - surface-positive sentences with negative intent
   fool every model, with transformers marginally better.
 \item
-  \textbf{Code-mixing} --- Latin-script English fragments cause
+  \textbf{Code-mixing} - Latin-script English fragments cause
   sparse-feature models to default to the \emph{Neutral} / majority
   class.
 \item
-  \textbf{Religious--poetic register} --- emotionally-charged poetic
+  \textbf{Religious--poetic register} - emotionally-charged poetic
   Urdu (a substantial subset of the corpus) is labelled \emph{Joy} by
   the dataset heuristic regardless of finer affective content; this is
   one structural reason the \emph{Joy} recall is so easy to maximise and
   the rare-class recall is so hard.
 \end{itemize}
 
-\subsection{8.3 Effect of label noise}\label{effect-of-label-noise}
+\subsection{Effect of label noise}\label{effect-of-label-noise}
 
 The dataset's labels are emoji-derived; the upper bound on attainable
 test accuracy is therefore the \emph{agreement rate} between the
@@ -745,7 +779,7 @@ estimates at \(\approx\) 80--85 \%. Two observations matter:
   class-weighted loss and therefore trade accuracy for macro coverage.
   The best macro-F1 numbers (0.457 sentiment, 0.270 emotion) are far
   below the heuristic-agreement ceiling, so the residual gap is genuine
-  modelling difficulty in weakly-supervised Urdu emotion --- not a
+  modelling difficulty in weakly-supervised Urdu emotion - not a
   leakage artefact.
 \end{enumerate}
 
@@ -754,23 +788,27 @@ preprocessing is doing its job: if it were not, we would see one or more
 models score arbitrarily close to 1.0 by re-learning the labelling
 heuristic.
 
-\subsection{8.4 Classical vs Deep vs Transformer --- measured
+\subsection{Classical vs Deep vs Transformer - measured
 ordering}\label{classical-vs-deep-vs-transformer-measured-ordering}
 
 The headline metric is macro-F1, which exposes rare-class collapse. The
 measured orderings are:
 
-\textbf{Sentiment (3-class) --- macro-F1:}
+\textbf{Sentiment (3-class) - macro-F1:}
 
-\[
-\text{Urdu-RoBERTa}\,(0.457) \;>\; \text{Text-CNN}\,(0.453) \;\approx\; \text{mBERT}\,(0.453) \;>\; \text{BiLSTM-Attn}\,(0.450) \;>\; \text{XLM-R}\,(0.448) \;>\; \text{Linear SVM}\,(0.400) \;>\; \text{Logistic Reg.}\,(0.385).
-\]
+\begin{align*}
+\text{Urdu-RoBERTa}\,(0.457) &\;>\; \text{Text-CNN}\,(0.453) \;\approx\; \text{mBERT}\,(0.453) \\
+&\;>\; \text{BiLSTM-Attn}\,(0.450) \;>\; \text{XLM-R}\,(0.448) \\
+&\;>\; \text{Linear SVM}\,(0.400) \;>\; \text{Logistic Reg.}\,(0.385).
+\end{align*}
 
-\textbf{Emotion (6-class) --- macro-F1:}
+\textbf{Emotion (6-class) - macro-F1:}
 
-\[
-\text{mBERT}\,(0.270) \;>\; \text{Urdu-RoBERTa}\,(0.254) \;\approx\; \text{XLM-R}\,(0.254) \;>\; \text{Text-CNN}\,(0.250) \;>\; \text{BiLSTM-Attn}\,(0.243) \;>\; \text{Linear SVM}\,(0.209) \;>\; \text{Logistic Reg.}\,(0.163).
-\]
+\begin{align*}
+\text{mBERT}\,(0.270) &\;>\; \text{Urdu-RoBERTa}\,(0.254) \;\approx\; \text{XLM-R}\,(0.254) \\
+&\;>\; \text{Text-CNN}\,(0.250) \;>\; \text{BiLSTM-Attn}\,(0.243) \\
+&\;>\; \text{Linear SVM}\,(0.209) \;>\; \text{Logistic Reg.}\,(0.163).
+\end{align*}
 
 Three observations:
 
@@ -779,8 +817,8 @@ Three observations:
 \tightlist
 \item
   \textbf{Transformers are not dominant on this corpus.} On sentiment,
-  Urdu-RoBERTa beats Text-CNN by 0.004 macro-F1 --- a difference within
-  noise. On emotion, mBERT's 0.016 lead over Text-CNN is real but small.
+  Urdu-RoBERTa beats Text-CNN by 0.004 macro-F1 - a difference within
+  noise. On emotion, mBERT's 0.020 lead over Text-CNN is real but small.
   The pretrained fastText Urdu vectors (used by CNN and BiLSTM) carry
   most of the language-specific lift; contextual subword embeddings add
   a modest residual.
@@ -800,33 +838,31 @@ Three observations:
   project pre-commits to macro-F1 as the single comparative metric.
 \end{enumerate}
 
-\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
-
-\section{9. Conclusion and Future
+\section{Conclusion and Future
 Work}\label{conclusion-and-future-work}
 
-\subsection{9.1 Summary}\label{summary}
+\subsection{Summary}\label{summary}
 
 This milestone delivers a complete, reproducible Urdu sentiment /
 emotion classification system that compares classical, deep, and
 transformer models under identical conditions. The key design decisions
---- emoji removal for leakage prevention, label canonicalisation against
+- emoji removal for leakage prevention, label canonicalisation against
 the noisy raw \texttt{Category} column, fp16 transformer fine-tuning on
-a 372 K-row training split, and class-weighted loss --- are documented
+a 372 K-row training split, and class-weighted loss - are documented
 mathematically and implemented in re-usable Python modules and three
 Jupyter notebooks.
 
 Empirically, \textbf{Urdu-RoBERTa attains the best 3-class sentiment
 macro-F1 of 0.4573} and \textbf{mBERT the best 6-class emotion macro-F1
-of 0.2703}. The CNN and BiLSTM baselines come within 0.005 / 0.020
-macro-F1 of the best transformer on each task, respectively ---
+of 0.2703}. The CNN and BiLSTM baselines come within 0.004 / 0.028
+macro-F1 of the best transformer on each task, respectively -
 i.e.~once a strong Urdu fastText embedding is available, the
 contextual-subword advantage on this corpus is modest. The Linear SVM
 achieves the highest \emph{accuracy} on both tasks (0.878) but collapses
 to majority-class prediction on the rare emotions, which is exactly the
 failure mode the macro-F1 metric is designed to surface.
 
-\subsection{9.2 Limitations}\label{limitations}
+\subsection{Limitations}\label{limitations}
 
 \begin{itemize}
 \tightlist
@@ -842,7 +878,7 @@ failure mode the macro-F1 metric is designed to surface.
   natural next step to exploit the full 1 M tweet count.
 \end{itemize}
 
-\subsection{9.3 Future work}\label{future-work}
+\subsection{Future work}\label{future-work}
 
 \begin{itemize}
 \tightlist
@@ -857,9 +893,7 @@ failure mode the macro-F1 metric is designed to surface.
   identified in Milestone 2.
 \end{itemize}
 
-\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
-
-\section{10. References}\label{references}
+\section{References}\label{references}
 
 IEEE-style references, drawn from the 20-paper review in Milestone 2.
 
@@ -932,9 +966,7 @@ IEEE-style references, drawn from the 20-paper review in Milestone 2.
   5, pp.~513--523, 1988. (TF-IDF)
 \end{enumerate}
 
-\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
-
-\section{11. AI Usage Declaration}\label{ai-usage-declaration}
+\section{AI Usage Declaration}\label{ai-usage-declaration}
 
 This declaration accompanies the present technical report in compliance
 with the course AI-use policy.
@@ -962,9 +994,9 @@ with the course AI-use policy.
   we authored and (b) the structure of the public SentiUrdu-1M dataset.
 \end{itemize}
 
-\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+\newpage
 
-\section{12. Contribution Statement}\label{contribution-statement}
+\section{Contribution Statement}\label{contribution-statement}
 
 {\def\LTcaptype{none} % do not increment counter
 \begin{longtable}[]{@{}
@@ -994,9 +1026,5 @@ reproducibility plumbing. \\
 
 Both authors reviewed and signed off on the final report and the
 released code.
-
-\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
-
-\emph{End of report.}
 
 \end{document}
