@@ -42,4 +42,4 @@ requires = ["setuptools>=68"]
 build-backend = "setuptools.build_meta"
 
 [tool.setuptools]
-py-modules = ["preprocessing", "config"]
+py-modules = ["config", "models_dl", "preprocessing", "train_dl", "train_transformer"]

@@ -1201,14 +1201,14 @@ def build_evaluation() -> None:
       Transformers handle this slightly better, but error rate is still high.
     - **Code-mixing.** Latin-script English fragments cause sparse-feature
       models to fall back to the *Neutral* class.
-    - **Religious / poetic register.** *Love*-labelled tweets often look
-      semantically identical to *Joy*; this is a known artefact of the
+    - **Religious / poetic register.** Emotionally charged religious or poetic
+      tweets often get labelled *Joy*; this is a known artefact of the
       emoji-derived labelling heuristic.
     """))
 
     cells.append(("md", "## 7 — Bonus — Training curves for the deep models"))
     cells.append(("code", r"""
-    # Loss / val-accuracy curves are saved as JSON next to the .pt checkpoints
+    # Loss / validation curves are saved as JSON next to the .pt checkpoints.
     import glob
     for task in ("sentiment", "emotion"):
         for name in ("cnn", "bilstm"):
@@ -1220,7 +1220,12 @@ def build_evaluation() -> None:
             fig, ax1 = plt.subplots(figsize=(7, 4))
             ax2 = ax1.twinx()
             ax1.plot(h["train_loss"], color="#d62728", label="train loss"); ax1.set_ylabel("loss", color="#d62728")
-            ax2.plot(h["val_acc"],    color="#2ca02c", label="val acc");    ax2.set_ylabel("val acc", color="#2ca02c")
+            if "val_macro_f1" in h:
+                ax2.plot(h["val_macro_f1"], color="#1f77b4", label="val macro-F1")
+                ax2.set_ylabel("val macro-F1", color="#1f77b4")
+            else:
+                ax2.plot(h["val_acc"], color="#2ca02c", label="val acc")
+                ax2.set_ylabel("val acc", color="#2ca02c")
             ax1.set_xlabel("epoch")
             ax1.set_title(f"{task} — {name} training curve")
             fig.tight_layout()

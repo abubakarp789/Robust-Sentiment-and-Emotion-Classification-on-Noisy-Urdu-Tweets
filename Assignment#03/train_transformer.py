@@ -7,6 +7,7 @@ single uniform function call per task.
 from __future__ import annotations
 
 import json
+import inspect
 from dataclasses import dataclass
 from pathlib import Path
 from typing import Sequence
@@ -114,7 +115,7 @@ def finetune_transformer(
     collator = DataCollatorWithPadding(tokenizer=tokenizer, pad_to_multiple_of=8)
     metric_fn = _make_metric_fn()
 
-    args = TrainingArguments(
+    training_kwargs = dict(
         output_dir=str(out_dir / "hf"),
         num_train_epochs=cfg.epochs,
         learning_rate=cfg.lr,
@@ -123,7 +124,6 @@ def finetune_transformer(
         gradient_accumulation_steps=cfg.grad_accum,
         warmup_ratio=cfg.warmup_ratio,
         weight_decay=cfg.weight_decay,
-        eval_strategy="epoch",
         save_strategy="epoch",
         load_best_model_at_end=True,
         metric_for_best_model="f1_macro",
@@ -136,6 +136,13 @@ def finetune_transformer(
         dataloader_num_workers=2,
         seed=42,
     )
+    # Transformers renamed evaluation_strategy to eval_strategy in newer releases.
+    # Supporting both keeps requirements.txt usable across the declared version range.
+    if "eval_strategy" in inspect.signature(TrainingArguments.__init__).parameters:
+        training_kwargs["eval_strategy"] = "epoch"
+    else:
+        training_kwargs["evaluation_strategy"] = "epoch"
+    args = TrainingArguments(**training_kwargs)
 
     trainer = WeightedTrainer(
         model=model,

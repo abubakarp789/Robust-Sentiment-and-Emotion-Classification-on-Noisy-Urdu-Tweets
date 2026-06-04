@@ -21,6 +21,7 @@ import numpy as np
 import torch
 import torch.nn as nn
 from torch.utils.data import DataLoader, Dataset
+from sklearn.metrics import f1_score
 
 from preprocessing import tokenize
 
@@ -155,7 +156,7 @@ def compute_class_weights(labels: Sequence[int], num_classes: int) -> torch.Tens
 
 
 @torch.no_grad()
-def evaluate(model, loader, device, needs_mask: bool) -> Tuple[float, np.ndarray, np.ndarray]:
+def evaluate(model, loader, device, needs_mask: bool) -> Tuple[float, float, np.ndarray, np.ndarray]:
     model.eval()
     correct, total = 0, 0
     all_pred, all_true = [], []
@@ -166,7 +167,10 @@ def evaluate(model, loader, device, needs_mask: bool) -> Tuple[float, np.ndarray
         correct += (pred == y).sum().item()
         total += y.numel()
         all_pred.append(pred.cpu().numpy()); all_true.append(y.cpu().numpy())
-    return correct / max(total, 1), np.concatenate(all_true), np.concatenate(all_pred)
+    y_true = np.concatenate(all_true)
+    y_pred = np.concatenate(all_pred)
+    macro_f1 = f1_score(y_true, y_pred, average="macro", zero_division=0)
+    return correct / max(total, 1), macro_f1, y_true, y_pred
 
 
 def train_model(
@@ -188,8 +192,8 @@ def train_model(
     sched = torch.optim.lr_scheduler.ReduceLROnPlateau(optim, mode="max", factor=0.5, patience=1)
     criterion = nn.CrossEntropyLoss(weight=class_weights.to(device))
 
-    best_state, best_val_acc, bad_epochs = None, -1.0, 0
-    history = {"train_loss": [], "val_acc": []}
+    best_state, best_val_macro_f1, best_val_acc, bad_epochs = None, -1.0, -1.0, 0
+    history = {"train_loss": [], "val_acc": [], "val_macro_f1": []}
 
     for epoch in range(1, epochs + 1):
         model.train()
@@ -206,13 +210,17 @@ def train_model(
             if step % log_every == 0:
                 print(f"  epoch {epoch:>2}  step {step:>5}  loss {running/n_steps:.4f}")
         train_loss = running / max(n_steps, 1)
-        val_acc, *_ = evaluate(model, val_loader, device, needs_mask)
-        history["train_loss"].append(train_loss); history["val_acc"].append(val_acc)
-        sched.step(val_acc)
+        val_acc, val_macro_f1, *_ = evaluate(model, val_loader, device, needs_mask)
+        history["train_loss"].append(train_loss)
+        history["val_acc"].append(val_acc)
+        history["val_macro_f1"].append(val_macro_f1)
+        sched.step(val_macro_f1)
         print(f"  epoch {epoch:>2} done  ({time.time()-t0:.1f}s)   "
-              f"train_loss={train_loss:.4f}   val_acc={val_acc:.4f}")
+              f"train_loss={train_loss:.4f}   val_acc={val_acc:.4f}   "
+              f"val_macro_f1={val_macro_f1:.4f}")
 
-        if val_acc > best_val_acc:
+        if val_macro_f1 > best_val_macro_f1:
+            best_val_macro_f1 = val_macro_f1
             best_val_acc = val_acc
             best_state = {k: v.detach().cpu().clone() for k, v in model.state_dict().items()}
             bad_epochs = 0
@@ -224,7 +232,11 @@ def train_model(
 
     if best_state is not None:
         model.load_state_dict(best_state)
-    return {"history": history, "best_val_acc": best_val_acc}
+    return {
+        "history": history,
+        "best_val_macro_f1": best_val_macro_f1,
+        "best_val_acc": best_val_acc,
+    }
 
 
 @torch.no_grad()
