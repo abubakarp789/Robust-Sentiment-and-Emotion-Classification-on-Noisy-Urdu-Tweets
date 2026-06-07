@@ -1,0 +1,55 @@
+{
+  "task": "sentiment",
+  "raw_label_column": "Category",
+  "canonical_emotion_labels": [
+    "Joy",
+    "Sad",
+    "Angry",
+    "Fear",
+    "Disgust",
+    "Surprise"
+  ],
+  "canonical_sentiment_labels": [
+    "Negative",
+    "Neutral",
+    "Positive"
+  ],
+  "emotion_to_sentiment": {
+    "Joy": "Positive",
+    "Sad": "Negative",
+    "Angry": "Negative",
+    "Fear": "Negative",
+    "Disgust": "Negative",
+    "Surprise": "Neutral"
+  },
+  "raw_to_canonical_emotion": {
+    "Joy": "Joy",
+    "Sad": "Sad",
+    "Sadness": "Sad",
+    "Angry": "Angry",
+    "Anger": "Angry",
+    "Fear": "Fear",
+    "Disgust": "Disgust",
+    "Surprice": "Surprise",
+    "Surprise": "Surprise"
+  },
+  "non_null_raw_labels": 533429,
+  "normalized_emotion_rows": 533429,
+  "task_label_rows": 533429,
+  "normalized_emotion_distribution": {
+    "None": 514571,
+    "Joy": 459728,
+    "Sad": 50417,
+    "Disgust": 17083,
+    "Angry": 2802,
+    "Fear": 1847,
+    "Surprise": 1552
+  },
+  "task_label_distribution": {
+    "None": 514571,
+    "Positive": 459728,
+    "Negative": 72149,
+    "Neutral": 1552
+  },
+  "unknown_label_tokens": {}
+}

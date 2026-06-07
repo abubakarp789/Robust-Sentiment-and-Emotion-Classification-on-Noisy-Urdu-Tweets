@@ -1,0 +1,173 @@
+# Final Project Roadmap
+
+## Current Status
+
+The repository currently contains three assignment folders. Assignment 1 defines the project and preprocessing pipeline, Assignment 2 provides the literature review, and Assignment 3 implements a substantial model comparison with EDA, classical baselines, neural models, transformer models, evaluation outputs, and a technical report.
+
+This `final_project/` folder is a clean final-submission structure. It does not overwrite or delete any assignment work.
+
+The final-project preprocessing, label-normalization, and split-generation pipeline has now been migrated into:
+
+- `src/preprocessing.py`
+- `src/label_mapping.py`
+- `src/create_splits.py`
+- `src/validate_pipeline.py`
+
+The pipeline is controlled by `config.yaml`.
+
+## Completed Work from Assignment 1
+
+- Defined the project title and problem statement.
+- Selected SentiUrdu-1M as the main dataset.
+- Motivated Urdu tweet sentiment and emotion analysis as a complex NLP problem.
+- Identified weak supervision, noisy tweets, code-mixing, and emoji leakage as key challenges.
+- Built an 8-step preprocessing pipeline:
+  - Unicode normalization
+  - URL removal
+  - Mention removal
+  - Hashtag cleanup
+  - Emoji removal
+  - Number removal
+  - Punctuation removal
+  - Whitespace normalization
+
+## Completed Work from Assignment 2
+
+- Completed a research-style literature review.
+- Reviewed 20 related papers.
+- Organized prior work into classical ML, deep learning, transformer-based, and multimodal/advanced approaches.
+- Identified the gap around weak supervision, fair model comparison, label leakage, and clean evaluation.
+- Built a comparative literature table with methods, datasets, findings, and limitations.
+
+## Completed Work from Assignment 3
+
+- Created reusable preprocessing and configuration modules.
+- Performed detailed dataset analysis and visualizations.
+- Implemented label normalization for noisy `Category` values.
+- Trained/evaluated classical baselines:
+  - TF-IDF + Logistic Regression
+  - TF-IDF + Linear SVM
+- Trained/evaluated neural models:
+  - Text-CNN
+  - BiLSTM-Attention
+- Trained/evaluated transformer models:
+  - mBERT
+  - XLM-RoBERTa
+  - Urdu-RoBERTa
+- Generated leaderboard CSV files.
+- Generated figures and confusion matrices.
+- Wrote a technical report.
+
+## Missing Work
+
+- Migrate model-training code into `final_project/src`.
+- Save model checkpoints under `outputs/models`.
+- Save richer prediction files under `outputs/predictions` with raw text, cleaned text, labels, predictions, and confidence.
+- Build complete error-analysis outputs under `outputs/error_analysis`.
+- Add a deployment-ready Streamlit app.
+- Add final report content under `reports/final_report.md`.
+- Add final slides or presentation outline.
+- Add ethics and limitations into the final report.
+- Fix any mismatch between documentation and actual saved artifacts.
+
+## Week-Wise Final Implementation Plan
+
+### Week 1: Repository Consolidation and Data Pipeline
+
+Tasks:
+
+- Finalize `final_project/` structure. Completed.
+- Move stable preprocessing and label-mapping logic into `src/`. Completed.
+- Create dataset card. Completed.
+- Create processed data and split-generation scripts. Completed.
+- Save stratified train/validation/test splits. Run `python src/create_splits.py`.
+
+Expected output:
+
+- Clean final repository structure.
+- Documented dataset card.
+- Reproducible data splits.
+
+Commands:
+
+```bash
+cd final_project
+python src/create_splits.py
+python src/validate_pipeline.py
+```
+
+### Week 2: Baseline and Neural Model Packaging
+
+Tasks:
+
+- Convert baseline notebook logic into `src/train_baseline.py`.
+- Convert neural model training logic into `src/train_neural.py`.
+- Save model artifacts and predictions.
+- Add reusable evaluation script.
+
+Expected output:
+
+- Reproducible baseline and neural model runs.
+- Saved metric tables and prediction files.
+
+### Week 3: Transformer, Evaluation, and Error Analysis
+
+Tasks:
+
+- Convert transformer training logic into `src/train_transformer.py`.
+- Save transformer predictions and model metadata.
+- Build `src/error_analysis.py`.
+- Generate misclassified example tables.
+- Add confusion matrix and per-class report exports.
+
+Expected output:
+
+- Final model comparison table.
+- Error-analysis report.
+- Model selection justification.
+
+### Week 4: Deployment, Report, and Presentation
+
+Tasks:
+
+- Implement Streamlit demo.
+- Add inference pipeline.
+- Add model explanation placeholder or GenAI assistant.
+- Write final report.
+- Prepare slides outline and demo script.
+
+Expected output:
+
+- Working demo app.
+- Final report.
+- Presentation-ready project.
+
+## Must-Have Tasks
+
+- Preserve original assignment folders.
+- Finalize preprocessing and label mapping modules. Completed.
+- Save train/validation/test splits. Pipeline implemented.
+- Report macro-F1 as the main metric.
+- Save model comparison table.
+- Save confusion matrices.
+- Add ethics and limitations.
+- Build basic Streamlit demo.
+- Write final README and final report.
+
+## Should-Have Tasks
+
+- Save model checkpoints.
+- Save prediction files with text and confidence.
+- Create clean manually verified test subset.
+- Add emoji-removal ablation.
+- Add per-class error analysis.
+- Add reproducibility checklist.
+
+## Nice-to-Have Tasks
+
+- Add GenAI explanation assistant.
+- Add LoRA or adapter-based transformer fine-tuning.
+- Add XLM-T or another Twitter-domain transformer.
+- Add model calibration analysis.
+- Deploy on Hugging Face Spaces or Streamlit Cloud.
+- Record a short demo video.

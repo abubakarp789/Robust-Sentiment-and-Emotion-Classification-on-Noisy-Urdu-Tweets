@@ -1,0 +1,39 @@
+{
+  "total_rows_loaded": 1048000,
+  "rows_with_missing_raw_labels": 514571,
+  "rows_with_missing_required_labels": 514571,
+  "rows_removed_empty_or_short_clean_text": 15463,
+  "rows_after_filtering": 517966,
+  "number_of_classes": 3,
+  "class_distribution_before_split": {
+    "Negative": 69971,
+    "Neutral": 1427,
+    "Positive": 446568
+  },
+  "train_size": 362576,
+  "validation_size": 77695,
+  "test_size": 77695,
+  "train_class_distribution": {
+    "Negative": 48980,
+    "Neutral": 999,
+    "Positive": 312597
+  },
+  "validation_class_distribution": {
+    "Negative": 10495,
+    "Neutral": 214,
+    "Positive": 66986
+  },
+  "test_class_distribution": {
+    "Negative": 10496,
+    "Neutral": 214,
+    "Positive": 66985
+  },
+  "random_seed": 42,
+  "split_ratios": {
+    "train_size": 0.7,
+    "validation_size": 0.15,
+    "test_size": 0.15
+  },
+  "task": "sentiment",
+  "min_text_length_tokens": 2
+}
