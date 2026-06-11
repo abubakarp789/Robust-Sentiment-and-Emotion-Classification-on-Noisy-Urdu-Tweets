@@ -37,6 +37,85 @@ outputs:
   models_dir: "outputs/models"
   error_analysis_dir: "outputs/error_analysis"
 
+baseline_models:
+  text_column: "clean_text"
+  label_column: "task_label"
+
+  tfidf:
+    analyzer: "word"
+    ngram_range: [1, 2]
+    max_features: 100000
+    min_df: 2
+    max_df: 0.95
+    sublinear_tf: true
+    dtype: "float32"
+
+  models:
+    logistic_regression:
+      enabled: true
+      class_weight: "balanced"
+      max_iter: 1000
+      solver: "liblinear"
+
+    linear_svm:
+      enabled: true
+      class_weight: "balanced"
+      max_iter: 5000
+
+    multinomial_nb:
+      enabled: true
+      alpha: 1.0
+
+error_analysis:
+  high_confidence_threshold: 0.80
+  low_confidence_threshold: 0.55
+  short_text_max_tokens: 3
+  long_text_min_tokens: 30
+  minority_classes: ["Neutral"]
+
+neural_models:
+  enabled: true
+  text_column: "clean_text"
+  label_column: "task_label"
+
+  data:
+    max_vocab_size: 50000
+    max_sequence_length: 80
+    min_frequency: 2
+    batch_size: 128
+    num_workers: 0
+
+  training:
+    random_seed: 42
+    epochs: 5
+    learning_rate: 0.001
+    weight_decay: 0.0001
+    early_stopping_patience: 2
+    gradient_clip_norm: 1.0
+    use_class_weights: true
+    device: "auto"
+
+  embeddings:
+    embedding_dim: 300
+    use_pretrained: false
+    pretrained_path: ""
+    freeze_embeddings: false
+
+  models:
+    text_cnn:
+      enabled: true
+      num_filters: 128
+      kernel_sizes: [3, 4, 5]
+      dropout: 0.5
+
+    bilstm_attention:
+      enabled: true
+      hidden_dim: 128
+      num_layers: 1
+      bidirectional: true
+      dropout: 0.5
+      attention: true
+
 models:
   baseline:
     logistic_regression: "tfidf_logistic_regression"
@@ -53,3 +132,39 @@ training:
   batch_size: 32
   learning_rate: 0.00002
   max_sequence_length: 96
+
+transformer_models:
+  enabled: true
+  text_column: "clean_text"
+  label_column: "task_label"
+
+  data:
+    max_sequence_length: 96
+    batch_size: 16
+    num_workers: 0
+
+  training:
+    random_seed: 42
+    epochs: 3
+    learning_rate: 0.00002
+    weight_decay: 0.01
+    warmup_ratio: 0.1
+    early_stopping_patience: 1
+    use_class_weights: true
+    class_weight_smoothing: 0.5
+    gradient_accumulation_steps: 1
+    fp16: true
+    device: "auto"
+
+  models:
+    mbert:
+      enabled: true
+      model_name: "bert-base-multilingual-cased"
+
+    xlm_roberta:
+      enabled: true
+      model_name: "xlm-roberta-base"
+
+    urdu_roberta:
+      enabled: false
+      model_name: "urduhack/roberta-urdu-small"

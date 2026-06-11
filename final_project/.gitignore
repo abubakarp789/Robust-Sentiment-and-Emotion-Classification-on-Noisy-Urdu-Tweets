@@ -1,0 +1,17 @@
+# PyTorch / Python cache
+__pycache__/
+*.pyc
+.pytest_cache/
+
+# Large dataset splits (train.csv is ~102MB, exceeding GitHub's 100MB limit)
+data/splits/*.csv
+
+# Large deep learning model checkpoints (~59MB each)
+outputs/models/**/*.pt
+
+# Large transformer model weights (>700MB each)
+outputs/models/**/*.safetensors
+outputs/models/**/*.bin
+
+# Large prediction tables (~350MB total, fully reproducible)
+outputs/predictions/*.csv

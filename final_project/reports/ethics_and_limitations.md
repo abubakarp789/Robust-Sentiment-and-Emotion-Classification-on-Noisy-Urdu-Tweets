@@ -45,4 +45,4 @@ This project should be used for academic NLP research, model comparison, and edu
 - The dataset is highly imbalanced.
 - Urdu code-mixing and Roman Urdu are not fully normalized.
 - Sarcasm and implicit emotion are difficult for all current models.
-- Current final-project app is only a placeholder until model inference is added.
+- The final-project Streamlit app is fully integrated with baseline and transformer inference pipelines, offering template-based explanations for predictions and error analysis.

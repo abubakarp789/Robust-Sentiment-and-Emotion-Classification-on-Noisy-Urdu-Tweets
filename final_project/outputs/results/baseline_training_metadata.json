@@ -1,0 +1,20 @@
+{
+  "tfidf_fit_split": "train",
+  "train_rows": 362576,
+  "validation_rows_used_for_fit": 0,
+  "test_rows_used_for_fit": 0,
+  "models": {
+    "logistic_regression": {
+      "model_path": "outputs\\models\\baseline_logistic_regression.joblib",
+      "fit_seconds": 9.881
+    },
+    "linear_svm": {
+      "model_path": "outputs\\models\\baseline_linear_svm.joblib",
+      "fit_seconds": 22.079
+    },
+    "multinomial_nb": {
+      "model_path": "outputs\\models\\baseline_multinomial_nb.joblib",
+      "fit_seconds": 2.735
+    }
+  }
+}

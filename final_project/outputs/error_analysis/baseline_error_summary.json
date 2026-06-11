@@ -1,0 +1,480 @@
+{
+  "best_baseline_model": "linear_svm",
+  "thresholds": {
+    "high_confidence": 0.8,
+    "low_confidence": 0.55,
+    "short_text_max_tokens": 3,
+    "minority_classes": [
+      "Neutral"
+    ]
+  },
+  "models": {
+    "linear_svm": {
+      "test": {
+        "total_rows": 77695,
+        "total_correct": 66281,
+        "total_errors": 11414,
+        "error_rate": 0.14690778042345068,
+        "class_errors": {
+          "Negative": {
+            "support": 10496,
+            "errors": 5661,
+            "error_rate": 0.5393483231707317
+          },
+          "Neutral": {
+            "support": 214,
+            "errors": 182,
+            "error_rate": 0.8504672897196262
+          },
+          "Positive": {
+            "support": 66985,
+            "errors": 5571,
+            "error_rate": 0.08316787340449354
+          }
+        },
+        "confusion_pairs": [
+          {
+            "true_label": "Negative",
+            "predicted_label": "Positive",
+            "count": 5599,
+            "share_of_errors": 0.490537935868232
+          },
+          {
+            "true_label": "Positive",
+            "predicted_label": "Negative",
+            "count": 5388,
+            "share_of_errors": 0.4720518661293149
+          },
+          {
+            "true_label": "Positive",
+            "predicted_label": "Neutral",
+            "count": 183,
+            "share_of_errors": 0.01603294200105134
+          },
+          {
+            "true_label": "Neutral",
+            "predicted_label": "Positive",
+            "count": 157,
+            "share_of_errors": 0.013755037673033117
+          },
+          {
+            "true_label": "Negative",
+            "predicted_label": "Neutral",
+            "count": 62,
+            "share_of_errors": 0.005431925705274224
+          },
+          {
+            "true_label": "Neutral",
+            "predicted_label": "Negative",
+            "count": 25,
+            "share_of_errors": 0.0021902926230944453
+          }
+        ],
+        "error_categories": {
+          "positive_to_negative": 4287,
+          "negative_to_positive": 3445,
+          "possible_label_noise": 1232,
+          "short_text_ambiguity": 1179,
+          "long_text_noise": 966,
+          "neutral_to_positive": 157,
+          "unknown": 123,
+          "minority_class_confusion": 25
+        },
+        "model_name": "linear_svm",
+        "split": "test",
+        "artifacts": {
+          "misclassified": "outputs\\error_analysis\\baseline_linear_svm_test_misclassified.csv",
+          "class_errors": "outputs\\error_analysis\\baseline_linear_svm_test_class_errors.csv",
+          "confusion_pairs": "outputs\\error_analysis\\baseline_linear_svm_test_confusion_pairs.csv",
+          "summary": "outputs\\error_analysis\\baseline_linear_svm_test_summary.json"
+        }
+      },
+      "validation": {
+        "total_rows": 77695,
+        "total_correct": 66333,
+        "total_errors": 11362,
+        "error_rate": 0.14623849668575842,
+        "class_errors": {
+          "Negative": {
+            "support": 10495,
+            "errors": 5570,
+            "error_rate": 0.5307289185326346
+          },
+          "Neutral": {
+            "support": 214,
+            "errors": 183,
+            "error_rate": 0.8551401869158879
+          },
+          "Positive": {
+            "support": 66986,
+            "errors": 5609,
+            "error_rate": 0.08373391454930881
+          }
+        },
+        "confusion_pairs": [
+          {
+            "true_label": "Negative",
+            "predicted_label": "Positive",
+            "count": 5530,
+            "share_of_errors": 0.48671008625242035
+          },
+          {
+            "true_label": "Positive",
+            "predicted_label": "Negative",
+            "count": 5425,
+            "share_of_errors": 0.4774687555007921
+          },
+          {
+            "true_label": "Positive",
+            "predicted_label": "Neutral",
+            "count": 184,
+            "share_of_errors": 0.016194331983805668
+          },
+          {
+            "true_label": "Neutral",
+            "predicted_label": "Positive",
+            "count": 145,
+            "share_of_errors": 0.012761837704629467
+          },
+          {
+            "true_label": "Negative",
+            "predicted_label": "Neutral",
+            "count": 40,
+            "share_of_errors": 0.0035205069530012323
+          },
+          {
+            "true_label": "Neutral",
+            "predicted_label": "Negative",
+            "count": 38,
+            "share_of_errors": 0.0033444816053511705
+          }
+        ],
+        "error_categories": {
+          "positive_to_negative": 4370,
+          "negative_to_positive": 3368,
+          "possible_label_noise": 1238,
+          "short_text_ambiguity": 1094,
+          "long_text_noise": 1008,
+          "neutral_to_positive": 145,
+          "unknown": 101,
+          "minority_class_confusion": 38
+        },
+        "model_name": "linear_svm",
+        "split": "validation",
+        "artifacts": {
+          "misclassified": "outputs\\error_analysis\\baseline_linear_svm_validation_misclassified.csv",
+          "class_errors": "outputs\\error_analysis\\baseline_linear_svm_validation_class_errors.csv",
+          "confusion_pairs": "outputs\\error_analysis\\baseline_linear_svm_validation_confusion_pairs.csv",
+          "summary": "outputs\\error_analysis\\baseline_linear_svm_validation_summary.json"
+        }
+      }
+    },
+    "logistic_regression": {
+      "test": {
+        "total_rows": 77695,
+        "total_correct": 60135,
+        "total_errors": 17560,
+        "error_rate": 0.2260119698822318,
+        "class_errors": {
+          "Negative": {
+            "support": 10496,
+            "errors": 3833,
+            "error_rate": 0.36518673780487804
+          },
+          "Neutral": {
+            "support": 214,
+            "errors": 176,
+            "error_rate": 0.822429906542056
+          },
+          "Positive": {
+            "support": 66985,
+            "errors": 13551,
+            "error_rate": 0.20229902216914233
+          }
+        },
+        "confusion_pairs": [
+          {
+            "true_label": "Positive",
+            "predicted_label": "Negative",
+            "count": 13008,
+            "share_of_errors": 0.7407744874715262
+          },
+          {
+            "true_label": "Negative",
+            "predicted_label": "Positive",
+            "count": 3710,
+            "share_of_errors": 0.21127562642369022
+          },
+          {
+            "true_label": "Positive",
+            "predicted_label": "Neutral",
+            "count": 543,
+            "share_of_errors": 0.03092255125284738
+          },
+          {
+            "true_label": "Negative",
+            "predicted_label": "Neutral",
+            "count": 123,
+            "share_of_errors": 0.007004555808656036
+          },
+          {
+            "true_label": "Neutral",
+            "predicted_label": "Positive",
+            "count": 118,
+            "share_of_errors": 0.006719817767653759
+          },
+          {
+            "true_label": "Neutral",
+            "predicted_label": "Negative",
+            "count": 58,
+            "share_of_errors": 0.0033029612756264237
+          }
+        ],
+        "error_categories": {
+          "positive_to_negative": 10158,
+          "negative_to_positive": 2628,
+          "short_text_ambiguity": 1678,
+          "long_text_noise": 1479,
+          "possible_label_noise": 1023,
+          "unknown": 418,
+          "neutral_to_positive": 118,
+          "minority_class_confusion": 58
+        },
+        "model_name": "logistic_regression",
+        "split": "test",
+        "artifacts": {
+          "misclassified": "outputs\\error_analysis\\baseline_logistic_regression_test_misclassified.csv",
+          "class_errors": "outputs\\error_analysis\\baseline_logistic_regression_test_class_errors.csv",
+          "confusion_pairs": "outputs\\error_analysis\\baseline_logistic_regression_test_confusion_pairs.csv",
+          "summary": "outputs\\error_analysis\\baseline_logistic_regression_test_summary.json"
+        }
+      },
+      "validation": {
+        "total_rows": 77695,
+        "total_correct": 60241,
+        "total_errors": 17454,
+        "error_rate": 0.22464766072462836,
+        "class_errors": {
+          "Negative": {
+            "support": 10495,
+            "errors": 3730,
+            "error_rate": 0.3554073368270605
+          },
+          "Neutral": {
+            "support": 214,
+            "errors": 178,
+            "error_rate": 0.8317757009345794
+          },
+          "Positive": {
+            "support": 66986,
+            "errors": 13546,
+            "error_rate": 0.20222135968709878
+          }
+        },
+        "confusion_pairs": [
+          {
+            "true_label": "Positive",
+            "predicted_label": "Negative",
+            "count": 12985,
+            "share_of_errors": 0.7439555402773004
+          },
+          {
+            "true_label": "Negative",
+            "predicted_label": "Positive",
+            "count": 3620,
+            "share_of_errors": 0.20740231465566633
+          },
+          {
+            "true_label": "Positive",
+            "predicted_label": "Neutral",
+            "count": 561,
+            "share_of_errors": 0.03214162942591956
+          },
+          {
+            "true_label": "Negative",
+            "predicted_label": "Neutral",
+            "count": 110,
+            "share_of_errors": 0.00630228027959207
+          },
+          {
+            "true_label": "Neutral",
+            "predicted_label": "Positive",
+            "count": 98,
+            "share_of_errors": 0.005614758794545663
+          },
+          {
+            "true_label": "Neutral",
+            "predicted_label": "Negative",
+            "count": 80,
+            "share_of_errors": 0.004583476566976052
+          }
+        ],
+        "error_categories": {
+          "positive_to_negative": 10040,
+          "negative_to_positive": 2507,
+          "short_text_ambiguity": 1749,
+          "long_text_noise": 1556,
+          "possible_label_noise": 1027,
+          "unknown": 397,
+          "neutral_to_positive": 98,
+          "minority_class_confusion": 80
+        },
+        "model_name": "logistic_regression",
+        "split": "validation",
+        "artifacts": {
+          "misclassified": "outputs\\error_analysis\\baseline_logistic_regression_validation_misclassified.csv",
+          "class_errors": "outputs\\error_analysis\\baseline_logistic_regression_validation_class_errors.csv",
+          "confusion_pairs": "outputs\\error_analysis\\baseline_logistic_regression_validation_confusion_pairs.csv",
+          "summary": "outputs\\error_analysis\\baseline_logistic_regression_validation_summary.json"
+        }
+      }
+    },
+    "multinomial_nb": {
+      "test": {
+        "total_rows": 77695,
+        "total_correct": 68269,
+        "total_errors": 9426,
+        "error_rate": 0.12132054829783126,
+        "class_errors": {
+          "Negative": {
+            "support": 10496,
+            "errors": 8790,
+            "error_rate": 0.8374618902439024
+          },
+          "Neutral": {
+            "support": 214,
+            "errors": 214,
+            "error_rate": 1.0
+          },
+          "Positive": {
+            "support": 66985,
+            "errors": 422,
+            "error_rate": 0.006299917892065388
+          }
+        },
+        "confusion_pairs": [
+          {
+            "true_label": "Negative",
+            "predicted_label": "Positive",
+            "count": 8790,
+            "share_of_errors": 0.9325270528325907
+          },
+          {
+            "true_label": "Positive",
+            "predicted_label": "Negative",
+            "count": 419,
+            "share_of_errors": 0.04445151708041587
+          },
+          {
+            "true_label": "Neutral",
+            "predicted_label": "Positive",
+            "count": 208,
+            "share_of_errors": 0.02206662423085084
+          },
+          {
+            "true_label": "Neutral",
+            "predicted_label": "Negative",
+            "count": 6,
+            "share_of_errors": 0.0006365372374283895
+          },
+          {
+            "true_label": "Positive",
+            "predicted_label": "Neutral",
+            "count": 3,
+            "share_of_errors": 0.00031826861871419476
+          }
+        ],
+        "error_categories": {
+          "possible_label_noise": 5232,
+          "negative_to_positive": 2015,
+          "short_text_ambiguity": 876,
+          "long_text_noise": 797,
+          "positive_to_negative": 291,
+          "neutral_to_positive": 208,
+          "minority_class_confusion": 6,
+          "unknown": 1
+        },
+        "model_name": "multinomial_nb",
+        "split": "test",
+        "artifacts": {
+          "misclassified": "outputs\\error_analysis\\baseline_multinomial_nb_test_misclassified.csv",
+          "class_errors": "outputs\\error_analysis\\baseline_multinomial_nb_test_class_errors.csv",
+          "confusion_pairs": "outputs\\error_analysis\\baseline_multinomial_nb_test_confusion_pairs.csv",
+          "summary": "outputs\\error_analysis\\baseline_multinomial_nb_test_summary.json"
+        }
+      },
+      "validation": {
+        "total_rows": 77695,
+        "total_correct": 68348,
+        "total_errors": 9347,
+        "error_rate": 0.12030375185018341,
+        "class_errors": {
+          "Negative": {
+            "support": 10495,
+            "errors": 8723,
+            "error_rate": 0.8311576941400667
+          },
+          "Neutral": {
+            "support": 214,
+            "errors": 214,
+            "error_rate": 1.0
+          },
+          "Positive": {
+            "support": 66986,
+            "errors": 410,
+            "error_rate": 0.006120681933538351
+          }
+        },
+        "confusion_pairs": [
+          {
+            "true_label": "Negative",
+            "predicted_label": "Positive",
+            "count": 8723,
+            "share_of_errors": 0.933240611961057
+          },
+          {
+            "true_label": "Positive",
+            "predicted_label": "Negative",
+            "count": 408,
+            "share_of_errors": 0.043650369102385796
+          },
+          {
+            "true_label": "Neutral",
+            "predicted_label": "Positive",
+            "count": 209,
+            "share_of_errors": 0.022360115545094685
+          },
+          {
+            "true_label": "Neutral",
+            "predicted_label": "Negative",
+            "count": 5,
+            "share_of_errors": 0.0005349309939017867
+          },
+          {
+            "true_label": "Positive",
+            "predicted_label": "Neutral",
+            "count": 2,
+            "share_of_errors": 0.00021397239756071467
+          }
+        ],
+        "error_categories": {
+          "possible_label_noise": 5172,
+          "negative_to_positive": 2006,
+          "long_text_noise": 885,
+          "short_text_ambiguity": 784,
+          "positive_to_negative": 286,
+          "neutral_to_positive": 209,
+          "minority_class_confusion": 5
+        },
+        "model_name": "multinomial_nb",
+        "split": "validation",
+        "artifacts": {
+          "misclassified": "outputs\\error_analysis\\baseline_multinomial_nb_validation_misclassified.csv",
+          "class_errors": "outputs\\error_analysis\\baseline_multinomial_nb_validation_class_errors.csv",
+          "confusion_pairs": "outputs\\error_analysis\\baseline_multinomial_nb_validation_confusion_pairs.csv",
+          "summary": "outputs\\error_analysis\\baseline_multinomial_nb_validation_summary.json"
+        }
+      }
+    }
+  }
+}

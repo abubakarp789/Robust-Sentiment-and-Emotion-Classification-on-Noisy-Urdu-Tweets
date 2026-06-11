@@ -1,4 +1,4 @@
-"""Shared utility placeholders for the final project."""
+"""Shared utilities for the final project."""
 
 from __future__ import annotations
 

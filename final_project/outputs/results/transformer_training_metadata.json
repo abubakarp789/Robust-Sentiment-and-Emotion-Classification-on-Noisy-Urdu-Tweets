@@ -1,0 +1,17 @@
+{
+  "device": "cuda",
+  "torch_version": "2.12.0.dev20260222+cu128",
+  "cuda_device": "NVIDIA GeForce RTX 5070 Ti",
+  "models": {
+    "xlm_roberta": {
+      "checkpoint": "outputs\\models\\transformer_xlm_roberta\\best",
+      "fit_seconds": 152.494,
+      "model_name": "xlm-roberta-base"
+    },
+    "mbert": {
+      "checkpoint": "outputs\\models\\transformer_mbert\\best",
+      "fit_seconds": 135.572,
+      "model_name": "bert-base-multilingual-cased"
+    }
+  }
+}

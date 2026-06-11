@@ -1,0 +1,145 @@
+{
+  "metadata": {
+    "random_seed": 42,
+    "device": "cuda",
+    "sample_size": 50000,
+    "split_sizes": {
+      "train": 50000,
+      "validation": 77695,
+      "test": 77695
+    },
+    "class_weights": [
+      1.4232444763183594,
+      1.9835759401321411,
+      0.5576498508453369
+    ],
+    "labels": [
+      "Negative",
+      "Neutral",
+      "Positive"
+    ],
+    "total_seconds": 202.561
+  },
+  "models": {
+    "xlm_roberta": {
+      "validation": {
+        "accuracy": 0.8545852371452475,
+        "macro_precision": 0.45374376688556195,
+        "macro_recall": 0.42972112272069096,
+        "macro_f1": 0.4392317003825246,
+        "weighted_precision": 0.838237815827447,
+        "weighted_recall": 0.8545852371452475,
+        "weighted_f1": 0.8451433030093336,
+        "per_class": {
+          "Negative": {
+            "precision": 0.46125139942778953,
+            "recall": 0.35331110052405906,
+            "f1": 0.40012949174490126,
+            "support": 10495
+          },
+          "Neutral": {
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0,
+            "support": 214
+          },
+          "Positive": {
+            "precision": 0.8999799012288963,
+            "recall": 0.9358522676380139,
+            "f1": 0.9175656094026727,
+            "support": 66986
+          }
+        }
+      },
+      "test": {
+        "accuracy": 0.8527961902310316,
+        "macro_precision": 0.45005454514649307,
+        "macro_recall": 0.4249252326808696,
+        "macro_f1": 0.4346386045018644,
+        "weighted_precision": 0.8352055730455771,
+        "weighted_recall": 0.8527961902310316,
+        "weighted_f1": 0.8425560414073318,
+        "per_class": {
+          "Negative": {
+            "precision": 0.45229007633587787,
+            "recall": 0.33870045731707316,
+            "f1": 0.38733928960557856,
+            "support": 10496
+          },
+          "Neutral": {
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0,
+            "support": 214
+          },
+          "Positive": {
+            "precision": 0.8978735591036013,
+            "recall": 0.9360752407255356,
+            "f1": 0.9165765239000147,
+            "support": 66985
+          }
+        }
+      }
+    },
+    "mbert": {
+      "validation": {
+        "accuracy": 0.8544693995752622,
+        "macro_precision": 0.45014502425627967,
+        "macro_recall": 0.4168463261074735,
+        "macro_f1": 0.42848052797507524,
+        "weighted_precision": 0.8327413244546246,
+        "weighted_recall": 0.8544693995752622,
+        "weighted_f1": 0.8411086952489222,
+        "per_class": {
+          "Negative": {
+            "precision": 0.4560090382714306,
+            "recall": 0.30767031919961885,
+            "f1": 0.36743286299499317,
+            "support": 10495
+          },
+          "Neutral": {
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0,
+            "support": 214
+          },
+          "Positive": {
+            "precision": 0.8944260344974084,
+            "recall": 0.9428686591228018,
+            "f1": 0.9180087209302326,
+            "support": 66986
+          }
+        }
+      },
+      "test": {
+        "accuracy": 0.8519595855589163,
+        "macro_precision": 0.4451276389777233,
+        "macro_recall": 0.41281774486810235,
+        "macro_f1": 0.4239583080942382,
+        "weighted_precision": 0.8294638170723287,
+        "weighted_recall": 0.8519595855589163,
+        "weighted_f1": 0.8382046245001552,
+        "per_class": {
+          "Negative": {
+            "precision": 0.44266022452749754,
+            "recall": 0.2967797256097561,
+            "f1": 0.3553299492385787,
+            "support": 10496
+          },
+          "Neutral": {
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0,
+            "support": 214
+          },
+          "Positive": {
+            "precision": 0.8927226924056724,
+            "recall": 0.941673508994551,
+            "f1": 0.9165449750441359,
+            "support": 66985
+          }
+        }
+      }
+    }
+  }
+}

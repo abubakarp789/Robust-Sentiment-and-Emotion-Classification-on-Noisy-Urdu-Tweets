@@ -1,0 +1,112 @@
+{
+  "project_name": "Leakage-Aware Urdu Tweet Sentiment and Emotion Classification",
+  "final_model_selected": "linear_svm",
+  "headline_metric": "test_macro_f1",
+  "split_sizes": {
+    "train": 362576,
+    "validation": 77695,
+    "test": 77695
+  },
+  "best_models": {
+    "by_macro_f1": {
+      "model_name": "linear_svm",
+      "model_family": "baseline",
+      "test_macro_f1": 0.504024,
+      "test_accuracy": 0.853092,
+      "neutral_f1": 0.130346
+    },
+    "by_accuracy": {
+      "model_name": "multinomial_nb",
+      "model_family": "baseline",
+      "test_macro_f1": 0.401377,
+      "test_accuracy": 0.878679,
+      "neutral_f1": 0.000000
+    },
+    "by_neutral_f1": {
+      "model_name": "linear_svm",
+      "model_family": "baseline",
+      "test_macro_f1": 0.504024,
+      "test_accuracy": 0.853092,
+      "neutral_f1": 0.130346
+    }
+  },
+  "rankings": [
+    {
+      "rank": 1,
+      "model_family": "baseline",
+      "model_name": "linear_svm",
+      "test_macro_f1": 0.504024,
+      "test_accuracy": 0.853092,
+      "neutral_f1": 0.130346,
+      "negative_f1": 0.466159,
+      "positive_f1": 0.915568,
+      "beats_linear_svm": false
+    },
+    {
+      "rank": 2,
+      "model_family": "baseline",
+      "model_name": "logistic_regression",
+      "test_macro_f1": 0.461269,
+      "test_accuracy": 0.773988,
+      "neutral_f1": 0.082789,
+      "negative_f1": 0.440893,
+      "positive_f1": 0.860125,
+      "beats_linear_svm": false
+    },
+    {
+      "rank": 3,
+      "model_family": "neural",
+      "model_name": "bilstm_attention",
+      "test_macro_f1": 0.450578,
+      "test_accuracy": 0.740794,
+      "neutral_f1": 0.099071,
+      "negative_f1": 0.418080,
+      "positive_f1": 0.834582,
+      "beats_linear_svm": false
+    },
+    {
+      "rank": 4,
+      "model_family": "neural",
+      "model_name": "text_cnn",
+      "test_macro_f1": 0.447622,
+      "test_accuracy": 0.758170,
+      "neutral_f1": 0.077728,
+      "negative_f1": 0.416361,
+      "positive_f1": 0.848777,
+      "beats_linear_svm": false
+    },
+    {
+      "rank": 5,
+      "model_family": "transformer",
+      "model_name": "xlm_roberta",
+      "test_macro_f1": 0.434639,
+      "test_accuracy": 0.852796,
+      "neutral_f1": 0.000000,
+      "negative_f1": 0.387339,
+      "positive_f1": 0.916577,
+      "beats_linear_svm": false
+    },
+    {
+      "rank": 6,
+      "model_family": "transformer",
+      "model_name": "mbert",
+      "test_macro_f1": 0.423958,
+      "test_accuracy": 0.851960,
+      "neutral_f1": 0.000000,
+      "negative_f1": 0.355330,
+      "positive_f1": 0.916545,
+      "beats_linear_svm": false
+    },
+    {
+      "rank": 7,
+      "model_family": "baseline",
+      "model_name": "multinomial_nb",
+      "test_macro_f1": 0.401377,
+      "test_accuracy": 0.878679,
+      "neutral_f1": 0.000000,
+      "negative_f1": 0.270215,
+      "positive_f1": 0.933916,
+      "beats_linear_svm": false
+    }
+  ]
+}

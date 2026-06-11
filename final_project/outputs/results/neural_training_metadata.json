@@ -1,0 +1,52 @@
+{
+  "device": "cuda",
+  "torch_version": "2.12.0.dev20260222+cu128",
+  "cuda_device": "NVIDIA GeForce RTX 5070 Ti",
+  "vocabulary_fit_split": "train",
+  "validation_rows_used_for_vocabulary": 0,
+  "test_rows_used_for_vocabulary": 0,
+  "pretrained_embeddings_used": false,
+  "pretrained_tokens_matched": 0,
+  "models": {
+    "text_cnn": {
+      "checkpoint": "outputs\\models\\neural_text_cnn.pt",
+      "history": "outputs\\results\\neural_text_cnn_training_history.csv",
+      "best_epoch": 5,
+      "best_validation_macro_f1": 0.4519626602722125,
+      "epochs_completed": 5,
+      "model_kwargs": {
+        "vocab_size": 50000,
+        "embedding_dim": 300,
+        "num_classes": 3,
+        "padding_idx": 0,
+        "freeze_embeddings": false,
+        "num_filters": 128,
+        "kernel_sizes": [
+          3,
+          4,
+          5
+        ],
+        "dropout": 0.5
+      }
+    },
+    "bilstm_attention": {
+      "checkpoint": "outputs\\models\\neural_bilstm_attention.pt",
+      "history": "outputs\\results\\neural_bilstm_attention_training_history.csv",
+      "best_epoch": 5,
+      "best_validation_macro_f1": 0.45572241570525485,
+      "epochs_completed": 5,
+      "model_kwargs": {
+        "vocab_size": 50000,
+        "embedding_dim": 300,
+        "num_classes": 3,
+        "padding_idx": 0,
+        "freeze_embeddings": false,
+        "hidden_dim": 128,
+        "num_layers": 1,
+        "bidirectional": true,
+        "dropout": 0.5,
+        "attention": true
+      }
+    }
+  }
+}

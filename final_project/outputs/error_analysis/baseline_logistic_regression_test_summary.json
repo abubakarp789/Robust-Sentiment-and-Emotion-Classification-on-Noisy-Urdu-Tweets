@@ -1,0 +1,73 @@
+{
+  "total_rows": 77695,
+  "total_correct": 60135,
+  "total_errors": 17560,
+  "error_rate": 0.2260119698822318,
+  "class_errors": {
+    "Negative": {
+      "support": 10496,
+      "errors": 3833,
+      "error_rate": 0.36518673780487804
+    },
+    "Neutral": {
+      "support": 214,
+      "errors": 176,
+      "error_rate": 0.822429906542056
+    },
+    "Positive": {
+      "support": 66985,
+      "errors": 13551,
+      "error_rate": 0.20229902216914233
+    }
+  },
+  "confusion_pairs": [
+    {
+      "true_label": "Positive",
+      "predicted_label": "Negative",
+      "count": 13008,
+      "share_of_errors": 0.7407744874715262
+    },
+    {
+      "true_label": "Negative",
+      "predicted_label": "Positive",
+      "count": 3710,
+      "share_of_errors": 0.21127562642369022
+    },
+    {
+      "true_label": "Positive",
+      "predicted_label": "Neutral",
+      "count": 543,
+      "share_of_errors": 0.03092255125284738
+    },
+    {
+      "true_label": "Negative",
+      "predicted_label": "Neutral",
+      "count": 123,
+      "share_of_errors": 0.007004555808656036
+    },
+    {
+      "true_label": "Neutral",
+      "predicted_label": "Positive",
+      "count": 118,
+      "share_of_errors": 0.006719817767653759
+    },
+    {
+      "true_label": "Neutral",
+      "predicted_label": "Negative",
+      "count": 58,
+      "share_of_errors": 0.0033029612756264237
+    }
+  ],
+  "error_categories": {
+    "positive_to_negative": 10158,
+    "negative_to_positive": 2628,
+    "short_text_ambiguity": 1678,
+    "long_text_noise": 1479,
+    "possible_label_noise": 1023,
+    "unknown": 418,
+    "neutral_to_positive": 118,
+    "minority_class_confusion": 58
+  },
+  "model_name": "logistic_regression",
+  "split": "test"
+}

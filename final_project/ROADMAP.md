@@ -58,17 +58,17 @@ The pipeline is controlled by `config.yaml`.
 - Generated figures and confusion matrices.
 - Wrote a technical report.
 
-## Missing Work
+## Completed Final Project Migration
 
-- Migrate model-training code into `final_project/src`.
-- Save model checkpoints under `outputs/models`.
-- Save richer prediction files under `outputs/predictions` with raw text, cleaned text, labels, predictions, and confidence.
-- Build complete error-analysis outputs under `outputs/error_analysis`.
-- Add a deployment-ready Streamlit app.
-- Add final report content under `reports/final_report.md`.
-- Add final slides or presentation outline.
-- Add ethics and limitations into the final report.
-- Fix any mismatch between documentation and actual saved artifacts.
+- [x] Migrate model-training code into `final_project/src`.
+- [x] Save model checkpoints under `outputs/models`.
+- [x] Save richer prediction files under `outputs/predictions` with raw text, cleaned text, labels, predictions, and confidence.
+- [x] Build complete error-analysis outputs under `outputs/error_analysis`.
+- [x] Add a deployment-ready Streamlit app.
+- [x] Add final report content under `reports/final_report.md`.
+- [x] Add final slides or presentation outline.
+- [x] Add ethics and limitations into the final report.
+- [x] Fix any mismatch between documentation and actual saved artifacts.
 
 ## Week-Wise Final Implementation Plan
 
@@ -100,74 +100,74 @@ python src/validate_pipeline.py
 
 Tasks:
 
-- Convert baseline notebook logic into `src/train_baseline.py`.
-- Convert neural model training logic into `src/train_neural.py`.
-- Save model artifacts and predictions.
-- Add reusable evaluation script.
+- Convert baseline notebook logic into `src/train_baseline.py`. Completed.
+- Convert neural model training logic into `src/train_neural.py`. Completed.
+- Save model artifacts and predictions. Completed.
+- Add reusable evaluation script. Completed.
 
 Expected output:
 
-- Reproducible baseline and neural model runs.
-- Saved metric tables and prediction files.
+- Reproducible baseline and neural model runs. Completed.
+- Saved metric tables and prediction files. Completed.
 
 ### Week 3: Transformer, Evaluation, and Error Analysis
 
 Tasks:
 
-- Convert transformer training logic into `src/train_transformer.py`.
-- Save transformer predictions and model metadata.
-- Build `src/error_analysis.py`.
-- Generate misclassified example tables.
-- Add confusion matrix and per-class report exports.
+- Convert transformer training logic into `src/train_transformer.py`. Completed.
+- Save transformer predictions and model metadata. Completed.
+- Build `src/error_analysis.py`. Completed.
+- Generate misclassified example tables. Completed.
+- Add confusion matrix and per-class report exports. Completed.
 
 Expected output:
 
-- Final model comparison table.
-- Error-analysis report.
-- Model selection justification.
+- Final model comparison table. Completed.
+- Error-analysis report. Completed.
+- Model selection justification. Completed.
 
 ### Week 4: Deployment, Report, and Presentation
 
 Tasks:
 
-- Implement Streamlit demo.
-- Add inference pipeline.
-- Add model explanation placeholder or GenAI assistant.
-- Write final report.
-- Prepare slides outline and demo script.
+- Implement Streamlit demo. Completed.
+- Add inference pipeline. Completed.
+- Add model explanation placeholder or GenAI assistant. Completed.
+- Write final report. Completed.
+- Prepare slides outline and demo script. Completed.
 
 Expected output:
 
-- Working demo app.
-- Final report.
-- Presentation-ready project.
+- Working demo app. Completed.
+- Final report. Completed.
+- Presentation-ready project. Completed.
 
 ## Must-Have Tasks
 
-- Preserve original assignment folders.
-- Finalize preprocessing and label mapping modules. Completed.
-- Save train/validation/test splits. Pipeline implemented.
-- Report macro-F1 as the main metric.
-- Save model comparison table.
-- Save confusion matrices.
-- Add ethics and limitations.
-- Build basic Streamlit demo.
-- Write final README and final report.
+- [x] Preserve original assignment folders.
+- [x] Finalize preprocessing and label mapping modules.
+- [x] Save train/validation/test splits.
+- [x] Report macro-F1 as the main metric.
+- [x] Save model comparison table.
+- [x] Save confusion matrices.
+- [x] Add ethics and limitations.
+- [x] Build basic Streamlit demo.
+- [x] Write final README and final report.
 
 ## Should-Have Tasks
 
-- Save model checkpoints.
-- Save prediction files with text and confidence.
-- Create clean manually verified test subset.
-- Add emoji-removal ablation.
-- Add per-class error analysis.
-- Add reproducibility checklist.
+- [x] Save model checkpoints.
+- [x] Save prediction files with text and confidence.
+- [ ] Create clean manually verified test subset (Future Work).
+- [ ] Add emoji-removal ablation (Future Work).
+- [x] Add per-class error analysis.
+- [x] Add reproducibility checklist.
 
 ## Nice-to-Have Tasks
 
-- Add GenAI explanation assistant.
-- Add LoRA or adapter-based transformer fine-tuning.
-- Add XLM-T or another Twitter-domain transformer.
-- Add model calibration analysis.
-- Deploy on Hugging Face Spaces or Streamlit Cloud.
-- Record a short demo video.
+- [x] Add GenAI explanation assistant.
+- [ ] Add LoRA or adapter-based transformer fine-tuning (Future Work).
+- [ ] Add XLM-T or another Twitter-domain transformer (Future Work).
+- [ ] Add model calibration analysis (Future Work).
+- [ ] Deploy on Hugging Face Spaces or Streamlit Cloud (Future Work).
+- [ ] Record a short demo video (Future Work).

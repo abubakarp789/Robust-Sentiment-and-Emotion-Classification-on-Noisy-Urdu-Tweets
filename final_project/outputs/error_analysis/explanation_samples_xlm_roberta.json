@@ -1,0 +1,82 @@
+[
+  {
+    "text": "ٹیچر سال کے مہینوں کے نام بتاؤ سٹوڈنٹ جنوری فروری لاک ڈاؤن اکتوبر نومبر دسمبر",
+    "true_label": "Positive",
+    "predicted_label": "Positive",
+    "confidence": 0.865625262260437,
+    "is_correct": true,
+    "explanation": "xlm_roberta predicted the sentiment as **Positive** with 0.87 confidence. This matches the ground truth label, indicating a correct classification. The input text contains 15 tokens."
+  },
+  {
+    "text": "چلو کوئی نہی کنجوس",
+    "true_label": "Positive",
+    "predicted_label": "Positive",
+    "confidence": 0.789620041847229,
+    "is_correct": true,
+    "explanation": "xlm_roberta predicted the sentiment as **Positive** with 0.79 confidence. This matches the ground truth label, indicating a correct classification. The input text contains 4 tokens. The text is short, which often leads to low context and ambiguity."
+  },
+  {
+    "text": "کوئی تے روکو کھوتے نے سبکو پرچی پر لگا دیا",
+    "true_label": "Positive",
+    "predicted_label": "Positive",
+    "confidence": 0.8584503531455994,
+    "is_correct": true,
+    "explanation": "xlm_roberta predicted the sentiment as **Positive** with 0.86 confidence. This matches the ground truth label, indicating a correct classification. The input text contains 10 tokens."
+  },
+  {
+    "text": "ہونا چاہیے",
+    "true_label": "Positive",
+    "predicted_label": "Positive",
+    "confidence": 0.8432304263114929,
+    "is_correct": true,
+    "explanation": "xlm_roberta predicted the sentiment as **Positive** with 0.84 confidence. This matches the ground truth label, indicating a correct classification. The input text contains 2 tokens. The text is short, which often leads to low context and ambiguity."
+  },
+  {
+    "text": "ضروری اس لئے تھا معذرت کا لفظ استعمال کرنا کیونکہ فالوورز میں محترم لیڈیز بھی ھوتی ھیں",
+    "true_label": "Positive",
+    "predicted_label": "Positive",
+    "confidence": 0.7813268303871155,
+    "is_correct": true,
+    "explanation": "xlm_roberta predicted the sentiment as **Positive** with 0.78 confidence. This matches the ground truth label, indicating a correct classification. The input text contains 17 tokens."
+  },
+  {
+    "text": "کرو میری پن ٹویٹ کو جلدی جلدی",
+    "true_label": "Negative",
+    "predicted_label": "Positive",
+    "confidence": 0.8277099132537842,
+    "is_correct": false,
+    "explanation": "Error Analysis: True label is **Negative**, but model predicted **Positive** (confidence: 0.83, text length: 7 tokens). Likely contributing factors: high-confidence model error, possibly indicating label noise or complex sarcastic context; polarity ambiguity or swap (confusing strong positive expressions with negative ones); class imbalance and potential weak-label noise from the emoji-based SentiUrdu-1M dataset construction."
+  },
+  {
+    "text": "آپکا بڑا نقصان یہ بھی ھے کہ آپ سے کسی کا اعتماد اٹھ جائے",
+    "true_label": "Negative",
+    "predicted_label": "Positive",
+    "confidence": 0.7541738748550415,
+    "is_correct": false,
+    "explanation": "Error Analysis: True label is **Negative**, but model predicted **Positive** (confidence: 0.75, text length: 14 tokens). Likely contributing factors: polarity ambiguity or swap (confusing strong positive expressions with negative ones); class imbalance and potential weak-label noise from the emoji-based SentiUrdu-1M dataset construction."
+  },
+  {
+    "text": "تیز بارش میں کبھی سرد ہواؤں میں رہا اک ترا ذکر تھا جو میری صداؤں میں رہا کتنے لوگوں سے میرے گہرے مراسم تھے مگر تیرا چہرہ ہی فقط میری دعاؤں میں رہا",
+    "true_label": "Positive",
+    "predicted_label": "Negative",
+    "confidence": 0.8718299269676208,
+    "is_correct": false,
+    "explanation": "Error Analysis: True label is **Positive**, but model predicted **Negative** (confidence: 0.87, text length: 33 tokens). Likely contributing factors: high-confidence model error, possibly indicating label noise or complex sarcastic context; polarity ambiguity or swap (confusing strong positive expressions with negative ones); class imbalance and potential weak-label noise from the emoji-based SentiUrdu-1M dataset construction."
+  },
+  {
+    "text": "زیادہ مت چلاؤ",
+    "true_label": "Negative",
+    "predicted_label": "Positive",
+    "confidence": 0.8719558715820312,
+    "is_correct": false,
+    "explanation": "Error Analysis: True label is **Negative**, but model predicted **Positive** (confidence: 0.87, text length: 3 tokens). Likely contributing factors: high-confidence model error, possibly indicating label noise or complex sarcastic context; short ambiguous tweet lacking sufficient semantic context; polarity ambiguity or swap (confusing strong positive expressions with negative ones); class imbalance and potential weak-label noise from the emoji-based SentiUrdu-1M dataset construction."
+  },
+  {
+    "text": "جو مجھے ٹویٹر پر فالو نہیں کرسکتی وہ",
+    "true_label": "Positive",
+    "predicted_label": "Negative",
+    "confidence": 0.6604824662208557,
+    "is_correct": false,
+    "explanation": "Error Analysis: True label is **Positive**, but model predicted **Negative** (confidence: 0.66, text length: 8 tokens). Likely contributing factors: polarity ambiguity or swap (confusing strong positive expressions with negative ones); class imbalance and potential weak-label noise from the emoji-based SentiUrdu-1M dataset construction."
+  }
+]
