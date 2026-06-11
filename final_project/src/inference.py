@@ -48,15 +48,19 @@ class InferenceModel:
             return {"predicted_label": pred_label, "confidence": confidence, "probabilities": probs.tolist()}
             
         elif self.model_type == "baseline":
-            # pipeline contains tfidf vectorizer and classifier
-            # predict label
             pred_label = str(self.model_obj.predict([clean_text])[0])
-            
-            # calculate confidence
-            decisions = self.model_obj.decision_function([clean_text])
-            probs = softmax(decisions, axis=1)[0]
+
+            if hasattr(self.model_obj, "predict_proba"):
+                probs = np.asarray(self.model_obj.predict_proba([clean_text]))[0]
+            elif hasattr(self.model_obj, "decision_function"):
+                decisions = np.asarray(self.model_obj.decision_function([clean_text]))
+                if decisions.ndim == 1:
+                    decisions = np.column_stack([-decisions, decisions])
+                probs = softmax(decisions, axis=1)[0]
+            else:
+                raise TypeError("Baseline model exposes neither predict_proba nor decision_function.")
             confidence = float(probs.max())
-            
+
             return {"predicted_label": pred_label, "confidence": confidence, "probabilities": probs.tolist()}
             
         else:

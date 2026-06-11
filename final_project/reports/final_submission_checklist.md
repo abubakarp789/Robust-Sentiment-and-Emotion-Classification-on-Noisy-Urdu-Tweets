@@ -57,3 +57,8 @@ This checklist documents the completion state of the **Leakage-Aware Urdu Tweet 
 - [x] **Reproducibility Rules**: Used fixed random seeds, saved immutable splits, documented training hyper-parameters, and saved all model prediction CSV files.
 - [x] **Project Unit Tests**: Verified that all 22 unit tests (`python -m pytest tests`) pass successfully.
 - [x] **Project-Wide Validator**: Implemented `src/validate_final_project.py` and confirmed that all project directory, file, and report structure validations pass successfully.
+
+## 11. Analysis Notebooks
+- [x] **Artifact-Backed Review**: The notebooks are analysis notebooks that load already generated artifacts instead of retraining models. This ensures reproducibility and avoids expensive re-training during review.
+- [x] **Notebook Validation**: Run `python src\validate_notebooks.py --config config.yaml` before submission.
+- [x] **Notebook Usage**: Open the analysis collection with `jupyter notebook notebooks`.

@@ -148,6 +148,15 @@ Linear SVM test errors were analyzed quantitatively:
 ## 11. Deployment
 The selected **Linear SVM** model is deployed in a Streamlit application (`app/streamlit_app.py`). It accepts Urdu tweet inputs, applies pre-processing, performs real-time classification and confidence score generation, provides explanations via the explanation assistant, and displays the project-wide model comparison leaderboard. The application includes robust fallbacks if transformer models are not loaded.
 
+### 11.1 Artifact-Backed Analysis Notebooks
+
+The notebooks are analysis notebooks that load already generated artifacts instead of retraining models. This ensures reproducibility and avoids expensive re-training during review.
+
+```powershell
+jupyter notebook notebooks
+python src\validate_notebooks.py --config config.yaml
+```
+
 ---
 
 ## 12. Limitations

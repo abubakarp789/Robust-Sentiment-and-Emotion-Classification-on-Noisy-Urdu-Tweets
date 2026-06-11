@@ -13,6 +13,11 @@ import sys
 from pathlib import Path
 import pandas as pd
 
+try:
+    from validate_notebooks import validate_notebooks
+except ImportError:
+    from src.validate_notebooks import validate_notebooks
+
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
 
 
@@ -235,6 +240,11 @@ def check_deployment() -> bool:
         return False
 
 
+def check_notebooks(config_path: str | Path) -> bool:
+    print("\n--- Checking Analysis Notebooks ---")
+    return validate_notebooks(config_path, verbose=True)
+
+
 def check_reports() -> bool:
     print("\n--- Checking Submission Reports ---")
     reports_dir = PROJECT_ROOT / "reports"
@@ -330,6 +340,7 @@ def run_validation(config_path: str | Path | None = None) -> None:
     all_checks.append(check_error_analysis())
     all_checks.append(check_figures())
     all_checks.append(check_deployment())
+    all_checks.append(check_notebooks(config_path))
     all_checks.append(check_reports())
     all_checks.append(check_readme())
 

@@ -311,6 +311,15 @@ To run the interactive web application:
 streamlit run app/streamlit_app.py
 ```
 
+### Analysis Notebooks
+
+The notebooks are analysis notebooks that load already generated artifacts instead of retraining models. This ensures reproducibility and avoids expensive re-training during review.
+
+```powershell
+jupyter notebook notebooks
+python src\validate_notebooks.py --config config.yaml
+```
+
 ## Reproducibility
 
 The final project should use:

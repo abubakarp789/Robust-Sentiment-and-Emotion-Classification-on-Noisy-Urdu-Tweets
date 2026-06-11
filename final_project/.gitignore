@@ -12,6 +12,3 @@ outputs/models/**/*.pt
 # Large transformer model weights (>700MB each)
 outputs/models/**/*.safetensors
 outputs/models/**/*.bin
-
-# Large prediction tables (~350MB total, fully reproducible)
-outputs/predictions/*.csv

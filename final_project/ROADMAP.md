@@ -171,3 +171,12 @@ Expected output:
 - [ ] Add model calibration analysis (Future Work).
 - [ ] Deploy on Hugging Face Spaces or Streamlit Cloud (Future Work).
 - [ ] Record a short demo video (Future Work).
+
+## Analysis Notebook Review
+
+The notebooks are analysis notebooks that load already generated artifacts instead of retraining models. This ensures reproducibility and avoids expensive re-training during review.
+
+```powershell
+jupyter notebook notebooks
+python src\validate_notebooks.py --config config.yaml
+```
