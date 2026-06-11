@@ -3,9 +3,6 @@ __pycache__/
 *.pyc
 .pytest_cache/
 
-# Large dataset splits (train.csv is ~102MB, exceeding GitHub's 100MB limit)
-data/splits/*.csv
-
 # Large deep learning model checkpoints (~59MB each)
 outputs/models/**/*.pt
 

@@ -87,8 +87,10 @@ def create_splits(config_path: str | Path | None = None) -> dict[str, Any]:
 
     raw_dataset_path = _resolve_project_path(data_cfg["raw_dataset_path"])
     split_dir = _resolve_project_path(data_cfg["output_dir"])
+    processed_path = _resolve_project_path("data/processed/processed_sentiment_dataset.csv")
     results_dir = _resolve_project_path(outputs_cfg["results_dir"])
     split_dir.mkdir(parents=True, exist_ok=True)
+    processed_path.parent.mkdir(parents=True, exist_ok=True)
     results_dir.mkdir(parents=True, exist_ok=True)
 
     id_col = data_cfg["id_column"]
@@ -137,6 +139,8 @@ def create_splits(config_path: str | Path | None = None) -> dict[str, Any]:
     if df.empty:
         raise ValueError("No rows remain after label and text filtering.")
 
+    df.to_csv(processed_path, index=False, encoding="utf-8")
+
     train_df, validation_df, test_df = _split_data(df, cfg)
 
     train_df.to_csv(split_dir / "train.csv", index=False, encoding="utf-8")
@@ -149,6 +153,8 @@ def create_splits(config_path: str | Path | None = None) -> dict[str, Any]:
         "rows_with_missing_required_labels": missing_required_labels,
         "rows_removed_empty_or_short_clean_text": rows_removed_empty_or_short,
         "rows_after_filtering": int(len(df)),
+        "processed_dataset_path": "data/processed/processed_sentiment_dataset.csv",
+        "processed_dataset_rows": int(len(df)),
         "number_of_classes": int(df["task_label"].nunique()),
         "class_distribution_before_split": _distribution(df["task_label"]),
         "train_size": int(len(train_df)),

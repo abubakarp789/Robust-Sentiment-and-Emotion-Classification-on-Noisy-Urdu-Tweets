@@ -6,10 +6,10 @@ SentiUrdu-1M
 
 ## Source
 
-The dataset is a public Urdu tweet sentiment/emotion dataset. In the current repository, the working CSV is stored at:
+The dataset is a public Urdu tweet sentiment/emotion dataset. The final project keeps a self-contained copy at:
 
 ```text
-Assignment#01/Urdu Tweets Dataset.csv
+final_project/data/raw/Urdu Tweets Dataset.csv
 ```
 
 The Assignment 3 documentation links the dataset to Mendeley Data:
@@ -127,6 +127,15 @@ The pipeline writes a label summary to:
 final_project/outputs/results/label_mapping_summary.json
 ```
 
+## Final Project Data Organization
+
+- `data/raw/` contains the copied 1,048,000-row raw dataset used by `config.yaml`.
+- `data/processed/` contains the 517,966-row cleaned labelled dataset before splitting.
+- `data/splits/` contains the final stratified train, validation, and test splits used by every reported model.
+- `data/annotation/` contains an optional 300-row balanced sample for future manual review.
+
+The raw dataset is now copied into `data/raw/` so the `final_project` folder is self-contained for data loading. The annotation sample is not used in training or evaluation and does not affect reported results.
+
 ## Train/Validation/Test Split Plan
 
 Recommended split:
@@ -145,10 +154,12 @@ final_project/data/splits/
 
 Generate and validate the splits with:
 
-```bash
+```powershell
 cd final_project
-python src/create_splits.py
-python src/validate_pipeline.py
+python src\create_splits.py --config config.yaml
+python src\create_annotation_sample.py --config config.yaml
+python src\validate_pipeline.py --config config.yaml
+python src\validate_final_project.py --config config.yaml
 ```
 
 Expected split files:

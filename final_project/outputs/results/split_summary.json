@@ -4,6 +4,8 @@
   "rows_with_missing_required_labels": 514571,
   "rows_removed_empty_or_short_clean_text": 15463,
   "rows_after_filtering": 517966,
+  "processed_dataset_path": "data/processed/processed_sentiment_dataset.csv",
+  "processed_dataset_rows": 517966,
   "number_of_classes": 3,
   "class_distribution_before_split": {
     "Negative": 69971,

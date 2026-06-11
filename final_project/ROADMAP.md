@@ -80,6 +80,9 @@ Tasks:
 - Move stable preprocessing and label-mapping logic into `src/`. Completed.
 - Create dataset card. Completed.
 - Create processed data and split-generation scripts. Completed.
+- Copy the raw dataset into `data/raw/` so the final project is self-contained. Completed.
+- Save the 517,966-row cleaned labelled dataset to `data/processed/` before splitting. Completed.
+- Create an optional balanced annotation sample for future manual review. Completed.
 - Save stratified train/validation/test splits. Run `python src/create_splits.py`.
 
 Expected output:
@@ -90,11 +93,15 @@ Expected output:
 
 Commands:
 
-```bash
+```powershell
 cd final_project
-python src/create_splits.py
-python src/validate_pipeline.py
+python src\create_splits.py --config config.yaml
+python src\create_annotation_sample.py --config config.yaml
+python src\validate_pipeline.py --config config.yaml
+python src\validate_final_project.py --config config.yaml
 ```
+
+The annotation sample is not used in training or evaluation and does not affect reported results.
 
 ### Week 2: Baseline and Neural Model Packaging
 

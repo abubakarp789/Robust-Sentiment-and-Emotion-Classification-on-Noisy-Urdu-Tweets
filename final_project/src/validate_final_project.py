@@ -15,8 +15,10 @@ import pandas as pd
 
 try:
     from validate_notebooks import validate_notebooks
+    from validate_pipeline import validate_data_assets
 except ImportError:
     from src.validate_notebooks import validate_notebooks
+    from src.validate_pipeline import validate_data_assets
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
 
@@ -64,6 +66,17 @@ def check_splits(data_cfg: dict) -> bool:
             all_ok = False
 
     return all_ok
+
+
+def check_data_assets(config: dict) -> bool:
+    print("\n--- Checking Organized Data Assets ---")
+    try:
+        validate_data_assets(config)
+        print_success("Raw, processed, annotation, and data README assets are valid.")
+        return True
+    except Exception as exc:
+        print_failure(f"Data asset validation failed: {exc}")
+        return False
 
 
 def check_models(config: dict) -> bool:
@@ -300,20 +313,83 @@ def check_reports() -> bool:
     return all_ok
 
 
-def check_readme() -> bool:
-    print("\n--- Checking README.md ---")
-    readme_path = PROJECT_ROOT / "README.md"
-    if not readme_path.exists():
-        print_failure("README.md is missing at project root.")
+def check_readmes_and_links() -> bool:
+    print("\n--- Checking Folder READMEs and Link Validator ---")
+    
+    # 1. Check validate_readme_links.py exists
+    validator_path = PROJECT_ROOT / "src" / "validate_readme_links.py"
+    if not validator_path.exists():
+        print_failure("Link validator script missing: src/validate_readme_links.py")
+        return False
+    print_success("src/validate_readme_links.py exists.")
+
+    # 2. Check all required READMEs exist and are not empty
+    required_readmes = [
+        "README.md",
+        "app/README.md",
+        "data/README.md",
+        "data/raw/README.md",
+        "data/processed/README.md",
+        "data/splits/README.md",
+        "data/annotation/README.md",
+        "notebooks/README.md",
+        "outputs/README.md",
+        "outputs/models/README.md",
+        "outputs/predictions/README.md",
+        "outputs/results/README.md",
+        "outputs/error_analysis/README.md",
+        "outputs/figures/README.md",
+        "reports/README.md",
+        "src/README.md",
+        "tests/README.md",
+    ]
+    
+    all_readmes_ok = True
+    for relative_path in required_readmes:
+        path = PROJECT_ROOT / relative_path
+        if not path.exists():
+            print_failure(f"Required README missing: {relative_path}")
+            all_readmes_ok = False
+        elif path.read_text(encoding="utf-8").strip() == "":
+            print_failure(f"Required README is empty: {relative_path}")
+            all_readmes_ok = False
+        else:
+            # For root README, check if it highlights best model
+            if relative_path == "README.md":
+                content = path.read_text(encoding="utf-8")
+                best_model_mention = "Best final model" in content or "Best Final Model" in content
+                if not best_model_mention:
+                    print_failure("README.md does not explicitly mention the best overall model (Linear SVM).")
+                    all_readmes_ok = False
+                else:
+                    print_success("Root README.md is valid and highlights the best selected model.")
+            else:
+                print_success(f"README valid: {relative_path}")
+                
+    if not all_readmes_ok:
         return False
 
-    content = readme_path.read_text(encoding="utf-8")
-    best_model_mention = "Best final model" in content or "Best Final Model" in content
-    if not best_model_mention:
-        print_failure("README.md does not explicitly mention the best overall model (Linear SVM).")
+    # 3. Run relative link check
+    try:
+        try:
+            from validate_readme_links import scan_project
+        except ImportError:
+            from src.validate_readme_links import scan_project
+        
+        errors = scan_project()
+        if errors:
+            print_failure("Markdown relative link validation failed. Broken links found:")
+            for filepath, broken_list in errors.items():
+                print(f"  File: {filepath}")
+                for link_raw, reason in broken_list:
+                    print(f"    - Link: '{link_raw}' -> {reason}")
+            return False
+        else:
+            print_success("Markdown relative link validation passed successfully.")
+    except Exception as e:
+        print_failure(f"Error running markdown link validation: {e}")
         return False
 
-    print_success("README.md exists and highlights the selected best overall model.")
     return True
 
 
@@ -332,7 +408,8 @@ def run_validation(config_path: str | Path | None = None) -> None:
         sys.exit(1)
 
     all_checks = []
-    
+
+    all_checks.append(check_data_assets(config))
     all_checks.append(check_splits(config["data"]))
     all_checks.append(check_models(config))
     all_checks.append(check_results())
@@ -342,7 +419,7 @@ def run_validation(config_path: str | Path | None = None) -> None:
     all_checks.append(check_deployment())
     all_checks.append(check_notebooks(config_path))
     all_checks.append(check_reports())
-    all_checks.append(check_readme())
+    all_checks.append(check_readmes_and_links())
 
     print("\n==================================================")
     if all(all_checks):

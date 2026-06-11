@@ -1,8 +1,30 @@
 # Leakage-Aware Urdu Tweet Sentiment and Emotion Classification
 
 > [!IMPORTANT]
-> **Best Final Model**: **TF-IDF + Linear SVM**, selected by test Macro-F1 (`0.5040`). 
+> **Final Selected Model**: **TF-IDF + Linear SVM**  
 > Under SentiUrdu-1M's emoji-stripped (leakage-free) pipeline and severe class imbalance, the classical max-margin classifier outperforms deep learning and transformer architectures trained under resource constraints.
+>
+> **Final Results Callout**:
+> ```text
+> Best final model: TF-IDF + Linear SVM
+> Test Macro-F1: 0.5040
+> Test Accuracy: 0.8531
+> Neutral F1: 0.1303
+> ```
+> 
+> *Note*: Multinomial Naive Bayes has the highest accuracy but is not the final selected model because it performs poorly on Macro-F1 and minority classes.
+
+## Repository Navigation
+
+| Folder | Purpose |
+|---|---|
+| [app/](app/) | Streamlit deployment app |
+| [data/](data/) | Raw, processed, split, and annotation data |
+| [notebooks/](notebooks/) | Artifact-based analysis notebooks |
+| [outputs/](outputs/) | Models, predictions, results, figures, and error-analysis artifacts |
+| [reports/](reports/) | Final report, dataset card, ethics, slides outline, and demo script |
+| [src/](src/) | Source code for preprocessing, training, evaluation, inference, and validation |
+| [tests/](tests/) | Regression and validation tests |
 
 ## Overview
 
@@ -25,7 +47,7 @@ Reliable Urdu sentiment analysis can support social-media monitoring, public-opi
 - Dataset: SentiUrdu-1M
 - Domain: Urdu tweets
 - Size found in the current folder: 1,048,000 rows
-- Source file in current assignment work: `Assignment#01/Urdu Tweets Dataset.csv`
+- Self-contained raw copy: `data/raw/Urdu Tweets Dataset.csv`
 - Columns: `Id`, `Text`, `Emotions`, `Category`
 - Label issue: `Category` is missing for 514,571 rows
 - Usable category-labelled rows: 533,429 rows
@@ -215,33 +237,23 @@ The recommended deployment is a Streamlit app because it is simple, course-demo 
 
 The app has been fully implemented in `app/streamlit_app.py` and loads trained model checkpoints with robust fallbacks to the best overall model (Linear SVM) if transformer files are missing.
 
-## Folder Structure
+### Folder Structure
 
 ```text
 final_project/
+|-- app/
+|   `-- streamlit_app.py
 |-- data/
-|   |-- raw/
-|   |-- processed/
-|   |-- splits/
-|   `-- annotation/
+|   |-- raw/                 # Copied 1,048,000-row source dataset
+|   |-- processed/           # Full cleaned labelled dataset before splitting
+|   |-- splits/              # Final train, validation, and test CSVs
+|   `-- annotation/          # Optional sample for future manual review
 |-- notebooks/
 |   |-- 01_dataset_analysis.ipynb
 |   |-- 02_baseline_models.ipynb
 |   |-- 03_neural_models.ipynb
 |   |-- 04_transformer_models.ipynb
 |   `-- 05_error_analysis.ipynb
-|-- src/
-|   |-- preprocessing.py
-|   |-- label_mapping.py
-|   |-- train_baseline.py
-|   |-- train_neural.py
-|   |-- train_transformer.py
-|   |-- evaluate.py
-|   |-- error_analysis.py
-|   |-- inference.py
-|   `-- utils.py
-|-- app/
-|   `-- streamlit_app.py
 |-- outputs/
 |   |-- figures/
 |   |-- results/
@@ -252,7 +264,30 @@ final_project/
 |   |-- final_report.md
 |   |-- dataset_card.md
 |   |-- ethics_and_limitations.md
-|   `-- slides_outline.md
+|   |-- slides_outline.md
+|   |-- demo_script.md
+|   |-- export_instructions.md
+|   |-- final_submission_checklist.md
+|   `-- final_evaluation_summary.md
+|-- src/
+|   |-- preprocessing.py
+|   |-- label_mapping.py
+|   |-- train_baseline.py
+|   |-- train_neural.py
+|   |-- train_transformer.py
+|   |-- evaluate.py
+|   |-- error_analysis.py
+|   `-- utils.py
+|-- tests/
+|   |-- test_compare_models.py
+|   |-- test_data_organization.py
+|   |-- test_error_analysis.py
+|   |-- test_evaluate.py
+|   |-- test_neural_utils.py
+|   |-- test_streamlit_app.py
+|   |-- test_train_baseline.py
+|   |-- test_transformer.py
+|   `-- test_validate_notebooks.py
 |-- README.md
 |-- requirements.txt
 |-- config.yaml
@@ -270,15 +305,37 @@ pip install -r requirements.txt
 
 Install the correct PyTorch build for your GPU separately if you plan to retrain neural or transformer models.
 
+## Quick Commands
+
+Execute the following commands from the root directory:
+
+```powershell
+python src\validate_pipeline.py --config config.yaml
+python src\validate_final_project.py --config config.yaml
+python -m pytest tests
+streamlit run app\streamlit_app.py
+```
+
 ## Usage
 
 The preprocessing, split generation, baseline, neural, and transformer modeling pipelines are fully implemented.
 
 ### Data Pipeline
-```bash
-python src/create_splits.py
-python src/validate_pipeline.py
+```powershell
+python src\create_splits.py --config config.yaml
+python src\create_annotation_sample.py --config config.yaml
+python src\validate_pipeline.py --config config.yaml
+python src\validate_final_project.py --config config.yaml
 ```
+
+### Data Folder Organization
+
+- `data/raw/` contains the copied raw SentiUrdu-1M CSV. The raw dataset is now copied into `data/raw/` so the `final_project` folder is self-contained for data loading.
+- `data/processed/` contains `processed_sentiment_dataset.csv`, the full cleaned and labelled dataset before splitting.
+- `data/splits/` contains the immutable stratified train, validation, and test splits used by all reported model runs.
+- `data/annotation/` contains an optional balanced sample for future manual verification.
+
+The annotation sample is not used in training or evaluation and does not affect reported results.
 
 ### Milestone 2: Baselines
 ```bash
@@ -322,15 +379,13 @@ python src\validate_notebooks.py --config config.yaml
 
 ## Reproducibility
 
-The final project should use:
-
-- Fixed random seed
-- Saved train/validation/test splits
-- Versioned configuration
-- Saved predictions
-- Saved model checkpoints
-- Saved metric tables
-- Documented preprocessing pipeline
+To ensure full reproducibility of the results:
+- The raw dataset is copied into [data/raw/](data/raw/) (`Urdu Tweets Dataset.csv`).
+- The processed dataset is saved in [data/processed/](data/processed/) (`processed_sentiment_dataset.csv`).
+- The stratified splits are saved in [data/splits/](data/splits/) (`train.csv`, `validation.csv`, `test.csv`).
+- The annotation sample is saved in [data/annotation/](data/annotation/) and is not used for training or evaluation.
+- All model checkpoints and metrics remain unchanged in `outputs/models/` and `outputs/results/`.
+- Preprocessing and split configurations are strictly versioned in `config.yaml`.
 
 ## Future Work
 

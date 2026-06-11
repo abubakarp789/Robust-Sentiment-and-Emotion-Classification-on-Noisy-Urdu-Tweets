@@ -31,6 +31,16 @@ Constructing robust Urdu NLP classifiers reduces the digital language barrier an
   - **Negative**: 13.51%
   - **Neutral**: 0.28%
 - **Weak Supervision**: Labels were generated via emoji heuristics, introducing substantial label noise.
+- **Self-contained source**: The raw CSV is copied to `data/raw/Urdu Tweets Dataset.csv` and referenced through `config.yaml`.
+
+### 4.1 Data Folder Structure
+
+- `data/raw/` stores the copied raw dataset.
+- `data/processed/` stores the full 517,966-row cleaned labelled dataset before splitting.
+- `data/splits/` stores the train, validation, and test files used for all model training and evaluation.
+- `data/annotation/` stores an optional balanced sample for future manual verification.
+
+The annotation sample is not used in training or evaluation and does not affect reported results. The raw dataset is now copied into `data/raw/` so the `final_project` folder is self-contained for data loading.
 
 ---
 
@@ -65,6 +75,8 @@ Implemented in `src/create_splits.py`. After filtering out tweets that are empty
 - **Train split**: 362,576 rows
 - **Validation split**: 77,695 rows
 - **Test split**: 77,695 rows
+
+Before splitting, the exact filtered frame is saved as `data/processed/processed_sentiment_dataset.csv`. An optional 300-row class-balanced annotation sample can be generated from the existing test split with `src/create_annotation_sample.py`; it is excluded from all current training and evaluation.
 
 ### 6.4 Baseline Statistical Models
 Implemented in `src/train_baseline.py`. A TF-IDF vectorizer (word unigrams/bigrams, 100,000 max features) is fitted on training text only. We evaluate:

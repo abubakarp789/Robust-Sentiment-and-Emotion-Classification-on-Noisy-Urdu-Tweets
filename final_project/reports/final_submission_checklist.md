@@ -11,10 +11,14 @@ This checklist documents the completion state of the **Leakage-Aware Urdu Tweet 
 - [x] **Compilation and Linting**: All codebase scripts compile cleanly and pass py_compile validations.
 
 ## 2. Data Splits
+- [x] **Self-Contained Raw Data**: Copied the 1,048,000-row source CSV to `data/raw/Urdu Tweets Dataset.csv` and updated `config.yaml`.
+- [x] **Processed Dataset**: Saved the 517,966-row cleaned labelled pre-split dataset to `data/processed/processed_sentiment_dataset.csv`.
 - [x] **Emoji Removal**: Stripped all emojis from tweet inputs to control label leakage from emoji heuristics.
 - [x] **Normalizations**: Performed Unicode NFC normalization, mention/URL stripping, and canonical label mapping.
 - [x] **Stratified Splitting**: Split 517,966 valid rows into reproducible 70/15/15 train (362,576), validation (77,695), and test (77,695) sets.
 - [x] **Split Summary**: Saved dataset split distribution and normalizations to `outputs/results/split_summary.json`.
+- [x] **Annotation Support**: Created a balanced optional annotation sample with 100 Positive, 100 Negative, and 100 Neutral examples.
+- [x] **Evaluation Isolation**: The annotation sample is not used in training or evaluation and does not affect reported results.
 
 ## 3. Models
 - [x] **Baseline Classifiers**: Trained and saved TF-IDF + Linear SVM, Logistic Regression, and Multinomial Naive Bayes models.
@@ -55,6 +59,8 @@ This checklist documents the completion state of the **Leakage-Aware Urdu Tweet 
 
 ## 10. Reproducibility & Verification
 - [x] **Reproducibility Rules**: Used fixed random seeds, saved immutable splits, documented training hyper-parameters, and saved all model prediction CSV files.
+- [x] **Data Loading**: The raw dataset is now copied into `data/raw/` so the `final_project` folder is self-contained for data loading.
+- [x] **Data Commands**: `python src\create_splits.py --config config.yaml`, `python src\create_annotation_sample.py --config config.yaml`, `python src\validate_pipeline.py --config config.yaml`, and `python src\validate_final_project.py --config config.yaml`.
 - [x] **Project Unit Tests**: Verified that all 22 unit tests (`python -m pytest tests`) pass successfully.
 - [x] **Project-Wide Validator**: Implemented `src/validate_final_project.py` and confirmed that all project directory, file, and report structure validations pass successfully.
 

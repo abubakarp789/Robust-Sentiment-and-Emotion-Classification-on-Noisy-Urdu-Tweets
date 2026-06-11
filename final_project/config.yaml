@@ -3,7 +3,7 @@ project:
   random_seed: 42
 
 data:
-  raw_dataset_path: "../Assignment#01/Urdu Tweets Dataset.csv"
+  raw_dataset_path: "data/raw/Urdu Tweets Dataset.csv"
   text_column: "Text"
   id_column: "Id"
   label_column: "Category"
