@@ -1,402 +1,215 @@
-# Leakage-Aware Urdu Tweet Sentiment and Emotion Classification
+# Robust Sentiment and Emotion Classification on Noisy Urdu Tweets
 
-> [!IMPORTANT]
-> **Final Selected Model**: **TF-IDF + Linear SVM**  
-> Under SentiUrdu-1M's emoji-stripped (leakage-free) pipeline and severe class imbalance, the classical max-margin classifier outperforms deep learning and transformer architectures trained under resource constraints.
->
-> **Final Results Callout**:
-> ```text
-> Best final model: TF-IDF + Linear SVM
-> Test Macro-F1: 0.5040
-> Test Accuracy: 0.8531
-> Neutral F1: 0.1303
-> ```
-> 
-> *Note*: Multinomial Naive Bayes has the highest accuracy but is not the final selected model because it performs poorly on Macro-F1 and minority classes.
+Leak-free multi-stage evaluation on the local SentiUrdu-1M corpus for the CSC-355 Natural Language Processing Design Project, Namal University Mianwali.
 
-## Repository Navigation
+**Students:** M. Raqib Hayat (NUM-BSCS-2022-40) and Abu Bakar (NUM-BSCS-2022-41)<br>
+**Instructor:** Dr. Muzamil Ahmed
 
-| Folder | Purpose |
+| Course information | Value |
 |---|---|
-| [app/](app/) | Streamlit deployment app |
-| [data/](data/) | Raw, processed, split, and annotation data |
-| [notebooks/](notebooks/) | Artifact-based analysis notebooks |
-| [outputs/](outputs/) | Models, predictions, results, figures, and error-analysis artifacts |
-| [reports/](reports/) | Final report, dataset card, ethics, slides outline, and demo script |
-| [src/](src/) | Source code for preprocessing, training, evaluation, inference, and validation |
-| [tests/](tests/) | Regression and validation tests |
+| Course | CSC-355 Natural Language Processing |
+| Session / Semester | 2022-2026, 8th Semester |
+| Total marks | 50 |
+| Professor-provided submission date | May 20, 2026 |
+| CLO coverage | CLO-2, CLO-3, CLO-4 |
 
-## Overview
+## Quick Evidence
 
-This final semester project converts the assignment-based work into a clean, research-oriented NLP repository. The project focuses on sentiment and emotion classification for noisy Urdu tweets using the SentiUrdu-1M dataset. It compares classical machine learning, neural models, and transformer-based models under a shared preprocessing, training, and evaluation pipeline.
+- Final report: [final_nlp_project_report.pdf](outputs/reports/final_nlp_project_report.pdf)
+- Audit: [final_project_audit.md](docs/final_project_audit.md)
+- Rubric checklist: [final_submission_checklist.md](docs/final_submission_checklist.md)
+- Demo guide: [demonstration_guide.md](docs/demonstration_guide.md)
+- Exact professor-brief mapping: [professor_requirements_alignment.md](docs/professor_requirements_alignment.md)
+- Submission manifest: [submission_manifest.md](docs/submission_manifest.md)
+- Source repository: [GitHub](https://github.com/abubakarp789/Robust-Sentiment-and-Emotion-Classification-on-Noisy-Urdu-Tweets)
 
-The current assignments already provide a strong foundation: a preprocessing pipeline, literature review, dataset exploration, baseline models, neural models, transformer experiments, evaluation results, and a technical report. This `final_project/` directory organizes that work into a final deliverable structure without deleting or overwriting the original assignment folders.
+## Professor Brief Alignment
 
-## Problem Statement
+| Required stage | Primary evidence | Status |
+|---|---|---|
+| 1. Problem identification and proposal | Final report, methodology, this README | Ready |
+| 2. Literature review and gap analysis | Final report Related Work and references | Ready |
+| 3. System design and methodology | Architecture figure, methodology docs, modular pipeline | Ready |
+| 4. Implementation and experimental development | Source, data pipeline, training scripts, tests, saved predictions | Ready |
+| 5. Evaluation, analysis, and optimization | Dual-task leaderboards, metrics, confusion matrices, error analysis | Ready |
+| 6. Final report and demonstration | IEEE report, report copy, Streamlit baseline demo, speaking guide | Ready |
 
-Urdu social media text is difficult to classify because it contains informal spellings, right-to-left script issues, code-mixing, emojis, hashtags, mentions, URLs, sarcasm, and weakly supervised labels. SentiUrdu-1M is large enough for modern NLP modeling, but its labels are derived partly from emoji and lexical heuristics. If emojis remain in the input, models may learn the labeling shortcut rather than Urdu sentiment and emotion semantics.
+Every required deliverable named by the professor has a repository artifact. This means the submission is structurally aligned with the 50-mark rubric; it does not guarantee a particular awarded grade.
 
-The project therefore aims to build a leakage-aware pipeline for classifying Urdu tweets into sentiment and emotion categories while evaluating model behavior under class imbalance and weak-label noise.
+## Problem
 
-## Motivation
+Urdu tweets contain spelling variation, code-mixing, short context, sarcasm, URLs, mentions, hashtags, emojis, and weak labels. SentiUrdu-1M is also severely imbalanced. Its labels are influenced by emoji-based heuristics, so retaining emojis in model input creates a shortcut: a model can imitate the labeling rule instead of learning Urdu language evidence.
 
-Reliable Urdu sentiment analysis can support social-media monitoring, public-opinion research, product feedback analysis, crisis communication, and low-resource language NLP research. Most strong NLP tools are built for English and do not transfer cleanly to Urdu, especially on noisy Twitter-style text. A transparent, evaluated, and deployable Urdu pipeline helps reduce this language-resource gap.
+The project removes emojis before feature extraction, canonicalizes noisy emotion labels, derives a three-class sentiment target, and compares classical, neural, and Transformer model families under shared stratified splits and class-aware metrics.
 
-## Dataset Description
+## Why This Is a Complex Computational Problem
 
-- Dataset: SentiUrdu-1M
-- Domain: Urdu tweets
-- Size found in the current folder: 1,048,000 rows
-- Self-contained raw copy: `data/raw/Urdu Tweets Dataset.csv`
-- Columns: `Id`, `Text`, `Emotions`, `Category`
-- Label issue: `Category` is missing for 514,571 rows
-- Usable category-labelled rows: 533,429 rows
-- Raw label issue: `Category` has many inconsistent surface forms and requires normalization
-- Weak supervision issue: labels are derived from emoji/lexicon heuristics, so label noise and leakage risk must be handled carefully
+- The local CSV contains 1,048,000 tweets.
+- 514,571 rows have no `Category` label.
+- The raw category field has inconsistent and multi-label surface forms.
+- Joy/Positive dominates while Surprise/Neutral is extremely rare.
+- Leakage prevention conflicts with apparent predictive performance.
+- Classical, neural, and Transformer methods have different cost, robustness, and deployment trade-offs.
+- Accuracy, macro-F1, weighted-F1, minority recall, and compute cost are competing objectives.
 
-See `reports/dataset_card.md` for the full dataset card.
+## Objectives
 
-## Milestone Mapping
+1. Build deterministic Urdu tweet preprocessing with emoji leakage control.
+2. Normalize labels into six emotions and map them into three sentiments.
+3. Create fixed 70/15/15 stratified train, validation, and test splits.
+4. Compare TF-IDF, neural, and Transformer approaches.
+5. Evaluate with accuracy, macro precision/recall/F1, weighted-F1, per-class reports, confusion matrices, and qualitative errors.
+6. Package the code, evidence, report, and live demo for reproducible inspection.
 
-| Course Milestone | Current Evidence | Final Project Status |
-| --- | --- | --- |
-| Milestone 1: Problem definition + dataset exploration | Assignment 1 proposal, preprocessing notebook, Assignment 3 EDA notebook | Completed & Verified |
-| Milestone 2: Baseline statistical model | TF-IDF + Logistic Regression and Linear SVM in Assignment 3 | Completed, Packaged, & Evaluated |
-| Milestone 3: Neural model | Text-CNN and BiLSTM-Attention in Assignment 3 | Completed, Packaged, & Evaluated |
-| Milestone 4: Transformer + Generative AI | mBERT, XLM-R, Urdu-RoBERTa in Assignment 3 | Completed, Packaged, & Evaluated |
-| Milestone 5: Evaluation + deployment + final report | Evaluation notebook, Streamlit app, and technical report | Fully Completed, Verified, & Submission-Ready |
+## Dataset
 
-## Methodology
+The included file is `data/raw/Urdu Tweets Dataset.csv` with columns `Id`, `Text`, `Emotions`, and `Category`.
 
-1. Load SentiUrdu-1M from the raw data folder.
-2. Normalize labels from the raw `Category` column.
-3. Apply leak-aware Urdu tweet preprocessing.
-4. Create reproducible train/validation/test splits.
-5. Train statistical baselines using TF-IDF features.
-6. Train neural models using Urdu word embeddings.
-7. Fine-tune transformer encoders.
-8. Evaluate with metrics suitable for imbalanced classification.
-9. Perform qualitative and quantitative error analysis.
-10. Deploy a simple interactive demo.
+Two verified experiment snapshots exist:
 
-## Preprocessing Pipeline
+| Evidence source | Cleaning threshold | Rows used | Tasks |
+|---|---:|---:|---|
+| Assignment 4 report / Assignment 3 outputs | Remove empty cleaned text | 532,661 | Sentiment and emotion |
+| Packaged `final_project` rerun | Minimum 2 cleaned tokens | 517,966 | Sentiment |
 
-The final-project preprocessing module is implemented in `src/preprocessing.py`.
-It is controlled by `config.yaml` and currently supports:
+These snapshots must not be merged. The compiled report uses Assignment 3 results. The packaged outputs use the stricter two-token filter and a later sentiment rerun. See `docs/dataset_description.md` and `docs/results_analysis.md`.
 
-- Urdu/Arabic Unicode normalization
-- URL removal
-- `@mention` removal
-- Hashtag cleanup while preserving hashtag text
-- Emoji removal for label-leakage prevention
-- Western and Eastern Arabic-Indic number removal
-- ASCII and Urdu/Arabic punctuation removal
-- Whitespace normalization
-- Minimum cleaned-text token filtering
+The exact dual-task leaderboards used by the final report are also copied into `outputs/report_snapshot/` so the final project package contains direct sentiment and emotion evidence.
 
-Emoji removal is intentionally enabled by default because the dataset labels are
-partly derived from emoji-based weak supervision. Keeping emojis in the model
-input would allow models to learn the labeling heuristic instead of Urdu text
-semantics.
+## Pipeline
 
-## Label Normalization
+1. Read the local CSV only.
+2. Normalize Urdu/Arabic Unicode variants.
+3. Remove URLs and mentions.
+4. Remove `#` while preserving hashtag text.
+5. Remove emojis before feature extraction.
+6. Remove numbers and punctuation; normalize whitespace.
+7. Parse noisy `Category` values and fix variants such as `Surprice`.
+8. Produce six canonical emotions: Joy, Sad, Angry, Fear, Disgust, Surprise.
+9. Map emotions to Positive, Negative, and Neutral sentiment.
+10. Create fixed stratified 70/15/15 splits with seed 42.
+11. Train model families and evaluate saved predictions.
 
-The label module is implemented in `src/label_mapping.py`. It converts noisy
-raw `Category` values such as `" Joy"`, `"['Joy']"`, `"Joy , Joy"`, and
-`"Surprice"` into canonical emotion labels:
+## Models
 
-- Joy
-- Sad
-- Angry
-- Fear
-- Disgust
-- Surprise
+| Family | Implemented models | Current artifact status |
+|---|---|---|
+| Classical | TF-IDF Logistic Regression, Linear SVM, Multinomial NB | Runnable `.joblib` files included |
+| Neural | Text-CNN, BiLSTM with additive attention | Code, predictions, metrics, histories, vocab, and label map included; `.pt` weights are not included |
+| Transformer | mBERT, XLM-R, Urdu-RoBERTa configuration | Code and Assignment 3 evidence for all three; packaged rerun predictions for mBERT/XLM-R; large weight files are not included |
 
-For the sentiment task, canonical emotions are mapped as:
+The neural packaged rerun used random trainable embeddings because local Urdu fastText vectors were not present. Assignment 3 and the final report document fastText-based experiments. Training scripts never download embeddings or pretrained models automatically; required resources must already be available locally.
 
-- Joy -> Positive
-- Sad, Angry, Fear, Disgust -> Negative
-- Surprise -> Neutral
+## Results
 
-The split-generation script writes the label mapping audit to
-`outputs/results/label_mapping_summary.json`.
+### Assignment 4 final report
 
-## Train/Validation/Test Split Strategy
+| Task | Best macro-F1 model | Macro-F1 | Highest-accuracy model | Accuracy |
+|---|---|---:|---|---:|
+| Sentiment | Urdu-RoBERTa | 0.4573 | Linear SVM | 0.8783 |
+| Emotion | mBERT | 0.2703 | Linear SVM | 0.8773 |
 
-The split pipeline is implemented in `src/create_splits.py`. It:
+### Packaged sentiment rerun
 
-1. Loads the dataset path from `config.yaml`.
-2. Reads the raw CSV with UTF-8 encoding.
-3. Applies preprocessing.
-4. Normalizes labels.
-5. Removes rows with missing task labels.
-6. Removes empty or too-short cleaned tweets.
-7. Creates stratified 70/15/15 train/validation/test splits.
-8. Saves CSV files under `data/splits/`.
-9. Saves `outputs/results/split_summary.json`.
+**Best final model for the packaged runnable demo:** TF-IDF + Linear SVM.
 
-Run it with:
+| Model | Test accuracy | Test macro-F1 | Test weighted-F1 |
+|---|---:|---:|---:|
+| Linear SVM | 0.8531 | 0.5040 | 0.8527 |
+| Logistic Regression | 0.7740 | 0.4613 | 0.8013 |
+| BiLSTM-Attention | 0.7408 | 0.4506 | 0.7763 |
+| Text-CNN | 0.7582 | 0.4476 | 0.7882 |
+| XLM-R | 0.8528 | 0.4346 | 0.8426 |
+| mBERT | 0.8520 | 0.4240 | 0.8382 |
+| Multinomial NB | 0.8787 | 0.4014 | 0.8417 |
 
-```bash
-cd final_project
-python src/create_splits.py
-python src/validate_pipeline.py
-```
+Multinomial NB has the highest packaged accuracy but collapses more strongly toward the Positive majority. Linear SVM is selected because macro-F1 is the headline metric.
 
-## Models Used
-
-Current Assignment 3 work already includes:
-
-- TF-IDF + Logistic Regression
-- TF-IDF + Linear SVM
-- Text-CNN
-- BiLSTM with attention
-- mBERT
-- XLM-RoBERTa
-- Urdu-RoBERTa
-
-The final project implements this model lineup across course milestones, keeping all original assignment folders untouched:
-
-## Milestone 2: Statistical Baselines
-- Implemented in `src/train_baseline.py` and evaluated in `src/evaluate.py`.
-- Trains TF-IDF + Logistic Regression, TF-IDF + Linear SVM, and Multinomial Naive Bayes.
-- Reuses a single training-only TF-IDF vocabulary fit to prevent leakage.
-- Validation script: `src/validate_baseline.py`.
-
-## Milestone 3: Neural Models
-- Implemented in `src/train_neural.py` with architectures in `src/models_dl.py` and utilities in `src/neural_utils.py`.
-- Trains a multi-kernel Text-CNN and a BiLSTM with additive attention.
-- Uses validation macro-F1 early stopping and PyTorch/CUDA mixed precision (`fp16`).
-- Validation script: `src/validate_neural.py`.
-
-## Milestone 4: Transformer-Based Modeling
-- Implemented in `src/train_transformer.py`.
-- Fine-tunes multilingual pre-trained encoders `bert-base-multilingual-cased` (mBERT) and `xlm-roberta-base` (XLM-RoBERTa).
-- Addresses class imbalance using smoothed class weights (`class_weight_smoothing = 0.5`) to prevent gradient instability from the rare Neutral class.
-- Saves model checkpoints, classification reports, confusion heatmaps, prediction tables, and training histories.
-- Validation script: `src/validate_transformer.py`.
-
-## Generative AI / Explanation Assistant
-- Implemented in `src/explanation_assistant.py`.
-- A lightweight, rule-based and template-driven assistant that explains model predictions, highlights likely causes of misclassification errors, generates plain-English model performance summaries, and outputs project-level model insights.
-- Integrates directly with the interactive user interface to explain model outputs in real time.
-
-## Evaluation Metrics
-
-The final evaluation should report:
-
-- Accuracy
-- Macro precision, recall, and F1
-- Weighted precision, recall, and F1
-- Per-class precision, recall, and F1
-- Confusion matrices
-- Misclassified examples
-- Class-wise and error-type analysis
-
-Macro-F1 should be the headline metric because the dataset is extremely imbalanced.
-
-## Error Analysis Plan
-
-The project should save a structured error-analysis table containing:
-
-- Raw tweet text
-- Preprocessed text
-- True label
-- Predicted label
-- Confidence score, if available
-- Text length
-- Model name
-- Error category
-- Human-readable explanation
-
-Planned error categories include negation, sarcasm, code-mixing, ambiguous text, weak-label issue, minority-class confusion, and preprocessing loss.
-
-## GenAI / Agentic AI Extension
-
-The most suitable extension is an error-analysis and explanation assistant. It does not replace the classifier. Instead, it helps interpret model predictions by producing short human-readable explanations, identifying likely error types, and summarizing failure patterns across misclassified examples.
-
-This extension has been successfully implemented in `src/explanation_assistant.py` and integrated into the Streamlit application for real-time inference analysis.
-
-## Ethical Considerations
-
-Key ethical issues include weak labels, dataset bias, privacy risk from social-media text, exposure to offensive content, minority-class harm, and misuse of sentiment predictions for surveillance or unfair decision-making.
-
-See `reports/ethics_and_limitations.md`.
-
-## Deployment Plan
-
-The recommended deployment is a Streamlit app because it is simple, course-demo friendly, and well-suited for showing:
-
-- Tweet input
-- Preprocessed output
-- Model selection
-- Prediction result
-- Confidence score
-- Explanation
-- Error-analysis note
-
-The app has been fully implemented in `app/streamlit_app.py` and loads trained model checkpoints with robust fallbacks to the best overall model (Linear SVM) if transformer files are missing.
-
-### Folder Structure
+## Structure
 
 ```text
 final_project/
-|-- app/
-|   `-- streamlit_app.py
-|-- data/
-|   |-- raw/                 # Copied 1,048,000-row source dataset
-|   |-- processed/           # Full cleaned labelled dataset before splitting
-|   |-- splits/              # Final train, validation, and test CSVs
-|   `-- annotation/          # Optional sample for future manual review
-|-- notebooks/
-|   |-- 01_dataset_analysis.ipynb
-|   |-- 02_baseline_models.ipynb
-|   |-- 03_neural_models.ipynb
-|   |-- 04_transformer_models.ipynb
-|   `-- 05_error_analysis.ipynb
-|-- outputs/
-|   |-- figures/
-|   |-- results/
-|   |-- models/
-|   |-- predictions/
-|   `-- error_analysis/
-|-- reports/
-|   |-- final_report.md
-|   |-- dataset_card.md
-|   |-- ethics_and_limitations.md
-|   |-- slides_outline.md
-|   |-- demo_script.md
-|   |-- export_instructions.md
-|   |-- final_submission_checklist.md
-|   `-- final_evaluation_summary.md
-|-- src/
-|   |-- preprocessing.py
-|   |-- label_mapping.py
-|   |-- train_baseline.py
-|   |-- train_neural.py
-|   |-- train_transformer.py
-|   |-- evaluate.py
-|   |-- error_analysis.py
-|   `-- utils.py
-|-- tests/
-|   |-- test_compare_models.py
-|   |-- test_data_organization.py
-|   |-- test_error_analysis.py
-|   |-- test_evaluate.py
-|   |-- test_neural_utils.py
-|   |-- test_streamlit_app.py
-|   |-- test_train_baseline.py
-|   |-- test_transformer.py
-|   `-- test_validate_notebooks.py
-|-- README.md
-|-- requirements.txt
-|-- config.yaml
-`-- ROADMAP.md
+|-- app/                 Streamlit demo
+|-- data/                Raw, processed, split, and annotation data
+|-- docs/                Submission audit, methodology, setup, results, and demo docs
+|-- notebooks/           Grader-friendly artifact analysis notebooks
+|-- outputs/             Models, predictions, metrics, figures, and report copy
+|-- scripts/             Stable numbered command-line entry points
+|-- src/                 Preprocessing, training, evaluation, inference, validation
+|-- tests/               Lightweight and regression tests
+|-- config.yaml          Canonical packaged sentiment configuration
+`-- requirements.txt
 ```
 
-## Installation
+The complete folder is the self-contained grading and evidence package. Earlier assignment folders are useful provenance but are not required to inspect it. Expensive deep-model retraining still requires the external pretrained resources described under Limitations.
 
-```bash
-cd final_project
-python -m venv .venv
-.venv\Scripts\activate
-pip install -r requirements.txt
-```
+## Setup
 
-Install the correct PyTorch build for your GPU separately if you plan to retrain neural or transformer models.
-
-## Quick Commands
-
-Execute the following commands from the root directory:
+Python 3.10-3.12 is recommended for the pinned ML ecosystem. From `final_project`:
 
 ```powershell
-python src\validate_pipeline.py --config config.yaml
-python src\validate_final_project.py --config config.yaml
+python -m venv .venv
+.venv\Scripts\Activate.ps1
+python -m pip install -r requirements.txt
+```
+
+No secrets are required. CUDA-specific PyTorch builds are intentionally not pinned.
+
+## Commands
+
+Run these from `final_project`:
+
+```powershell
+python scripts\01_prepare_data.py --config config.yaml
+python scripts\02_train_classical.py --config config.yaml
+python scripts\03_train_neural.py --config config.yaml --sample-size 50000
+python scripts\04_train_transformers.py --config config.yaml --sample-size 50000 --epochs 1
+python scripts\05_evaluate_models.py
+python scripts\06_generate_visualizations.py
 python -m pytest tests
+python src\validate_final_project.py --config config.yaml
+python src\validate_professor_requirements.py
 streamlit run app\streamlit_app.py
 ```
 
-## Usage
+The neural and Transformer sample modes shorten a demonstration run. They create new experimental outputs and must not be presented as the existing final-report results.
 
-The preprocessing, split generation, baseline, neural, and transformer modeling pipelines are fully implemented.
+## Expected Outputs
 
-### Data Pipeline
-```powershell
-python src\create_splits.py --config config.yaml
-python src\create_annotation_sample.py --config config.yaml
-python src\validate_pipeline.py --config config.yaml
-python src\validate_final_project.py --config config.yaml
-```
+- Splits: `data/splits/*.csv`
+- Processed data: `data/processed/processed_sentiment_dataset.csv`
+- Saved predictions: `outputs/predictions/`
+- Recomputed metrics: `outputs/metrics/` (created on demand by the evaluation script)
+- Existing experiment metrics: `outputs/results/`
+- Figures: `outputs/figures/`
+- Error analysis: `outputs/error_analysis/`
+- Report copy: `outputs/reports/final_nlp_project_report.pdf`
 
-### Data Folder Organization
+## Demo
 
-- `data/raw/` contains the copied raw SentiUrdu-1M CSV. The raw dataset is now copied into `data/raw/` so the `final_project` folder is self-contained for data loading.
-- `data/processed/` contains `processed_sentiment_dataset.csv`, the full cleaned and labelled dataset before splitting.
-- `data/splits/` contains the immutable stratified train, validation, and test splits used by all reported model runs.
-- `data/annotation/` contains an optional balanced sample for future manual verification.
+The most reliable live path uses the included Linear SVM artifact. Start Streamlit, enter an Urdu tweet containing an emoji, show that preprocessing removes the emoji, then compare the prediction with the model leaderboard and confusion matrix. Full speaking notes and likely questions are in `docs/demonstration_guide.md` and `docs/demo_script.md`.
 
-The annotation sample is not used in training or evaluation and does not affect reported results.
+## Why the Notebooks Are Included
 
-### Milestone 2: Baselines
-```bash
-python src/train_baseline.py --config config.yaml
-python src/validate_baseline.py --config config.yaml
-python src/analyze_baseline_errors.py --config config.yaml
-python src/plot_baseline_errors.py --config config.yaml
-python src/validate_error_analysis.py --config config.yaml
-```
+The five notebooks are useful submission artifacts, not duplicate training code. They provide short, ordered walkthroughs of dataset preparation, baseline results, neural results, Transformer results, and error analysis. They load saved artifacts instead of retraining models, so the professor can inspect the experimental story quickly and reproducibly.
 
-### Milestone 3: Neural Models
-```bash
-python src/train_neural.py --config config.yaml
-python src/compare_models.py --config config.yaml
-python src/plot_neural_results.py --config config.yaml
-python src/validate_neural.py --config config.yaml
-```
+## Limitations
 
-### Milestone 4: Transformer Models & Explanations
-```bash
-python src/train_transformer.py --config config.yaml
-python src/compare_models.py --config config.yaml
-python src/plot_transformer_results.py --config config.yaml
-python src/validate_transformer.py --config config.yaml
-```
-
-### Streamlit Application
-To run the interactive web application:
-```bash
-streamlit run app/streamlit_app.py
-```
-
-### Analysis Notebooks
-
-The notebooks are analysis notebooks that load already generated artifacts instead of retraining models. This ensures reproducibility and avoids expensive re-training during review.
-
-```powershell
-jupyter notebook notebooks
-python src\validate_notebooks.py --config config.yaml
-```
-
-## Reproducibility
-
-To ensure full reproducibility of the results:
-- The raw dataset is copied into [data/raw/](data/raw/) (`Urdu Tweets Dataset.csv`).
-- The processed dataset is saved in [data/processed/](data/processed/) (`processed_sentiment_dataset.csv`).
-- The stratified splits are saved in [data/splits/](data/splits/) (`train.csv`, `validation.csv`, `test.csv`).
-- The annotation sample is saved in [data/annotation/](data/annotation/) and is not used for training or evaluation.
-- All model checkpoints and metrics remain unchanged in `outputs/models/` and `outputs/results/`.
-- Preprocessing and split configurations are strictly versioned in `config.yaml`.
+- Test labels are weak, not independently gold-annotated.
+- Extreme class imbalance makes Neutral and rare emotions unreliable.
+- No repeated-seed confidence intervals or significance tests are available.
+- The final report and packaged rerun use different cleaning thresholds and result snapshots.
+- Neural and Transformer weight files are omitted; their saved predictions and metrics remain inspectable.
+- Packaged Transformer training requires locally cached pretrained models and does not download them automatically.
 
 ## Future Work
 
-- Build a manually verified clean test subset
-- Add emoji-removal ablation study
-- Add model confidence and calibration analysis
-- Add Hugging Face Spaces or Streamlit Cloud deployment
-- Explore XLM-T or parameter-efficient LoRA fine-tuning
+Create a native-speaker gold test set, run repeated seeds, add calibration and bootstrap confidence intervals, evaluate noise-robust losses, preserve task-specific split/output directories, and test domain-adapted Urdu/Twitter encoders using locally approved resources.
 
-## Author
+## Academic Integrity
 
-Abu Bakar and M. Raqib Hayat  
-CSC-355 Natural Language Processing  
-Namal University Mianwali
+All counts, results, hardware notes, and claims in this folder come from files already present in this repository. No new score, checkpoint, citation, dataset fact, or hardware specification has been invented. Items that could not be verified are marked as missing or not verified in the audit and checklist.
+
+## Submission Uploads
+
+The exact hand-in list, including the preferred full package and a size-limited alternative, is documented in [submission_manifest.md](docs/submission_manifest.md).

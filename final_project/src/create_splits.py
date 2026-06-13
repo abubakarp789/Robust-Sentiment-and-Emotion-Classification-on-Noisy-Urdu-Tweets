@@ -10,13 +10,22 @@ from typing import Any
 import pandas as pd
 from sklearn.model_selection import train_test_split
 
-from label_mapping import (
-    normalize_label,
-    normalize_task_label,
-    save_label_mapping_summary,
-)
-from preprocessing import is_valid_clean_text, preprocess_series, token_count
-from utils import load_config, set_seed
+try:
+    from .label_mapping import (
+        normalize_label,
+        normalize_task_label,
+        save_label_mapping_summary,
+    )
+    from .preprocessing import is_valid_clean_text, preprocess_series, token_count
+    from .utils import load_config, set_seed
+except ImportError:  # Support direct execution: python src/create_splits.py
+    from label_mapping import (
+        normalize_label,
+        normalize_task_label,
+        save_label_mapping_summary,
+    )
+    from preprocessing import is_valid_clean_text, preprocess_series, token_count
+    from utils import load_config, set_seed
 
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]

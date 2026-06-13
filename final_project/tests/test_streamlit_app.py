@@ -2,12 +2,19 @@ from __future__ import annotations
 
 from pathlib import Path
 
+import pytest
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.naive_bayes import MultinomialNB
 from sklearn.pipeline import Pipeline
 
 from src.inference import InferenceModel
-from app import streamlit_app
+
+try:
+    from app import streamlit_app
+except ModuleNotFoundError as exc:
+    if exc.name != "streamlit":
+        raise
+    streamlit_app = None
 
 
 APP_PATH = Path(__file__).resolve().parents[1] / "app" / "streamlit_app.py"
@@ -51,6 +58,7 @@ def test_multinomial_nb_inference_uses_probability_output() -> None:
     assert 0.0 <= result["confidence"] <= 1.0
 
 
+@pytest.mark.skipif(streamlit_app is None, reason="streamlit is not installed")
 def test_model_availability_requires_real_checkpoint_files(tmp_path: Path) -> None:
     models_dir = tmp_path / "models"
     models_dir.mkdir()
@@ -66,6 +74,7 @@ def test_model_availability_requires_real_checkpoint_files(tmp_path: Path) -> No
     assert streamlit_app.model_artifact_available("mbert", models_dir)
 
 
+@pytest.mark.skipif(streamlit_app is None, reason="streamlit is not installed")
 def test_selected_model_failure_falls_back_to_linear_svm(monkeypatch) -> None:
     fallback_model = object()
 

@@ -45,4 +45,4 @@ This project should be used for academic NLP research, model comparison, and edu
 - The dataset is highly imbalanced.
 - Urdu code-mixing and Roman Urdu are not fully normalized.
 - Sarcasm and implicit emotion are difficult for all current models.
-- The final-project Streamlit app is fully integrated with baseline and transformer inference pipelines, offering template-based explanations for predictions and error analysis.
+- The Streamlit source supports baseline and Transformer inference paths, but only the packaged Linear SVM checkpoint is guaranteed runnable in the submission. Missing deep weights trigger a documented fallback.

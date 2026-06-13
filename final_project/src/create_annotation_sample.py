@@ -9,7 +9,10 @@ from typing import Any
 
 import pandas as pd
 
-from utils import load_config
+try:
+    from .utils import load_config
+except ImportError:  # Support direct execution: python src/create_annotation_sample.py
+    from utils import load_config
 
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
@@ -22,15 +25,17 @@ OUTPUT_COLUMNS = (
     "manual_label",
     "annotator_notes",
 )
-ANNOTATION_README = """# Annotation Sample
+ANNOTATION_README = """# Annotation Sample Status
 
-`annotation_sample.csv` is an optional support file for future manual review.
+`annotation_sample.csv` is an optional candidate set for future manual review.
 
 - It was sampled from the existing test split with a fixed random seed.
+- It is balanced across the three packaged sentiment labels.
+- Its manual-label and annotator-note fields are currently empty.
 - It was not used for model training.
 - It was not used for model evaluation.
 - It does not affect any reported metric.
-- It can later support a manually verified clean test subset.
+- It becomes gold evaluation evidence only after independent annotation and agreement checks.
 """
 
 

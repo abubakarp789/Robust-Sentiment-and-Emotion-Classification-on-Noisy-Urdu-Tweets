@@ -13,16 +13,29 @@ from typing import Any, Mapping, Sequence
 import numpy as np
 import pandas as pd
 import torch
-from datasets import Dataset
 from sklearn.model_selection import train_test_split
-from transformers import (
-    AutoModelForSequenceClassification,
-    AutoTokenizer,
-    DataCollatorWithPadding,
-    Trainer,
-    TrainingArguments,
-    EarlyStoppingCallback,
-)
+
+try:
+    from datasets import Dataset
+    from transformers import (
+        AutoModelForSequenceClassification,
+        AutoTokenizer,
+        DataCollatorWithPadding,
+        EarlyStoppingCallback,
+        Trainer,
+        TrainingArguments,
+    )
+except ModuleNotFoundError as exc:
+    Dataset = None
+    AutoModelForSequenceClassification = None
+    AutoTokenizer = None
+    DataCollatorWithPadding = None
+    EarlyStoppingCallback = None
+    Trainer = None
+    TrainingArguments = None
+    _TRANSFORMER_IMPORT_ERROR = exc
+else:
+    _TRANSFORMER_IMPORT_ERROR = None
 
 try:
     from .evaluate import (
@@ -59,22 +72,37 @@ except ImportError:
 EVALUATION_SPLITS = ("validation", "test")
 
 
-class WeightedTrainer(Trainer):
-    """Trainer with class-weighted cross-entropy loss."""
+def _require_transformer_dependencies() -> None:
+    if _TRANSFORMER_IMPORT_ERROR is not None:
+        raise ModuleNotFoundError(
+            "Transformer training requires 'datasets', 'transformers', and "
+            "'accelerate'. Install final_project/requirements.txt first."
+        ) from _TRANSFORMER_IMPORT_ERROR
 
-    def __init__(self, *args, class_weights: torch.Tensor, **kwargs):
-        super().__init__(*args, **kwargs)
-        self.class_weights = class_weights
 
-    def compute_loss(self, model, inputs, return_outputs=False, **kwargs):
-        labels = inputs.pop("labels")
-        outputs = model(**inputs)
-        logits = outputs.logits
-        loss_fct = torch.nn.CrossEntropyLoss(
-            weight=self.class_weights.to(logits.device)
-        )
-        loss = loss_fct(logits.view(-1, logits.size(-1)), labels.view(-1))
-        return (loss, outputs) if return_outputs else loss
+if Trainer is not None:
+    class WeightedTrainer(Trainer):
+        """Trainer with class-weighted cross-entropy loss."""
+
+        def __init__(self, *args, class_weights: torch.Tensor, **kwargs):
+            super().__init__(*args, **kwargs)
+            self.class_weights = class_weights
+
+        def compute_loss(self, model, inputs, return_outputs=False, **kwargs):
+            labels = inputs.pop("labels")
+            outputs = model(**inputs)
+            logits = outputs.logits
+            loss_fct = torch.nn.CrossEntropyLoss(
+                weight=self.class_weights.to(logits.device)
+            )
+            loss = loss_fct(logits.view(-1, logits.size(-1)), labels.view(-1))
+            return (loss, outputs) if return_outputs else loss
+else:
+    class WeightedTrainer:
+        """Dependency error placeholder used by lightweight validation."""
+
+        def __init__(self, *args, **kwargs):
+            _require_transformer_dependencies()
 
 
 def load_splits_transformer(
@@ -124,6 +152,7 @@ def compute_class_weights_with_smoothing(
 
 def _build_hf_dataset(df: pd.DataFrame, text_col: str, label_col: str, label_to_id: dict) -> Dataset:
     """Build a Hugging Face Dataset from a pandas DataFrame."""
+    _require_transformer_dependencies()
     renamed = df[[text_col, label_col]].rename(columns={text_col: "text", label_col: "labels"})
     renamed["labels"] = renamed["labels"].map(label_to_id)
     return Dataset.from_pandas(renamed, preserve_index=False)
@@ -152,6 +181,7 @@ def train_transformer_models(
     selected_model: str | None = None,
 ) -> dict[str, Any]:
     """Train enabled transformer models and save evaluation outputs."""
+    _require_transformer_dependencies()
     config_file = Path(config_path).resolve()
     project_root = config_file.parent
     config = load_config(config_file)

@@ -2,14 +2,14 @@
 
 ## Purpose
 
-This folder contains the files for an optional manual annotation study. It is intended to support a future human-verified clean test subset to evaluate model alignment against ground-truth human annotations.
+This folder contains an optional candidate sample for a future manual annotation study. It is not a gold test set in its current unlabeled state.
 
 ## Contents
 
 | File/Folder | Description |
 |---|---|
 | [annotation_sample.csv](annotation_sample.csv) | Balanced sample of tweets for manual labeling |
-| [annotation_readme.md](annotation_readme.md) | Description and guidelines for annotation |
+| [annotation_readme.md](annotation_readme.md) | Generated status note confirming that the sample is not used in current metrics |
 
 ## How It Is Used
 
@@ -17,7 +17,7 @@ The sample dataset is generated using [../../src/create_annotation_sample.py](..
 - **Sample Size**: `300` tweets
 - **Class Distribution**: Exactly balanced (`100` Positive, `100` Negative, `100` Neutral)
 - **Training/Evaluation**: This sample is **NOT** used for training or evaluation in the current project, and it has no impact on the reported metrics.
-- **Future Use**: It will serve as a high-quality human-verified gold standard subset for model testing.
+- **Future Use**: After independent annotation and agreement checks, it could support a cleaner evaluation subset.
 
 ## Related Files
 

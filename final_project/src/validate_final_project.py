@@ -16,9 +16,11 @@ import pandas as pd
 try:
     from validate_notebooks import validate_notebooks
     from validate_pipeline import validate_data_assets
+    from validate_professor_requirements import validate_requirements
 except ImportError:
     from src.validate_notebooks import validate_notebooks
     from src.validate_pipeline import validate_data_assets
+    from src.validate_professor_requirements import validate_requirements
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
 
@@ -94,30 +96,39 @@ def check_models(config: dict) -> bool:
         else:
             print_success(f"Baseline model found: {model} ({path.stat().st_size / 1024 / 1024:.2f} MB)")
 
-    # 2. Neural Models
-    neural_models = ["neural_bilstm_attention.pt", "neural_text_cnn.pt", "neural_vocab.json", "neural_label_mapping.json"]
-    for model in neural_models:
+    # 2. Neural support files are required; large weights are optional submission artifacts.
+    neural_support = ["neural_vocab.json", "neural_label_mapping.json"]
+    for model in neural_support:
         path = models_dir / model
         if not path.exists():
-            print_failure(f"Neural model file missing: {path}")
+            print_failure(f"Neural support file missing: {path}")
             all_ok = False
         else:
-            print_success(f"Neural model file found: {model} ({path.stat().st_size / 1024 / 1024:.2f} MB)")
+            print_success(f"Neural support file found: {model}")
+
+    for model in ["neural_bilstm_attention.pt", "neural_text_cnn.pt"]:
+        path = models_dir / model
+        if path.exists():
+            print_success(f"Neural weight file found: {model}")
+        else:
+            print_warning(f"Neural weight file not included: {model}; saved predictions remain available.")
 
     # 3. Transformers
     transformers = ["transformer_mbert", "transformer_xlm_roberta"]
     for tf_model in transformers:
         best_dir = models_dir / tf_model / "best"
         if not best_dir.exists():
-            # Check if main folder exists at least
-            main_dir = models_dir / tf_model
-            if not main_dir.exists():
-                print_failure(f"Transformer model folder missing: {tf_model}")
-                all_ok = False
-            else:
-                print_warning(f"Transformer model 'best' folder missing, but main folder exists: {tf_model}")
+            print_warning(f"Transformer tokenizer/config folder not included: {tf_model}/best")
+            continue
+
+        weight_files = list(best_dir.glob("*.safetensors")) + list(best_dir.glob("*.bin"))
+        if weight_files:
+            print_success(f"Complete Transformer checkpoint found: {tf_model}/best")
         else:
-            print_success(f"Transformer model found: {tf_model}/best")
+            print_warning(
+                f"{tf_model}/best contains tokenizer/config files but no model weights; "
+                "saved predictions remain available."
+            )
 
     return all_ok
 
@@ -259,56 +270,38 @@ def check_notebooks(config_path: str | Path) -> bool:
 
 
 def check_reports() -> bool:
-    print("\n--- Checking Submission Reports ---")
-    reports_dir = PROJECT_ROOT / "reports"
+    print("\n--- Checking Submission Documentation ---")
+    docs_dir = PROJECT_ROOT / "docs"
     all_ok = True
 
-    required_reports = [
-        "final_report.md",
-        "dataset_card.md",
+    required_docs = [
+        "methodology.md",
+        "dataset_description.md",
+        "experiment_setup.md",
+        "results_analysis.md",
         "ethics_and_limitations.md",
-        "slides_outline.md",
+        "presentation_outline.md",
+        "demonstration_guide.md",
         "demo_script.md",
+        "final_submission_checklist.md",
+        "professor_requirements_alignment.md",
+        "submission_manifest.md",
     ]
 
-    for r in required_reports:
-        path = reports_dir / r
+    for filename in required_docs:
+        path = docs_dir / filename
         if not path.exists():
-            print_failure(f"Required report missing: {r}")
+            print_failure(f"Required documentation missing: {filename}")
             all_ok = False
         else:
-            print_success(f"Report found: {r}")
+            print_success(f"Documentation found: {filename}")
 
-    # Validate final_report.md sections
-    report_path = reports_dir / "final_report.md"
-    if report_path.exists():
-        content = report_path.read_text(encoding="utf-8")
-        required_headers = [
-            "## Abstract",
-            "## 1. Introduction",
-            "## 2. Problem Statement",
-            "## 3. Motivation",
-            "## 4. Dataset Description",
-            "## 5. Literature Review Summary",
-            "## 6. Methodology",
-            "## 7. Experimental Setup",
-            "## 8. Results",
-            "## 9. Error Analysis",
-            "## 10. Ethical Considerations",
-            "## 11. Deployment",
-            "## 12. Limitations",
-            "## 13. Future Work",
-            "## 14. Conclusion",
-            "## References"
-        ]
-        
-        print("\nChecking report headers in final_report.md:")
-        for header in required_headers:
-            if header not in content:
-                print_failure(f"Missing header: '{header}'")
-                all_ok = False
-            else:
-                print_success(f"Header found: '{header}'")
+    report_copy = PROJECT_ROOT / "outputs" / "reports" / "final_nlp_project_report.pdf"
+    if report_copy.is_file():
+        print_success("Final report PDF found in outputs/reports.")
+    else:
+        print_failure("Final report PDF is missing from outputs/reports.")
+        all_ok = False
 
     return all_ok
 
@@ -332,6 +325,7 @@ def check_readmes_and_links() -> bool:
         "data/processed/README.md",
         "data/splits/README.md",
         "data/annotation/README.md",
+        "data/annotation/annotation_readme.md",
         "notebooks/README.md",
         "outputs/README.md",
         "outputs/models/README.md",
@@ -339,7 +333,9 @@ def check_readmes_and_links() -> bool:
         "outputs/results/README.md",
         "outputs/error_analysis/README.md",
         "outputs/figures/README.md",
-        "reports/README.md",
+        "outputs/report_snapshot/README.md",
+        "outputs/reports/README.md",
+        "scripts/README.md",
         "src/README.md",
         "tests/README.md",
     ]
@@ -393,6 +389,19 @@ def check_readmes_and_links() -> bool:
     return True
 
 
+def check_professor_brief() -> bool:
+    print("\n--- Checking Professor Brief Alignment ---")
+    result = validate_requirements()
+    for name, group in result["groups"].items():
+        if group["ready"]:
+            print_success(f"{name}: evidence ready")
+        else:
+            print_failure(f"{name}: missing evidence")
+            for missing in group["missing"]:
+                print(f"  - {missing}")
+    return bool(result["ready"])
+
+
 def run_validation(config_path: str | Path | None = None) -> None:
     config_path = Path(config_path or PROJECT_ROOT / "config.yaml").resolve()
     if not config_path.exists():
@@ -420,10 +429,11 @@ def run_validation(config_path: str | Path | None = None) -> None:
     all_checks.append(check_notebooks(config_path))
     all_checks.append(check_reports())
     all_checks.append(check_readmes_and_links())
+    all_checks.append(check_professor_brief())
 
     print("\n==================================================")
     if all(all_checks):
-        print_success("ALL PROJECT VALIDATIONS PASSED SUCCESSFULLY! Ready for final submission.")
+        print_success("CORE PROJECT VALIDATIONS PASSED. Review checkpoint warnings before submission.")
         sys.exit(0)
     else:
         print_failure("SOME PROJECT VALIDATIONS FAILED. Please address the errors above.")

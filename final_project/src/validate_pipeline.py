@@ -7,9 +7,14 @@ from pathlib import Path
 
 import pandas as pd
 
-from label_mapping import map_to_sentiment, normalize_label
-from preprocessing import preprocess_text
-from utils import load_config
+try:
+    from .label_mapping import map_to_sentiment, normalize_label
+    from .preprocessing import preprocess_text
+    from .utils import load_config
+except ImportError:  # Support direct execution: python src/validate_pipeline.py
+    from label_mapping import map_to_sentiment, normalize_label
+    from preprocessing import preprocess_text
+    from utils import load_config
 
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]

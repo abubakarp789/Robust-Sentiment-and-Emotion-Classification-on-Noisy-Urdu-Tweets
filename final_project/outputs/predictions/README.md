@@ -18,17 +18,18 @@ This folder contains predictions for each of the 7 evaluated models on both the 
 
 Each prediction CSV contains the following fields:
 - `id`: Tweet ID
-- `text`: Original Urdu tweet text
+- `raw_text`: Original Urdu tweet text
 - `clean_text`: Cleaned text used as model input
-- `true_label`: Ground truth sentiment label (`Positive`, `Negative`, or `Neutral`)
+- `true_label`: Saved weak-reference sentiment label (`Positive`, `Negative`, or `Neutral`)
 - `predicted_label`: Label predicted by the model
 - `confidence`: Class probability or decision function score
-- `correct`: Boolean flag indicating if the prediction matches the true label
+- `is_correct`: Boolean flag indicating whether the prediction matches the saved reference label
 - `split`: Partition name (`validation` or `test`)
 - `model_name`: Label identifier of the model
+- `text_length`: Cleaned-text token count
 
 These tables are used by:
-1. `src/evaluate.py` to compile metrics stored in [../results/](../results/).
+1. `scripts/05_evaluate_models.py` and `src/evaluation_workflow.py` to recompute metrics without retraining.
 2. `src/error_analysis.py` to identify failure modes (sarcasm, negation, etc.) and isolate misclassified samples.
 
 ## Related Files

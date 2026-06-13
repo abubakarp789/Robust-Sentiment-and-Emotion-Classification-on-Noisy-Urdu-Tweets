@@ -2,7 +2,7 @@
 
 ## Purpose
 
-This folder contains Jupyter Notebooks that document and explore the project milestones. These notebooks are designed for analysis, visualization, and validation, rather than model training.
+This folder contains five concise reviewer notebooks. They are designed for analysis, visualization, and validation rather than model training, so a grader can inspect the experimental progression without rerunning expensive models.
 
 ## Contents
 
@@ -16,12 +16,14 @@ This folder contains Jupyter Notebooks that document and explore the project mil
 
 ## How It Is Used
 
-These notebooks are used for presentation, interpretation, and reproducing results:
+These notebooks are used for presentation, interpretation, and independently reviewing saved results:
 - **No Retraining**: To ensure quick reproducibility and avoid expensive computational loads, the notebooks load pre-generated prediction csv files and metrics from [../outputs/results/](../outputs/results/) and [../outputs/predictions/](../outputs/predictions/).
 - **Figures**: The plotting code inside notebooks matches the scripts in `src/` and references figures stored in [../outputs/figures/](../outputs/figures/).
+- **Submission Value**: Together they provide direct notebook evidence for dataset preparation, three model families, evaluation, and qualitative error analysis.
 
-To start Jupyter and browse the notebooks:
+Jupyter is optional and is not required for the training or validation scripts. To browse the notebooks interactively:
 ```powershell
+python -m pip install jupyterlab
 jupyter notebook notebooks
 ```
 

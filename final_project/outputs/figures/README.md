@@ -19,13 +19,13 @@ This folder contains various comparison and matrix plots. Key figures include:
 
 The plots in this folder are generated programmatically:
 - **Generation**: Created by plotting scripts (such as `src/plot_baseline_errors.py`, `src/plot_neural_results.py`, and `src/plot_transformer_results.py`) using `matplotlib` and `seaborn`.
-- **Reference**: These figures are embedded in the Jupyter Notebooks under `notebooks/`, included in reports under `reports/`, and displayed in the Streamlit web application.
+- **Reference**: These figures describe the packaged sentiment rerun and are used by the notebooks, documentation, and Streamlit application. Final-report dual-task figures are stored separately under `../report_snapshot/`.
 
 ## Related Files
 
 - [../README.md](../README.md)
 - [../../notebooks/](../../notebooks/)
-- [../../reports/](../../reports/)
+- [../../docs/results_analysis.md](../../docs/results_analysis.md)
 
 ## Notes
 

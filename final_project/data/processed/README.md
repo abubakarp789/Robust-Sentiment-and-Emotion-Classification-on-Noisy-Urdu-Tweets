@@ -21,7 +21,7 @@ The processed dataset is generated programmatically by running [../../src/create
   - `raw_label`: Noisy original emotion/sentiment label from Twitter
   - `normalized_label`: Cleaned and consolidated canonical emotion label
   - `task_label`: Final mapped target sentiment label (`Positive`, `Negative`, or `Neutral`)
-  - `text_length`: Number of characters in the cleaned text
+  - `text_length`: Number of whitespace-delimited tokens in the cleaned text
 
 After this file is created, [../../src/create_splits.py](../../src/create_splits.py) splits it into the train, validation, and test datasets saved in [../splits/](../splits/).
 

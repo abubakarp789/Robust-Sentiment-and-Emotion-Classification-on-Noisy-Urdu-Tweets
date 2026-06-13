@@ -1,9 +1,9 @@
-# Annotation Sample
+# Annotation Sample Status
 
-`annotation_sample.csv` is an optional support file for future manual review.
+`annotation_sample.csv` is an optional candidate set for future manual review.
 
-- It was sampled from the existing test split with a fixed random seed.
-- It was not used for model training.
-- It was not used for model evaluation.
-- It does not affect any reported metric.
-- It can later support a manually verified clean test subset.
+- It was sampled from the saved test split with a fixed random seed.
+- It is balanced across the three packaged sentiment labels.
+- Its manual-label and annotator-note fields are currently empty.
+- It was not used for training or evaluation and does not affect reported metrics.
+- It becomes gold evaluation evidence only after independent annotation and agreement checks.

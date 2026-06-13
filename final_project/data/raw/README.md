@@ -14,7 +14,7 @@ This folder contains the original raw source dataset for the SentiUrdu-1M projec
 
 The raw dataset `Urdu Tweets Dataset.csv` contains the original unlabeled and weakly-labeled tweets collected from Twitter.
 - **Expected Rows**: `1,048,000`
-- **Expected Columns**: `Id`, `Text`, `Category`
+- **Expected Columns**: `Id`, `Text`, `Emotions`, `Category`
 - This file is read as the entry point by the split-creation script [../../src/create_splits.py](../../src/create_splits.py).
 - The path configurations are defined in [../../config.yaml](../../config.yaml).
 

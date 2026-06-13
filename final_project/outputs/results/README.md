@@ -2,7 +2,7 @@
 
 ## Purpose
 
-This folder contains quantitative metrics, leaderboards, classification reports, training histories, and confusion matrices for all model evaluations. It houses the structured logs that establish the performance rankings of the models.
+This folder contains the later 517,966-row packaged sentiment rerun: quantitative metrics, leaderboards, classification reports, training histories, and confusion matrices. The earlier dual-task report results are kept separately in `../report_snapshot/`.
 
 ## Contents
 
@@ -19,7 +19,7 @@ This folder contains metrics and reports for all models. Key summary files inclu
 
 The files in this directory are generated and referenced by the evaluation pipeline:
 - **Baseline/Neural/Transformer Results**: Metrics are written here as JSON/CSV logs after training finishes.
-- **Leaderboard compilation**: Compiled by running `python src/compare_models.py`, which aggregates metrics into [model_comparison_leaderboard.csv](model_comparison_leaderboard.csv).
+- **Leaderboard compilation**: `python src/compare_models.py --config config.yaml` aggregates metrics into [model_comparison_leaderboard.csv](model_comparison_leaderboard.csv).
 - **Streamlit Integration**: The interactive dashboard reads [model_comparison_leaderboard.csv](model_comparison_leaderboard.csv) to display the model leaderboard.
 - **Jupyter Notebooks**: Notebooks under `notebooks/` load these logs to plot graphs.
 
