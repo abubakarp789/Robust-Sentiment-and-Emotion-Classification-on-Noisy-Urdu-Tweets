@@ -21,7 +21,8 @@
 NUM-BSCS-2022-40 and NUM-BSCS-2022-41\\
 Department of Computer Science, Namal University Mianwali\\
 CSC-355 Natural Language Processing\\
-Instructor: Dr. Muzamil Ahmed}
+Instructor: Dr. Muzamil Ahmed\\
+Session: 2022--2026 (8th Semester); Submission Date: 20 May 2026}
 }
 
 \begin{document}
@@ -70,7 +71,7 @@ The realized contributions are:
     \item saved predictions, leaderboards, confusion matrices, and visual diagnostics supporting the reported findings.
 \end{itemize}
 
-The scope is limited to the local SentiUrdu-1M files and the two classification tasks. The manually verified gold test set and deployed interface proposed at the beginning of the semester were not completed and are therefore treated as future work. The remainder of the paper reviews related research, presents the methodology, describes the dataset and experiment, discusses results, and concludes with limitations and future directions.
+The scope is limited to the local SentiUrdu-1M files and the two classification tasks. The manually verified gold test set proposed at the beginning of the semester was not completed and is therefore treated as future work. The final submission includes a lightweight Streamlit interface for leakage-aware preprocessing and local inference with the packaged Linear SVM model; saved outputs support inspection of the more expensive model families. The remainder of the paper reviews related research, presents the methodology, describes the dataset and experiment, discusses results, and concludes with limitations and future directions.
 
 \section{Related Work}
 
@@ -304,7 +305,7 @@ Three dataset factors dominate the results. (1) Weak labels impose an unknown no
 
 \subsection{Validity and Limitations of the Results}
 
-The experiment has several threats to validity. The test set is stratified but not manually re-annotated, so it measures agreement with weak labels rather than verified human affect. All results use one fixed seed, and small model differences may change under retraining. The local CSV contains fewer rows than the source paper reports, and the second workbook sheet is not integrated. The domain is Pakistani Twitter and may not transfer to reviews, news, or formal Urdu. Model checkpoints and cached splits were not present in the inspected artifact tree, although code, predictions, metrics, and figures were available. These limitations constrain the strength of causal claims but do not invalidate the central comparison among the saved outputs.
+The experiment has several threats to validity. The test set is stratified but not manually re-annotated, so it measures agreement with weak labels rather than verified human affect. All results use one fixed seed, and small model differences may change under retraining. The local CSV contains fewer rows than the source paper reports, and the second workbook sheet is not integrated. The domain is Pakistani Twitter and may not transfer to reviews, news, or formal Urdu. The original Assignment 3 artifact tree did not include cached splits or model checkpoints; the final submission now packages processed splits, classical checkpoints, saved predictions, metrics, and figures, while large neural and transformer weight files remain excluded. These limitations constrain the strength of causal claims but do not invalidate the central comparison among the saved outputs.
 
 \section{Conclusion and Future Work}
 
@@ -312,7 +313,7 @@ This project investigated sentiment and emotion classification for noisy Urdu tw
 
 The results demonstrate why metric selection matters. Linear SVM achieved approximately 0.878 accuracy on both tasks but weak macro-F1, indicating majority-class collapse. Urdu-RoBERTa achieved the best three-class sentiment macro-F1 of 0.4573, while mBERT achieved the best six-class emotion macro-F1 of 0.2703. Neural fastText models remained close to transformers, showing that architecture alone cannot overcome label noise and 296:1 imbalance. The main contribution is therefore not a single high score, but a controlled, leak-aware evaluation that makes model limitations visible.
 
-Future work should first construct a native-speaker gold test set and report inter-annotator agreement. Repeated-seed experiments and bootstrap confidence intervals are needed before interpreting small leaderboard gaps. Noise-robust losses, active learning, self-training on the 514,571 unlabeled-category rows, focal loss, balanced sampling, and calibrated thresholding may improve minority recall. Domain-adapted models such as XLM-T \cite{barbieri2022xlmt}, parameter-efficient fine-tuning, cross-corpus evaluation, and explicit code-mixing or sarcasm modules are also promising. Finally, a lightweight inference interface with transparent uncertainty and error warnings could translate the research pipeline into a responsible practical tool.
+Future work should first construct a native-speaker gold test set and report inter-annotator agreement. Repeated-seed experiments and bootstrap confidence intervals are needed before interpreting small leaderboard gaps. Noise-robust losses, active learning, self-training on the 514,571 unlabeled-category rows, focal loss, balanced sampling, and calibrated thresholding may improve minority recall. Domain-adapted models such as XLM-T \cite{barbieri2022xlmt}, parameter-efficient fine-tuning, cross-corpus evaluation, and explicit code-mixing or sarcasm modules are also promising. The included Streamlit interface can be extended with calibrated uncertainty, token-level explanations, and restored deep-model checkpoints for a more complete responsible deployment.
 
 \bibliographystyle{IEEEtran}
 \bibliography{references}

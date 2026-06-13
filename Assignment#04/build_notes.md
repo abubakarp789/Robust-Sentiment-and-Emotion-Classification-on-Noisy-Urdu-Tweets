@@ -15,7 +15,7 @@ tectonic main.tex
 Tectonic processed the BibTeX database with the IEEEtran bibliography style and created `report/main.pdf`.
 
 - Final page count: 9 pages.
-- Output size after architecture redesign: 504,757 bytes (approximately 493 KiB).
+- Output size after final submission alignment update: 505,232 bytes (approximately 493 KiB).
 - Citation audit: 29 BibTeX entries, 29 cited, 0 missing, 0 unused.
 - Abstract length: 251 words.
 - Visual inspection: all nine pages rendered; tables, figures, two-column text, and references are visible without clipping.
@@ -27,10 +27,14 @@ Tectonic emitted a non-fatal Windows Fontconfig warning and minor underfull-box 
 ## Known Review Items
 
 - Author email addresses were not available in the inspected sources.
-- The proposed manually verified gold test set and deployed demo were not found.
+- The proposed manually verified gold test set was not completed. A Streamlit baseline demo is included in `final_project/app/streamlit_app.py` with a packaged Linear SVM model.
 - No repeated-seed uncertainty estimates or statistical significance tests were found.
 - Hardware and runtime values are transcribed from Assignment 3 rather than re-benchmarked.
 - Confirm whether Assignment 4 needs separate plagiarism/similarity and AI-use reports.
+
+## Final Submission Alignment Update
+
+On June 13, 2026, the report author block was updated with the official session and professor-provided submission date. Three stale statements were also corrected to reflect the completed `final_project` package: the Streamlit demonstration now exists, processed splits and classical checkpoints are packaged, and only large neural/Transformer weights remain excluded. No dataset count, model result, citation, table, or experimental conclusion was changed. The rebuilt PDF remains nine pages.
 
 ## Figure Provenance
 
