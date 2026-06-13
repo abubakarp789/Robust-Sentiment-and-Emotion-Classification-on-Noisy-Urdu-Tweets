@@ -1,0 +1,41 @@
+\begin{table*}[t]
+\caption{Three-Class Sentiment Classification Results on the Shared Test Split}
+\label{tab:sentiment-results}
+\centering
+\footnotesize
+\setlength{\tabcolsep}{7pt}
+\begin{tabular}{lccccc}
+\toprule
+Model & Accuracy & Macro Precision & Macro Recall & Macro F1 & Weighted F1 \\
+\midrule
+Logistic Regression & 0.6598 & 0.4046 & 0.4372 & 0.3852 & 0.7107 \\
+Linear SVM          & \textbf{0.8783} & \textbf{0.5620} & 0.3848 & 0.4004 & \textbf{0.8409} \\
+Text-CNN            & 0.7848 & 0.4407 & 0.5413 & 0.4533 & 0.8117 \\
+BiLSTM-Attention    & 0.7762 & 0.4350 & \textbf{0.5424} & 0.4500 & 0.8040 \\
+mBERT               & 0.8054 & 0.4748 & 0.4807 & 0.4526 & 0.8217 \\
+XLM-R               & 0.7897 & 0.5120 & 0.4894 & 0.4475 & 0.8118 \\
+Urdu-RoBERTa        & 0.7750 & 0.4492 & 0.5019 & \textbf{0.4573} & 0.8011 \\
+\bottomrule
+\end{tabular}
+\end{table*}
+
+\begin{table*}[t]
+\caption{Six-Class Emotion Classification Results on the Shared Test Split}
+\label{tab:emotion-results}
+\centering
+\footnotesize
+\setlength{\tabcolsep}{7pt}
+\begin{tabular}{lccccc}
+\toprule
+Model & Accuracy & Macro Precision & Macro Recall & Macro F1 & Weighted F1 \\
+\midrule
+Logistic Regression & 0.3601 & 0.2530 & 0.2994 & 0.1632 & 0.4959 \\
+Linear SVM          & \textbf{0.8773} & \textbf{0.4517} & 0.1989 & 0.2087 & \textbf{0.8347} \\
+Text-CNN            & 0.6476 & 0.2435 & 0.3700 & 0.2499 & 0.7215 \\
+BiLSTM-Attention    & 0.6064 & 0.2420 & \textbf{0.3721} & 0.2428 & 0.6910 \\
+mBERT               & 0.6922 & 0.2635 & 0.3219 & \textbf{0.2703} & 0.7467 \\
+XLM-R               & 0.6907 & 0.2545 & 0.3043 & 0.2535 & 0.7462 \\
+Urdu-RoBERTa        & 0.6153 & 0.2503 & 0.3500 & 0.2539 & 0.6971 \\
+\bottomrule
+\end{tabular}
+\end{table*}
