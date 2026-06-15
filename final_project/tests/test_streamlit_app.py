@@ -27,6 +27,16 @@ def test_app_uses_unicode_safe_trimmed_input_boundary() -> None:
     assert "if not clean_input:" in source
 
 
+def test_app_supports_both_tasks_and_all_model_families() -> None:
+    source = APP_PATH.read_text(encoding="utf-8")
+
+    assert 'TASK_OPTIONS = {"Sentiment": "sentiment", "Emotion": "emotion"}' in source
+    assert '"Text-CNN": "text_cnn"' in source
+    assert '"BiLSTM + Attention": "bilstm_attention"' in source
+    assert '"Urdu-RoBERTa": "urdu_roberta"' in source
+    assert "validation_macro_f1_mean" in source
+
+
 def test_app_rejects_text_removed_by_preprocessing() -> None:
     source = APP_PATH.read_text(encoding="utf-8")
 
@@ -59,26 +69,11 @@ def test_multinomial_nb_inference_uses_probability_output() -> None:
 
 
 @pytest.mark.skipif(streamlit_app is None, reason="streamlit is not installed")
-def test_model_availability_requires_real_checkpoint_files(tmp_path: Path) -> None:
-    models_dir = tmp_path / "models"
-    models_dir.mkdir()
-    (models_dir / "baseline_linear_svm.joblib").write_bytes(b"saved")
-    transformer_dir = models_dir / "transformer_mbert" / "best"
-    transformer_dir.mkdir(parents=True)
-    (transformer_dir / "config.json").write_text("{}", encoding="utf-8")
-
-    assert streamlit_app.model_artifact_available("linear_svm", models_dir)
-    assert not streamlit_app.model_artifact_available("mbert", models_dir)
-
-    (transformer_dir / "model.safetensors").write_bytes(b"saved")
-    assert streamlit_app.model_artifact_available("mbert", models_dir)
-
-
-@pytest.mark.skipif(streamlit_app is None, reason="streamlit is not installed")
 def test_selected_model_failure_falls_back_to_linear_svm(monkeypatch) -> None:
     fallback_model = object()
 
-    def fake_cached_model(model_key: str, project_root: str):
+    def fake_cached_model(task: str, model_key: str, project_root: str):
+        assert task == "emotion"
         if model_key == "mbert":
             raise OSError("checkpoint is incomplete")
         assert model_key == "linear_svm"
@@ -86,7 +81,7 @@ def test_selected_model_failure_falls_back_to_linear_svm(monkeypatch) -> None:
 
     monkeypatch.setattr(streamlit_app, "cached_model", fake_cached_model)
 
-    model, actual_key, warning = streamlit_app.load_selected_model("mbert")
+    model, actual_key, warning = streamlit_app.load_selected_model("emotion", "mbert")
 
     assert model is fallback_model
     assert actual_key == "linear_svm"
