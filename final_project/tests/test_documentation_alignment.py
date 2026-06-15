@@ -45,3 +45,31 @@ def test_upload_manifest_covers_professor_deliverables() -> None:
         "repository URL",
     ):
         assert item.lower() in manifest.lower()
+
+
+def test_current_submission_materials_describe_the_official_dual_task_run() -> None:
+    current_files = [
+        PROJECT_ROOT / "README.md",
+        *PROJECT_ROOT.joinpath("docs").glob("*.md"),
+        *PROJECT_ROOT.joinpath("notebooks").glob("*.ipynb"),
+    ]
+    combined = "\n".join(path.read_text(encoding="utf-8") for path in current_files)
+
+    assert "517,966" not in combined
+    assert "0.5040" not in combined
+    assert "seven-model" not in combined.lower()
+    assert "sentiment-only" not in combined.lower()
+    assert "36 official runs" in combined
+    assert "validation macro-f1" in combined.lower()
+    assert "weak" in combined.lower()
+
+    readme = read("README.md")
+    for required in (
+        "config_sentiment.yaml",
+        "config_emotion.yaml",
+        "0.4590",
+        "0.2854",
+        "data/splits/sentiment",
+        "data/splits/emotion",
+    ):
+        assert required in readme

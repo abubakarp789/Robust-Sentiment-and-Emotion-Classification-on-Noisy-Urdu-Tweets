@@ -1,0 +1,3951 @@
+{
+  "generated_on": "2026-06-15",
+  "git_commit": "ab81ce55cc7bca109807f387ac14f735f49c6f6d",
+  "protocol": {
+    "tasks": [
+      "sentiment",
+      "emotion"
+    ],
+    "selection_metric": "validation_macro_f1_mean",
+    "classical_neural_seeds": [
+      42,
+      52,
+      62
+    ],
+    "transformer_seeds": [
+      42
+    ],
+    "transformer_sample_size": 50000,
+    "transformer_epochs": 1,
+    "human_gold_evaluation": false,
+    "bootstrap_samples": 1000
+  },
+  "configs": {
+    "config_sentiment.yaml": {
+      "path": "config_sentiment.yaml",
+      "sha256": "2ddcc67215b2ceb544918128394f717d0202b59ac74d31439fd6f0b2da495f57"
+    },
+    "config_emotion.yaml": {
+      "path": "config_emotion.yaml",
+      "sha256": "22f3ddb509023cad63c0d114ea196fb373100fbc635377ba030e7dac755d73a3"
+    }
+  },
+  "tasks": {
+    "sentiment": {
+      "split_summary": {
+        "total_rows_loaded": 1048000,
+        "rows_with_missing_raw_labels": 514571,
+        "rows_with_missing_required_labels": 514571,
+        "rows_removed_empty_or_short_clean_text": 15463,
+        "rows_after_filtering": 446745,
+        "processed_dataset_path": "data/processed/sentiment/dataset.csv",
+        "processed_dataset_rows": 446745,
+        "number_of_classes": 3,
+        "class_distribution_before_split": {
+          "Negative": 57874,
+          "Neutral": 1228,
+          "Positive": 387643
+        },
+        "train_size": 312710,
+        "validation_size": 67016,
+        "test_size": 67019,
+        "train_class_distribution": {
+          "Negative": 40510,
+          "Neutral": 860,
+          "Positive": 271340
+        },
+        "validation_class_distribution": {
+          "Negative": 8681,
+          "Neutral": 184,
+          "Positive": 58151
+        },
+        "test_class_distribution": {
+          "Negative": 8683,
+          "Neutral": 184,
+          "Positive": 58152
+        },
+        "random_seed": 42,
+        "split_ratios": {
+          "train_size": 0.7,
+          "validation_size": 0.15,
+          "test_size": 0.15
+        },
+        "task": "sentiment",
+        "min_text_length_tokens": 2,
+        "group_safety": {
+          "duplicate_groups": 447583,
+          "conflicting_groups_removed": 2198,
+          "rows_removed_in_conflicting_groups": 14069,
+          "rows_removed_as_duplicate": 57152
+        }
+      },
+      "selected_model": {
+        "model_family": "baseline",
+        "model_name": "linear_svm",
+        "canonical_seed": 42,
+        "validation_macro_f1_mean": 0.4578198020206501,
+        "validation_macro_f1_std": 0.0,
+        "test_macro_f1_mean": 0.45904213886862216,
+        "test_macro_f1_std": 0.0,
+        "bootstrap_95": {
+          "samples": 1000,
+          "lower_95": 0.4456062156856101,
+          "median": 0.45854995092053696,
+          "upper_95": 0.4741653329812838
+        },
+        "prediction_path": "outputs/sentiment/runs/baseline/linear_svm/seed_42/predictions/baseline_linear_svm_test_predictions.csv"
+      }
+    },
+    "emotion": {
+      "split_summary": {
+        "total_rows_loaded": 1048000,
+        "rows_with_missing_raw_labels": 514571,
+        "rows_with_missing_required_labels": 514571,
+        "rows_removed_empty_or_short_clean_text": 15463,
+        "rows_after_filtering": 446640,
+        "processed_dataset_path": "data/processed/emotion/dataset.csv",
+        "processed_dataset_rows": 446640,
+        "number_of_classes": 6,
+        "class_distribution_before_split": {
+          "Angry": 2475,
+          "Disgust": 13888,
+          "Fear": 1512,
+          "Joy": 387643,
+          "Sad": 39894,
+          "Surprise": 1228
+        },
+        "train_size": 312643,
+        "validation_size": 66995,
+        "test_size": 67002,
+        "train_class_distribution": {
+          "Angry": 1733,
+          "Disgust": 9721,
+          "Fear": 1058,
+          "Joy": 271348,
+          "Sad": 27923,
+          "Surprise": 860
+        },
+        "validation_class_distribution": {
+          "Angry": 371,
+          "Disgust": 2084,
+          "Fear": 227,
+          "Joy": 58143,
+          "Sad": 5986,
+          "Surprise": 184
+        },
+        "test_class_distribution": {
+          "Angry": 371,
+          "Disgust": 2083,
+          "Fear": 227,
+          "Joy": 58152,
+          "Sad": 5985,
+          "Surprise": 184
+        },
+        "random_seed": 42,
+        "split_ratios": {
+          "train_size": 0.7,
+          "validation_size": 0.15,
+          "test_size": 0.15
+        },
+        "task": "emotion",
+        "min_text_length_tokens": 2,
+        "group_safety": {
+          "duplicate_groups": 447583,
+          "conflicting_groups_removed": 2291,
+          "rows_removed_in_conflicting_groups": 14310,
+          "rows_removed_as_duplicate": 57016
+        }
+      },
+      "selected_model": {
+        "model_family": "baseline",
+        "model_name": "linear_svm",
+        "canonical_seed": 42,
+        "validation_macro_f1_mean": 0.2856214778644834,
+        "validation_macro_f1_std": 0.0,
+        "test_macro_f1_mean": 0.285355785078111,
+        "test_macro_f1_std": 0.0,
+        "bootstrap_95": {
+          "samples": 1000,
+          "lower_95": 0.27493612532297357,
+          "median": 0.28513284170993425,
+          "upper_95": 0.2962284929659635
+        },
+        "prediction_path": "outputs/emotion/runs/baseline/linear_svm/seed_42/predictions/baseline_linear_svm_test_predictions.csv"
+      }
+    }
+  },
+  "runs": [
+    {
+      "task": "sentiment",
+      "family": "baseline",
+      "model": "linear_svm",
+      "seed": 42,
+      "validation": {
+        "accuracy": 0.8459920019099917,
+        "macro_precision": 0.47102889908946494,
+        "macro_recall": 0.45059596500566385,
+        "macro_f1": 0.4578198020206501,
+        "weighted_precision": 0.8415056919104675,
+        "weighted_recall": 0.8459920019099917,
+        "weighted_f1": 0.8436712166998964,
+        "per_class": {
+          "Negative": {
+            "precision": 0.41333657233086357,
+            "recall": 0.39200552931689897,
+            "f1": 0.4023885538607071,
+            "support": 8681
+          },
+          "Neutral": {
+            "precision": 0.09195402298850575,
+            "recall": 0.043478260869565216,
+            "f1": 0.05904059040590406,
+            "support": 184
+          },
+          "Positive": {
+            "precision": 0.9077961019490255,
+            "recall": 0.9163041048305274,
+            "f1": 0.9120302617953392,
+            "support": 58151
+          }
+        }
+      },
+      "test": {
+        "accuracy": 0.8448350467777794,
+        "macro_precision": 0.4755362683001707,
+        "macro_recall": 0.45079357139329335,
+        "macro_f1": 0.45904213886862216,
+        "weighted_precision": 0.8403806925131676,
+        "weighted_recall": 0.8448350467777794,
+        "weighted_f1": 0.8425240934772267,
+        "per_class": {
+          "Negative": {
+            "precision": 0.4082919141714147,
+            "recall": 0.3878843717609121,
+            "f1": 0.39782660051972596,
+            "support": 8683
+          },
+          "Neutral": {
+            "precision": 0.1111111111111111,
+            "recall": 0.04891304347826087,
+            "f1": 0.06792452830188679,
+            "support": 184
+          },
+          "Positive": {
+            "precision": 0.9072057796179863,
+            "recall": 0.9155832989407071,
+            "f1": 0.9113752877842538,
+            "support": 58152
+          }
+        }
+      },
+      "metrics_path": "outputs/sentiment/runs/baseline/linear_svm/seed_42/results/baseline_metrics.json",
+      "artifacts": [
+        {
+          "path": "outputs/sentiment/runs/baseline/linear_svm/seed_42/models/baseline_linear_svm.joblib",
+          "bytes": 3549707
+        }
+      ]
+    },
+    {
+      "task": "sentiment",
+      "family": "baseline",
+      "model": "linear_svm",
+      "seed": 52,
+      "validation": {
+        "accuracy": 0.8459920019099917,
+        "macro_precision": 0.47102889908946494,
+        "macro_recall": 0.45059596500566385,
+        "macro_f1": 0.4578198020206501,
+        "weighted_precision": 0.8415056919104675,
+        "weighted_recall": 0.8459920019099917,
+        "weighted_f1": 0.8436712166998964,
+        "per_class": {
+          "Negative": {
+            "precision": 0.41333657233086357,
+            "recall": 0.39200552931689897,
+            "f1": 0.4023885538607071,
+            "support": 8681
+          },
+          "Neutral": {
+            "precision": 0.09195402298850575,
+            "recall": 0.043478260869565216,
+            "f1": 0.05904059040590406,
+            "support": 184
+          },
+          "Positive": {
+            "precision": 0.9077961019490255,
+            "recall": 0.9163041048305274,
+            "f1": 0.9120302617953392,
+            "support": 58151
+          }
+        }
+      },
+      "test": {
+        "accuracy": 0.8448350467777794,
+        "macro_precision": 0.4755362683001707,
+        "macro_recall": 0.45079357139329335,
+        "macro_f1": 0.45904213886862216,
+        "weighted_precision": 0.8403806925131676,
+        "weighted_recall": 0.8448350467777794,
+        "weighted_f1": 0.8425240934772267,
+        "per_class": {
+          "Negative": {
+            "precision": 0.4082919141714147,
+            "recall": 0.3878843717609121,
+            "f1": 0.39782660051972596,
+            "support": 8683
+          },
+          "Neutral": {
+            "precision": 0.1111111111111111,
+            "recall": 0.04891304347826087,
+            "f1": 0.06792452830188679,
+            "support": 184
+          },
+          "Positive": {
+            "precision": 0.9072057796179863,
+            "recall": 0.9155832989407071,
+            "f1": 0.9113752877842538,
+            "support": 58152
+          }
+        }
+      },
+      "metrics_path": "outputs/sentiment/runs/baseline/linear_svm/seed_52/results/baseline_metrics.json",
+      "artifacts": [
+        {
+          "path": "outputs/sentiment/runs/baseline/linear_svm/seed_52/models/baseline_linear_svm.joblib",
+          "bytes": 3549707
+        }
+      ]
+    },
+    {
+      "task": "sentiment",
+      "family": "baseline",
+      "model": "linear_svm",
+      "seed": 62,
+      "validation": {
+        "accuracy": 0.8459920019099917,
+        "macro_precision": 0.47102889908946494,
+        "macro_recall": 0.45059596500566385,
+        "macro_f1": 0.4578198020206501,
+        "weighted_precision": 0.8415056919104675,
+        "weighted_recall": 0.8459920019099917,
+        "weighted_f1": 0.8436712166998964,
+        "per_class": {
+          "Negative": {
+            "precision": 0.41333657233086357,
+            "recall": 0.39200552931689897,
+            "f1": 0.4023885538607071,
+            "support": 8681
+          },
+          "Neutral": {
+            "precision": 0.09195402298850575,
+            "recall": 0.043478260869565216,
+            "f1": 0.05904059040590406,
+            "support": 184
+          },
+          "Positive": {
+            "precision": 0.9077961019490255,
+            "recall": 0.9163041048305274,
+            "f1": 0.9120302617953392,
+            "support": 58151
+          }
+        }
+      },
+      "test": {
+        "accuracy": 0.8448350467777794,
+        "macro_precision": 0.4755362683001707,
+        "macro_recall": 0.45079357139329335,
+        "macro_f1": 0.45904213886862216,
+        "weighted_precision": 0.8403806925131676,
+        "weighted_recall": 0.8448350467777794,
+        "weighted_f1": 0.8425240934772267,
+        "per_class": {
+          "Negative": {
+            "precision": 0.4082919141714147,
+            "recall": 0.3878843717609121,
+            "f1": 0.39782660051972596,
+            "support": 8683
+          },
+          "Neutral": {
+            "precision": 0.1111111111111111,
+            "recall": 0.04891304347826087,
+            "f1": 0.06792452830188679,
+            "support": 184
+          },
+          "Positive": {
+            "precision": 0.9072057796179863,
+            "recall": 0.9155832989407071,
+            "f1": 0.9113752877842538,
+            "support": 58152
+          }
+        }
+      },
+      "metrics_path": "outputs/sentiment/runs/baseline/linear_svm/seed_62/results/baseline_metrics.json",
+      "artifacts": [
+        {
+          "path": "outputs/sentiment/runs/baseline/linear_svm/seed_62/models/baseline_linear_svm.joblib",
+          "bytes": 3549707
+        }
+      ]
+    },
+    {
+      "task": "sentiment",
+      "family": "baseline",
+      "model": "logistic_regression",
+      "seed": 42,
+      "validation": {
+        "accuracy": 0.7666527396442641,
+        "macro_precision": 0.4199124839305668,
+        "macro_recall": 0.48105809949954953,
+        "macro_f1": 0.4316543978730684,
+        "weighted_precision": 0.8451286458952051,
+        "weighted_recall": 0.7666527396442641,
+        "weighted_f1": 0.7954369239974753,
+        "per_class": {
+          "Negative": {
+            "precision": 0.30647653000594177,
+            "recall": 0.5941711784356641,
+            "f1": 0.4043745835129944,
+            "support": 8681
+          },
+          "Neutral": {
+            "precision": 0.02512562814070352,
+            "recall": 0.05434782608695652,
+            "f1": 0.03436426116838488,
+            "support": 184
+          },
+          "Positive": {
+            "precision": 0.928135293645055,
+            "recall": 0.794655293976028,
+            "f1": 0.856224348937826,
+            "support": 58151
+          }
+        }
+      },
+      "test": {
+        "accuracy": 0.7669317656187051,
+        "macro_precision": 0.4234813794191081,
+        "macro_recall": 0.4868397992068784,
+        "macro_f1": 0.4361440968041888,
+        "weighted_precision": 0.8451552830564122,
+        "weighted_recall": 0.7669317656187051,
+        "weighted_f1": 0.795565891182655,
+        "per_class": {
+          "Negative": {
+            "precision": 0.30648318405599384,
+            "recall": 0.5950708280548198,
+            "f1": 0.4045885208675906,
+            "support": 8683
+          },
+          "Neutral": {
+            "precision": 0.03581267217630854,
+            "recall": 0.07065217391304347,
+            "f1": 0.04753199268738574,
+            "support": 184
+          },
+          "Positive": {
+            "precision": 0.9281482820250216,
+            "recall": 0.794796395652772,
+            "f1": 0.8563117768575902,
+            "support": 58152
+          }
+        }
+      },
+      "metrics_path": "outputs/sentiment/runs/baseline/logistic_regression/seed_42/results/baseline_metrics.json",
+      "artifacts": [
+        {
+          "path": "outputs/sentiment/runs/baseline/logistic_regression/seed_42/models/baseline_logistic_regression.joblib",
+          "bytes": 3531439
+        }
+      ]
+    },
+    {
+      "task": "sentiment",
+      "family": "baseline",
+      "model": "logistic_regression",
+      "seed": 52,
+      "validation": {
+        "accuracy": 0.7666527396442641,
+        "macro_precision": 0.4199124839305668,
+        "macro_recall": 0.48105809949954953,
+        "macro_f1": 0.4316543978730684,
+        "weighted_precision": 0.8451286458952051,
+        "weighted_recall": 0.7666527396442641,
+        "weighted_f1": 0.7954369239974753,
+        "per_class": {
+          "Negative": {
+            "precision": 0.30647653000594177,
+            "recall": 0.5941711784356641,
+            "f1": 0.4043745835129944,
+            "support": 8681
+          },
+          "Neutral": {
+            "precision": 0.02512562814070352,
+            "recall": 0.05434782608695652,
+            "f1": 0.03436426116838488,
+            "support": 184
+          },
+          "Positive": {
+            "precision": 0.928135293645055,
+            "recall": 0.794655293976028,
+            "f1": 0.856224348937826,
+            "support": 58151
+          }
+        }
+      },
+      "test": {
+        "accuracy": 0.7669317656187051,
+        "macro_precision": 0.4234813794191081,
+        "macro_recall": 0.4868397992068784,
+        "macro_f1": 0.4361440968041888,
+        "weighted_precision": 0.8451552830564122,
+        "weighted_recall": 0.7669317656187051,
+        "weighted_f1": 0.795565891182655,
+        "per_class": {
+          "Negative": {
+            "precision": 0.30648318405599384,
+            "recall": 0.5950708280548198,
+            "f1": 0.4045885208675906,
+            "support": 8683
+          },
+          "Neutral": {
+            "precision": 0.03581267217630854,
+            "recall": 0.07065217391304347,
+            "f1": 0.04753199268738574,
+            "support": 184
+          },
+          "Positive": {
+            "precision": 0.9281482820250216,
+            "recall": 0.794796395652772,
+            "f1": 0.8563117768575902,
+            "support": 58152
+          }
+        }
+      },
+      "metrics_path": "outputs/sentiment/runs/baseline/logistic_regression/seed_52/results/baseline_metrics.json",
+      "artifacts": [
+        {
+          "path": "outputs/sentiment/runs/baseline/logistic_regression/seed_52/models/baseline_logistic_regression.joblib",
+          "bytes": 3531440
+        }
+      ]
+    },
+    {
+      "task": "sentiment",
+      "family": "baseline",
+      "model": "logistic_regression",
+      "seed": 62,
+      "validation": {
+        "accuracy": 0.7666527396442641,
+        "macro_precision": 0.4199124839305668,
+        "macro_recall": 0.48105809949954953,
+        "macro_f1": 0.4316543978730684,
+        "weighted_precision": 0.8451286458952051,
+        "weighted_recall": 0.7666527396442641,
+        "weighted_f1": 0.7954369239974753,
+        "per_class": {
+          "Negative": {
+            "precision": 0.30647653000594177,
+            "recall": 0.5941711784356641,
+            "f1": 0.4043745835129944,
+            "support": 8681
+          },
+          "Neutral": {
+            "precision": 0.02512562814070352,
+            "recall": 0.05434782608695652,
+            "f1": 0.03436426116838488,
+            "support": 184
+          },
+          "Positive": {
+            "precision": 0.928135293645055,
+            "recall": 0.794655293976028,
+            "f1": 0.856224348937826,
+            "support": 58151
+          }
+        }
+      },
+      "test": {
+        "accuracy": 0.7669317656187051,
+        "macro_precision": 0.4234813794191081,
+        "macro_recall": 0.4868397992068784,
+        "macro_f1": 0.4361440968041888,
+        "weighted_precision": 0.8451552830564122,
+        "weighted_recall": 0.7669317656187051,
+        "weighted_f1": 0.795565891182655,
+        "per_class": {
+          "Negative": {
+            "precision": 0.30648318405599384,
+            "recall": 0.5950708280548198,
+            "f1": 0.4045885208675906,
+            "support": 8683
+          },
+          "Neutral": {
+            "precision": 0.03581267217630854,
+            "recall": 0.07065217391304347,
+            "f1": 0.04753199268738574,
+            "support": 184
+          },
+          "Positive": {
+            "precision": 0.9281482820250216,
+            "recall": 0.794796395652772,
+            "f1": 0.8563117768575902,
+            "support": 58152
+          }
+        }
+      },
+      "metrics_path": "outputs/sentiment/runs/baseline/logistic_regression/seed_62/results/baseline_metrics.json",
+      "artifacts": [
+        {
+          "path": "outputs/sentiment/runs/baseline/logistic_regression/seed_62/models/baseline_logistic_regression.joblib",
+          "bytes": 3531439
+        }
+      ]
+    },
+    {
+      "task": "sentiment",
+      "family": "baseline",
+      "model": "multinomial_nb",
+      "seed": 42,
+      "validation": {
+        "accuracy": 0.8811925510325892,
+        "macro_precision": 0.5720380365252273,
+        "macro_recall": 0.37525857255324707,
+        "macro_f1": 0.3866797041666141,
+        "weighted_precision": 0.8734957608944581,
+        "weighted_recall": 0.8811925510325892,
+        "weighted_f1": 0.8409928495263771,
+        "per_class": {
+          "Negative": {
+            "precision": 0.8339510748702743,
+            "recall": 0.12959336481972122,
+            "f1": 0.22432701894317048,
+            "support": 8681
+          },
+          "Neutral": {
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0,
+            "support": 184
+          },
+          "Positive": {
+            "precision": 0.8821630347054076,
+            "recall": 0.99618235284002,
+            "f1": 0.9357120935566718,
+            "support": 58151
+          }
+        }
+      },
+      "test": {
+        "accuracy": 0.8799743356361629,
+        "macro_precision": 0.5673588248031532,
+        "macro_recall": 0.3723407947257256,
+        "macro_f1": 0.3819632231813968,
+        "weighted_precision": 0.8709080131662046,
+        "weighted_recall": 0.8799743356361629,
+        "weighted_f1": 0.8386824515335433,
+        "per_class": {
+          "Negative": {
+            "precision": 0.8209538702111024,
+            "recall": 0.12092594725325348,
+            "f1": 0.21080104396707489,
+            "support": 8683
+          },
+          "Neutral": {
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0,
+            "support": 184
+          },
+          "Positive": {
+            "precision": 0.8811226041983572,
+            "recall": 0.9960964369239235,
+            "f1": 0.9350886255771156,
+            "support": 58152
+          }
+        }
+      },
+      "metrics_path": "outputs/sentiment/runs/baseline/multinomial_nb/seed_42/results/baseline_metrics.json",
+      "artifacts": [
+        {
+          "path": "outputs/sentiment/runs/baseline/multinomial_nb/seed_42/models/baseline_multinomial_nb.joblib",
+          "bytes": 3576195
+        }
+      ]
+    },
+    {
+      "task": "sentiment",
+      "family": "baseline",
+      "model": "multinomial_nb",
+      "seed": 52,
+      "validation": {
+        "accuracy": 0.8811925510325892,
+        "macro_precision": 0.5720380365252273,
+        "macro_recall": 0.37525857255324707,
+        "macro_f1": 0.3866797041666141,
+        "weighted_precision": 0.8734957608944581,
+        "weighted_recall": 0.8811925510325892,
+        "weighted_f1": 0.8409928495263771,
+        "per_class": {
+          "Negative": {
+            "precision": 0.8339510748702743,
+            "recall": 0.12959336481972122,
+            "f1": 0.22432701894317048,
+            "support": 8681
+          },
+          "Neutral": {
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0,
+            "support": 184
+          },
+          "Positive": {
+            "precision": 0.8821630347054076,
+            "recall": 0.99618235284002,
+            "f1": 0.9357120935566718,
+            "support": 58151
+          }
+        }
+      },
+      "test": {
+        "accuracy": 0.8799743356361629,
+        "macro_precision": 0.5673588248031532,
+        "macro_recall": 0.3723407947257256,
+        "macro_f1": 0.3819632231813968,
+        "weighted_precision": 0.8709080131662046,
+        "weighted_recall": 0.8799743356361629,
+        "weighted_f1": 0.8386824515335433,
+        "per_class": {
+          "Negative": {
+            "precision": 0.8209538702111024,
+            "recall": 0.12092594725325348,
+            "f1": 0.21080104396707489,
+            "support": 8683
+          },
+          "Neutral": {
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0,
+            "support": 184
+          },
+          "Positive": {
+            "precision": 0.8811226041983572,
+            "recall": 0.9960964369239235,
+            "f1": 0.9350886255771156,
+            "support": 58152
+          }
+        }
+      },
+      "metrics_path": "outputs/sentiment/runs/baseline/multinomial_nb/seed_52/results/baseline_metrics.json",
+      "artifacts": [
+        {
+          "path": "outputs/sentiment/runs/baseline/multinomial_nb/seed_52/models/baseline_multinomial_nb.joblib",
+          "bytes": 3576195
+        }
+      ]
+    },
+    {
+      "task": "sentiment",
+      "family": "baseline",
+      "model": "multinomial_nb",
+      "seed": 62,
+      "validation": {
+        "accuracy": 0.8811925510325892,
+        "macro_precision": 0.5720380365252273,
+        "macro_recall": 0.37525857255324707,
+        "macro_f1": 0.3866797041666141,
+        "weighted_precision": 0.8734957608944581,
+        "weighted_recall": 0.8811925510325892,
+        "weighted_f1": 0.8409928495263771,
+        "per_class": {
+          "Negative": {
+            "precision": 0.8339510748702743,
+            "recall": 0.12959336481972122,
+            "f1": 0.22432701894317048,
+            "support": 8681
+          },
+          "Neutral": {
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0,
+            "support": 184
+          },
+          "Positive": {
+            "precision": 0.8821630347054076,
+            "recall": 0.99618235284002,
+            "f1": 0.9357120935566718,
+            "support": 58151
+          }
+        }
+      },
+      "test": {
+        "accuracy": 0.8799743356361629,
+        "macro_precision": 0.5673588248031532,
+        "macro_recall": 0.3723407947257256,
+        "macro_f1": 0.3819632231813968,
+        "weighted_precision": 0.8709080131662046,
+        "weighted_recall": 0.8799743356361629,
+        "weighted_f1": 0.8386824515335433,
+        "per_class": {
+          "Negative": {
+            "precision": 0.8209538702111024,
+            "recall": 0.12092594725325348,
+            "f1": 0.21080104396707489,
+            "support": 8683
+          },
+          "Neutral": {
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0,
+            "support": 184
+          },
+          "Positive": {
+            "precision": 0.8811226041983572,
+            "recall": 0.9960964369239235,
+            "f1": 0.9350886255771156,
+            "support": 58152
+          }
+        }
+      },
+      "metrics_path": "outputs/sentiment/runs/baseline/multinomial_nb/seed_62/results/baseline_metrics.json",
+      "artifacts": [
+        {
+          "path": "outputs/sentiment/runs/baseline/multinomial_nb/seed_62/models/baseline_multinomial_nb.joblib",
+          "bytes": 3576195
+        }
+      ]
+    },
+    {
+      "task": "sentiment",
+      "family": "neural",
+      "model": "bilstm_attention",
+      "seed": 42,
+      "validation": {
+        "accuracy": 0.7492539095141458,
+        "macro_precision": 0.41462186087016817,
+        "macro_recall": 0.4823583542734033,
+        "macro_f1": 0.4249098042656579,
+        "weighted_precision": 0.8409785366926188,
+        "weighted_recall": 0.7492539095141458,
+        "weighted_f1": 0.7824499143378153,
+        "per_class": {
+          "Negative": {
+            "precision": 0.2868655212938609,
+            "recall": 0.5904849671696809,
+            "f1": 0.38613935969868174,
+            "support": 8681
+          },
+          "Neutral": {
+            "precision": 0.030737704918032786,
+            "recall": 0.08152173913043478,
+            "f1": 0.044642857142857144,
+            "support": 184
+          },
+          "Positive": {
+            "precision": 0.9262623563986108,
+            "recall": 0.7750683565200942,
+            "f1": 0.8439471959554349,
+            "support": 58151
+          }
+        }
+      },
+      "test": {
+        "accuracy": 0.7485787612468106,
+        "macro_precision": 0.4120688530246313,
+        "macro_recall": 0.4747309524735755,
+        "macro_f1": 0.42084553391021845,
+        "weighted_precision": 0.8413395028409372,
+        "weighted_recall": 0.7485787612468106,
+        "weighted_f1": 0.7819448546332441,
+        "per_class": {
+          "Negative": {
+            "precision": 0.2871561668145519,
+            "recall": 0.5963376713117586,
+            "f1": 0.3876473891072431,
+            "support": 8683
+          },
+          "Neutral": {
+            "precision": 0.02237136465324385,
+            "recall": 0.05434782608695652,
+            "f1": 0.03169572107765452,
+            "support": 184
+          },
+          "Positive": {
+            "precision": 0.9266790276060981,
+            "recall": 0.7735073600220113,
+            "f1": 0.8431934915457578,
+            "support": 58152
+          }
+        }
+      },
+      "metrics_path": "outputs/sentiment/runs/neural/bilstm_attention/seed_42/results/neural_metrics.json",
+      "artifacts": [
+        {
+          "path": "outputs/sentiment/runs/neural/bilstm_attention/seed_42/models/neural_bilstm_attention.pt",
+          "bytes": 62033930
+        },
+        {
+          "path": "outputs/sentiment/runs/neural/bilstm_attention/seed_42/models/neural_label_mapping.json",
+          "bytes": 177
+        },
+        {
+          "path": "outputs/sentiment/runs/neural/bilstm_attention/seed_42/models/neural_vocab.json",
+          "bytes": 1205892
+        }
+      ]
+    },
+    {
+      "task": "sentiment",
+      "family": "neural",
+      "model": "bilstm_attention",
+      "seed": 52,
+      "validation": {
+        "accuracy": 0.7384803628984123,
+        "macro_precision": 0.4111671462943627,
+        "macro_recall": 0.48213036218726985,
+        "macro_f1": 0.4190429443713887,
+        "weighted_precision": 0.841964896412549,
+        "weighted_recall": 0.7384803628984123,
+        "weighted_f1": 0.7750078588568924,
+        "per_class": {
+          "Negative": {
+            "precision": 0.2813694267515924,
+            "recall": 0.6106439350305264,
+            "f1": 0.38523309472766254,
+            "support": 8681
+          },
+          "Neutral": {
+            "precision": 0.023890784982935155,
+            "recall": 0.07608695652173914,
+            "f1": 0.03636363636363636,
+            "support": 184
+          },
+          "Positive": {
+            "precision": 0.9282412271485606,
+            "recall": 0.7596601950095441,
+            "f1": 0.8355321020228672,
+            "support": 58151
+          }
+        }
+      },
+      "test": {
+        "accuracy": 0.7381339620107731,
+        "macro_precision": 0.40986109067839266,
+        "macro_recall": 0.47864093886241754,
+        "macro_f1": 0.4170036877760073,
+        "weighted_precision": 0.8421388079443003,
+        "weighted_recall": 0.7381339620107731,
+        "weighted_f1": 0.7748432464763993,
+        "per_class": {
+          "Negative": {
+            "precision": 0.28163784873236447,
+            "recall": 0.6115397903950247,
+            "f1": 0.38566292624468895,
+            "support": 8683
+          },
+          "Neutral": {
+            "precision": 0.01951219512195122,
+            "recall": 0.06521739130434782,
+            "f1": 0.030037546933667083,
+            "support": 184
+          },
+          "Positive": {
+            "precision": 0.9284332281808623,
+            "recall": 0.75916563488788,
+            "f1": 0.835310590149666,
+            "support": 58152
+          }
+        }
+      },
+      "metrics_path": "outputs/sentiment/runs/neural/bilstm_attention/seed_52/results/neural_metrics.json",
+      "artifacts": [
+        {
+          "path": "outputs/sentiment/runs/neural/bilstm_attention/seed_52/models/neural_bilstm_attention.pt",
+          "bytes": 62033930
+        },
+        {
+          "path": "outputs/sentiment/runs/neural/bilstm_attention/seed_52/models/neural_label_mapping.json",
+          "bytes": 177
+        },
+        {
+          "path": "outputs/sentiment/runs/neural/bilstm_attention/seed_52/models/neural_vocab.json",
+          "bytes": 1205892
+        }
+      ]
+    },
+    {
+      "task": "sentiment",
+      "family": "neural",
+      "model": "bilstm_attention",
+      "seed": 62,
+      "validation": {
+        "accuracy": 0.7539095141458756,
+        "macro_precision": 0.41480002942222,
+        "macro_recall": 0.47873845688240485,
+        "macro_f1": 0.4253209747297379,
+        "weighted_precision": 0.8407228910992892,
+        "weighted_recall": 0.7539095141458756,
+        "weighted_f1": 0.7856311362978848,
+        "per_class": {
+          "Negative": {
+            "precision": 0.2904519159172919,
+            "recall": 0.5841492915562723,
+            "f1": 0.38798775822494264,
+            "support": 8681
+          },
+          "Neutral": {
+            "precision": 0.02850877192982456,
+            "recall": 0.07065217391304347,
+            "f1": 0.040625,
+            "support": 184
+          },
+          "Positive": {
+            "precision": 0.9254394004195434,
+            "recall": 0.7814139051778989,
+            "f1": 0.847350165964271,
+            "support": 58151
+          }
+        }
+      },
+      "test": {
+        "accuracy": 0.7530401826347752,
+        "macro_precision": 0.415310691767616,
+        "macro_recall": 0.4813267123481697,
+        "macro_f1": 0.4262254941963963,
+        "weighted_precision": 0.840340525093568,
+        "weighted_recall": 0.7530401826347752,
+        "weighted_f1": 0.7849819240578558,
+        "per_class": {
+          "Negative": {
+            "precision": 0.2890745721971041,
+            "recall": 0.5817113900725556,
+            "f1": 0.3862211347300811,
+            "support": 8683
+          },
+          "Neutral": {
+            "precision": 0.03164556962025317,
+            "recall": 0.08152173913043478,
+            "f1": 0.04559270516717325,
+            "support": 184
+          },
+          "Positive": {
+            "precision": 0.9252119334854907,
+            "recall": 0.7807470078415187,
+            "f1": 0.8468626426919347,
+            "support": 58152
+          }
+        }
+      },
+      "metrics_path": "outputs/sentiment/runs/neural/bilstm_attention/seed_62/results/neural_metrics.json",
+      "artifacts": [
+        {
+          "path": "outputs/sentiment/runs/neural/bilstm_attention/seed_62/models/neural_bilstm_attention.pt",
+          "bytes": 62033930
+        },
+        {
+          "path": "outputs/sentiment/runs/neural/bilstm_attention/seed_62/models/neural_label_mapping.json",
+          "bytes": 177
+        },
+        {
+          "path": "outputs/sentiment/runs/neural/bilstm_attention/seed_62/models/neural_vocab.json",
+          "bytes": 1205892
+        }
+      ]
+    },
+    {
+      "task": "sentiment",
+      "family": "neural",
+      "model": "text_cnn",
+      "seed": 42,
+      "validation": {
+        "accuracy": 0.7475677450161156,
+        "macro_precision": 0.41049106224412985,
+        "macro_recall": 0.47783262273328214,
+        "macro_f1": 0.4202090018379668,
+        "weighted_precision": 0.8379881120601549,
+        "weighted_recall": 0.7475677450161156,
+        "weighted_f1": 0.7809114573302998,
+        "per_class": {
+          "Negative": {
+            "precision": 0.2828421293123144,
+            "recall": 0.5704411934108974,
+            "f1": 0.378174042536943,
+            "support": 8681
+          },
+          "Neutral": {
+            "precision": 0.025196850393700787,
+            "recall": 0.08695652173913043,
+            "f1": 0.03907203907203907,
+            "support": 184
+          },
+          "Positive": {
+            "precision": 0.9234342070263745,
+            "recall": 0.7761001530498186,
+            "f1": 0.8433809239049185,
+            "support": 58151
+          }
+        }
+      },
+      "test": {
+        "accuracy": 0.7492800549098017,
+        "macro_precision": 0.41239766538662215,
+        "macro_recall": 0.47989194445754596,
+        "macro_f1": 0.42265164564738783,
+        "weighted_precision": 0.8389850953972622,
+        "weighted_recall": 0.7492800549098017,
+        "weighted_f1": 0.7822244068469818,
+        "per_class": {
+          "Negative": {
+            "precision": 0.28476972184222527,
+            "recall": 0.5753771737878614,
+            "f1": 0.3809814313493728,
+            "support": 8683
+          },
+          "Neutral": {
+            "precision": 0.028119507908611598,
+            "recall": 0.08695652173913043,
+            "f1": 0.04249667994687915,
+            "support": 184
+          },
+          "Positive": {
+            "precision": 0.9243037664090296,
+            "recall": 0.7773421378456459,
+            "f1": 0.8444768256459115,
+            "support": 58152
+          }
+        }
+      },
+      "metrics_path": "outputs/sentiment/runs/neural/text_cnn/seed_42/results/neural_metrics.json",
+      "artifacts": [
+        {
+          "path": "outputs/sentiment/runs/neural/text_cnn/seed_42/models/neural_label_mapping.json",
+          "bytes": 177
+        },
+        {
+          "path": "outputs/sentiment/runs/neural/text_cnn/seed_42/models/neural_text_cnn.pt",
+          "bytes": 61854532
+        },
+        {
+          "path": "outputs/sentiment/runs/neural/text_cnn/seed_42/models/neural_vocab.json",
+          "bytes": 1205892
+        }
+      ]
+    },
+    {
+      "task": "sentiment",
+      "family": "neural",
+      "model": "text_cnn",
+      "seed": 52,
+      "validation": {
+        "accuracy": 0.849319565476901,
+        "macro_precision": 0.4497020392700541,
+        "macro_recall": 0.4320134209666644,
+        "macro_f1": 0.43758598751467837,
+        "weighted_precision": 0.8362982861192734,
+        "weighted_recall": 0.849319565476901,
+        "weighted_f1": 0.8416821414944311,
+        "per_class": {
+          "Negative": {
+            "precision": 0.423998786407767,
+            "recall": 0.32196751526321854,
+            "f1": 0.3660053689517449,
+            "support": 8681
+          },
+          "Neutral": {
+            "precision": 0.024691358024691357,
+            "recall": 0.043478260869565216,
+            "f1": 0.031496062992125984,
+            "support": 184
+          },
+          "Positive": {
+            "precision": 0.9004159733777038,
+            "recall": 0.9305944867672095,
+            "f1": 0.9152565306001641,
+            "support": 58151
+          }
+        }
+      },
+      "test": {
+        "accuracy": 0.8490577298974917,
+        "macro_precision": 0.446676047745236,
+        "macro_recall": 0.42688140613028697,
+        "macro_f1": 0.4337163328995693,
+        "weighted_precision": 0.8353694138005975,
+        "weighted_recall": 0.8490577298974917,
+        "weighted_f1": 0.8410344293736126,
+        "per_class": {
+          "Negative": {
+            "precision": 0.42060217025829133,
+            "recall": 0.31694114937233675,
+            "f1": 0.36148693025088663,
+            "support": 8683
+          },
+          "Neutral": {
+            "precision": 0.019543973941368076,
+            "recall": 0.03260869565217391,
+            "f1": 0.024439918533604887,
+            "support": 184
+          },
+          "Positive": {
+            "precision": 0.8998819990360485,
+            "recall": 0.9310943733663503,
+            "f1": 0.9152221499142165,
+            "support": 58152
+          }
+        }
+      },
+      "metrics_path": "outputs/sentiment/runs/neural/text_cnn/seed_52/results/neural_metrics.json",
+      "artifacts": [
+        {
+          "path": "outputs/sentiment/runs/neural/text_cnn/seed_52/models/neural_label_mapping.json",
+          "bytes": 177
+        },
+        {
+          "path": "outputs/sentiment/runs/neural/text_cnn/seed_52/models/neural_text_cnn.pt",
+          "bytes": 61854532
+        },
+        {
+          "path": "outputs/sentiment/runs/neural/text_cnn/seed_52/models/neural_vocab.json",
+          "bytes": 1205892
+        }
+      ]
+    },
+    {
+      "task": "sentiment",
+      "family": "neural",
+      "model": "text_cnn",
+      "seed": 62,
+      "validation": {
+        "accuracy": 0.8289960606422347,
+        "macro_precision": 0.437488103192374,
+        "macro_recall": 0.45545747698174144,
+        "macro_f1": 0.4409799846151748,
+        "weighted_precision": 0.8374345315523073,
+        "weighted_recall": 0.8289960606422347,
+        "weighted_f1": 0.8331330346328721,
+        "per_class": {
+          "Negative": {
+            "precision": 0.38491840180078785,
+            "recall": 0.39396382905195254,
+            "f1": 0.3893885915974041,
+            "support": 8681
+          },
+          "Neutral": {
+            "precision": 0.019971469329529243,
+            "recall": 0.07608695652173914,
+            "f1": 0.031638418079096044,
+            "support": 184
+          },
+          "Positive": {
+            "precision": 0.9075744384468049,
+            "recall": 0.8963216453715327,
+            "f1": 0.9019129441690243,
+            "support": 58151
+          }
+        }
+      },
+      "test": {
+        "accuracy": 0.8270639669347498,
+        "macro_precision": 0.4351977378718186,
+        "macro_recall": 0.45417160064950496,
+        "macro_f1": 0.43957966273200216,
+        "weighted_precision": 0.835922872675116,
+        "weighted_recall": 0.8270639669347498,
+        "weighted_f1": 0.8313939283939799,
+        "per_class": {
+          "Negative": {
+            "precision": 0.37684047381822205,
+            "recall": 0.39203040423816654,
+            "f1": 0.38428539173628357,
+            "support": 8683
+          },
+          "Neutral": {
+            "precision": 0.021705426356589147,
+            "recall": 0.07608695652173914,
+            "f1": 0.033775633293124246,
+            "support": 184
+          },
+          "Positive": {
+            "precision": 0.9070473134406446,
+            "recall": 0.8943974411886092,
+            "f1": 0.9006779631665989,
+            "support": 58152
+          }
+        }
+      },
+      "metrics_path": "outputs/sentiment/runs/neural/text_cnn/seed_62/results/neural_metrics.json",
+      "artifacts": [
+        {
+          "path": "outputs/sentiment/runs/neural/text_cnn/seed_62/models/neural_label_mapping.json",
+          "bytes": 177
+        },
+        {
+          "path": "outputs/sentiment/runs/neural/text_cnn/seed_62/models/neural_text_cnn.pt",
+          "bytes": 61854532
+        },
+        {
+          "path": "outputs/sentiment/runs/neural/text_cnn/seed_62/models/neural_vocab.json",
+          "bytes": 1205892
+        }
+      ]
+    },
+    {
+      "task": "sentiment",
+      "family": "transformer",
+      "model": "mbert",
+      "seed": 42,
+      "validation": {
+        "accuracy": 0.8667780828458875,
+        "macro_precision": 0.45970074574421704,
+        "macro_recall": 0.39297933623774767,
+        "macro_f1": 0.4073809819861673,
+        "weighted_precision": 0.8349648763355608,
+        "weighted_recall": 0.8667780828458875,
+        "weighted_f1": 0.8422873381840542,
+        "per_class": {
+          "Negative": {
+            "precision": 0.48999733262203254,
+            "recall": 0.21161156548784701,
+            "f1": 0.29557522123893804,
+            "support": 8681
+          },
+          "Neutral": {
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0,
+            "support": 184
+          },
+          "Positive": {
+            "precision": 0.8891049046106185,
+            "recall": 0.967326443225396,
+            "f1": 0.9265677247195638,
+            "support": 58151
+          }
+        }
+      },
+      "test": {
+        "accuracy": 0.8676047091123412,
+        "macro_precision": 0.4623230879337817,
+        "macro_recall": 0.39296343542972373,
+        "macro_f1": 0.40762300241033156,
+        "weighted_precision": 0.8359071139373654,
+        "weighted_recall": 0.8676047091123412,
+        "weighted_f1": 0.8427197262511577,
+        "per_class": {
+          "Negative": {
+            "precision": 0.49795584627964024,
+            "recall": 0.21041114822066107,
+            "f1": 0.2958225388601036,
+            "support": 8683
+          },
+          "Neutral": {
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0,
+            "support": 184
+          },
+          "Positive": {
+            "precision": 0.8890134175217048,
+            "recall": 0.9684791580685101,
+            "f1": 0.927046468370891,
+            "support": 58152
+          }
+        }
+      },
+      "metrics_path": "outputs/sentiment/runs/transformer/mbert/seed_42/results/transformer_metrics.json",
+      "artifacts": [
+        {
+          "path": "outputs/sentiment/runs/transformer/mbert/seed_42/models/transformer_label_mapping.json",
+          "bytes": 177
+        },
+        {
+          "path": "outputs/sentiment/runs/transformer/mbert/seed_42/models/transformer_mbert/best/config.json",
+          "bytes": 987
+        },
+        {
+          "path": "outputs/sentiment/runs/transformer/mbert/seed_42/models/transformer_mbert/best/model.safetensors",
+          "bytes": 711446532
+        },
+        {
+          "path": "outputs/sentiment/runs/transformer/mbert/seed_42/models/transformer_mbert/best/special_tokens_map.json",
+          "bytes": 132
+        },
+        {
+          "path": "outputs/sentiment/runs/transformer/mbert/seed_42/models/transformer_mbert/best/tokenizer.json",
+          "bytes": 2919459
+        },
+        {
+          "path": "outputs/sentiment/runs/transformer/mbert/seed_42/models/transformer_mbert/best/tokenizer_config.json",
+          "bytes": 1278
+        },
+        {
+          "path": "outputs/sentiment/runs/transformer/mbert/seed_42/models/transformer_mbert/best/training_args.bin",
+          "bytes": 6097
+        },
+        {
+          "path": "outputs/sentiment/runs/transformer/mbert/seed_42/models/transformer_mbert/best/vocab.txt",
+          "bytes": 995526
+        },
+        {
+          "path": "outputs/sentiment/runs/transformer/mbert/seed_42/models/transformer_mbert/hf_checkpoints/checkpoint-3125/config.json",
+          "bytes": 987
+        },
+        {
+          "path": "outputs/sentiment/runs/transformer/mbert/seed_42/models/transformer_mbert/hf_checkpoints/checkpoint-3125/model.safetensors",
+          "bytes": 711446532
+        },
+        {
+          "path": "outputs/sentiment/runs/transformer/mbert/seed_42/models/transformer_mbert/hf_checkpoints/checkpoint-3125/optimizer.pt",
+          "bytes": 1423017355
+        },
+        {
+          "path": "outputs/sentiment/runs/transformer/mbert/seed_42/models/transformer_mbert/hf_checkpoints/checkpoint-3125/rng_state.pth",
+          "bytes": 14645
+        },
+        {
+          "path": "outputs/sentiment/runs/transformer/mbert/seed_42/models/transformer_mbert/hf_checkpoints/checkpoint-3125/scaler.pt",
+          "bytes": 1383
+        },
+        {
+          "path": "outputs/sentiment/runs/transformer/mbert/seed_42/models/transformer_mbert/hf_checkpoints/checkpoint-3125/scheduler.pt",
+          "bytes": 1465
+        },
+        {
+          "path": "outputs/sentiment/runs/transformer/mbert/seed_42/models/transformer_mbert/hf_checkpoints/checkpoint-3125/special_tokens_map.json",
+          "bytes": 132
+        },
+        {
+          "path": "outputs/sentiment/runs/transformer/mbert/seed_42/models/transformer_mbert/hf_checkpoints/checkpoint-3125/tokenizer.json",
+          "bytes": 2919459
+        },
+        {
+          "path": "outputs/sentiment/runs/transformer/mbert/seed_42/models/transformer_mbert/hf_checkpoints/checkpoint-3125/tokenizer_config.json",
+          "bytes": 1278
+        },
+        {
+          "path": "outputs/sentiment/runs/transformer/mbert/seed_42/models/transformer_mbert/hf_checkpoints/checkpoint-3125/trainer_state.json",
+          "bytes": 11904
+        },
+        {
+          "path": "outputs/sentiment/runs/transformer/mbert/seed_42/models/transformer_mbert/hf_checkpoints/checkpoint-3125/training_args.bin",
+          "bytes": 6097
+        },
+        {
+          "path": "outputs/sentiment/runs/transformer/mbert/seed_42/models/transformer_mbert/hf_checkpoints/checkpoint-3125/vocab.txt",
+          "bytes": 995526
+        }
+      ]
+    },
+    {
+      "task": "sentiment",
+      "family": "transformer",
+      "model": "urdu_roberta",
+      "seed": 42,
+      "validation": {
+        "accuracy": 0.8747015638056583,
+        "macro_precision": 0.4857496487008695,
+        "macro_recall": 0.39942038243252,
+        "macro_f1": 0.41722997247300664,
+        "weighted_precision": 0.8467521801690969,
+        "weighted_recall": 0.8747015638056583,
+        "weighted_f1": 0.849500886739478,
+        "per_class": {
+          "Negative": {
+            "precision": 0.5658892128279883,
+            "recall": 0.22359175210229237,
+            "f1": 0.3205350507802824,
+            "support": 8681
+          },
+          "Neutral": {
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0,
+            "support": 184
+          },
+          "Positive": {
+            "precision": 0.8913597332746201,
+            "recall": 0.9746693951952675,
+            "f1": 0.9311548666387376,
+            "support": 58151
+          }
+        }
+      },
+      "test": {
+        "accuracy": 0.8729017144391888,
+        "macro_precision": 0.4798820004917535,
+        "macro_recall": 0.3968271292542361,
+        "macro_f1": 0.41369342458877995,
+        "weighted_precision": 0.8437156381046382,
+        "weighted_recall": 0.8729017144391888,
+        "weighted_f1": 0.8473502913244314,
+        "per_class": {
+          "Negative": {
+            "precision": 0.5492998833138857,
+            "recall": 0.21686053207416792,
+            "f1": 0.3109569812567088,
+            "support": 8683
+          },
+          "Neutral": {
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0,
+            "support": 184
+          },
+          "Positive": {
+            "precision": 0.890346118161375,
+            "recall": 0.9736208556885404,
+            "f1": 0.930123292509631,
+            "support": 58152
+          }
+        }
+      },
+      "metrics_path": "outputs/sentiment/runs/transformer/urdu_roberta/seed_42/results/transformer_metrics.json",
+      "artifacts": [
+        {
+          "path": "outputs/sentiment/runs/transformer/urdu_roberta/seed_42/models/transformer_label_mapping.json",
+          "bytes": 177
+        },
+        {
+          "path": "outputs/sentiment/runs/transformer/urdu_roberta/seed_42/models/transformer_urdu_roberta/best/config.json",
+          "bytes": 875
+        },
+        {
+          "path": "outputs/sentiment/runs/transformer/urdu_roberta/seed_42/models/transformer_urdu_roberta/best/merges.txt",
+          "bytes": 1150119
+        },
+        {
+          "path": "outputs/sentiment/runs/transformer/urdu_roberta/seed_42/models/transformer_urdu_roberta/best/model.safetensors",
+          "bytes": 503945820
+        },
+        {
+          "path": "outputs/sentiment/runs/transformer/urdu_roberta/seed_42/models/transformer_urdu_roberta/best/special_tokens_map.json",
+          "bytes": 1008
+        },
+        {
+          "path": "outputs/sentiment/runs/transformer/urdu_roberta/seed_42/models/transformer_urdu_roberta/best/tokenizer.json",
+          "bytes": 5037993
+        },
+        {
+          "path": "outputs/sentiment/runs/transformer/urdu_roberta/seed_42/models/transformer_urdu_roberta/best/tokenizer_config.json",
+          "bytes": 1359
+        },
+        {
+          "path": "outputs/sentiment/runs/transformer/urdu_roberta/seed_42/models/transformer_urdu_roberta/best/training_args.bin",
+          "bytes": 6097
+        },
+        {
+          "path": "outputs/sentiment/runs/transformer/urdu_roberta/seed_42/models/transformer_urdu_roberta/best/vocab.json",
+          "bytes": 1503982
+        },
+        {
+          "path": "outputs/sentiment/runs/transformer/urdu_roberta/seed_42/models/transformer_urdu_roberta/hf_checkpoints/checkpoint-3125/config.json",
+          "bytes": 875
+        },
+        {
+          "path": "outputs/sentiment/runs/transformer/urdu_roberta/seed_42/models/transformer_urdu_roberta/hf_checkpoints/checkpoint-3125/merges.txt",
+          "bytes": 1150119
+        },
+        {
+          "path": "outputs/sentiment/runs/transformer/urdu_roberta/seed_42/models/transformer_urdu_roberta/hf_checkpoints/checkpoint-3125/model.safetensors",
+          "bytes": 503945820
+        },
+        {
+          "path": "outputs/sentiment/runs/transformer/urdu_roberta/seed_42/models/transformer_urdu_roberta/hf_checkpoints/checkpoint-3125/optimizer.pt",
+          "bytes": 1008014731
+        },
+        {
+          "path": "outputs/sentiment/runs/transformer/urdu_roberta/seed_42/models/transformer_urdu_roberta/hf_checkpoints/checkpoint-3125/rng_state.pth",
+          "bytes": 14645
+        },
+        {
+          "path": "outputs/sentiment/runs/transformer/urdu_roberta/seed_42/models/transformer_urdu_roberta/hf_checkpoints/checkpoint-3125/scaler.pt",
+          "bytes": 1383
+        },
+        {
+          "path": "outputs/sentiment/runs/transformer/urdu_roberta/seed_42/models/transformer_urdu_roberta/hf_checkpoints/checkpoint-3125/scheduler.pt",
+          "bytes": 1465
+        },
+        {
+          "path": "outputs/sentiment/runs/transformer/urdu_roberta/seed_42/models/transformer_urdu_roberta/hf_checkpoints/checkpoint-3125/special_tokens_map.json",
+          "bytes": 1008
+        },
+        {
+          "path": "outputs/sentiment/runs/transformer/urdu_roberta/seed_42/models/transformer_urdu_roberta/hf_checkpoints/checkpoint-3125/tokenizer.json",
+          "bytes": 5037993
+        },
+        {
+          "path": "outputs/sentiment/runs/transformer/urdu_roberta/seed_42/models/transformer_urdu_roberta/hf_checkpoints/checkpoint-3125/tokenizer_config.json",
+          "bytes": 1359
+        },
+        {
+          "path": "outputs/sentiment/runs/transformer/urdu_roberta/seed_42/models/transformer_urdu_roberta/hf_checkpoints/checkpoint-3125/trainer_state.json",
+          "bytes": 11920
+        },
+        {
+          "path": "outputs/sentiment/runs/transformer/urdu_roberta/seed_42/models/transformer_urdu_roberta/hf_checkpoints/checkpoint-3125/training_args.bin",
+          "bytes": 6097
+        },
+        {
+          "path": "outputs/sentiment/runs/transformer/urdu_roberta/seed_42/models/transformer_urdu_roberta/hf_checkpoints/checkpoint-3125/vocab.json",
+          "bytes": 1503982
+        }
+      ]
+    },
+    {
+      "task": "sentiment",
+      "family": "transformer",
+      "model": "xlm_roberta",
+      "seed": 42,
+      "validation": {
+        "accuracy": 0.8640473916676614,
+        "macro_precision": 0.4528195464651485,
+        "macro_recall": 0.39526225786912456,
+        "macro_f1": 0.40910799515557245,
+        "weighted_precision": 0.8330261939230679,
+        "weighted_recall": 0.8640473916676614,
+        "weighted_f1": 0.8416915692497359,
+        "per_class": {
+          "Negative": {
+            "precision": 0.4683574879227053,
+            "recall": 0.2233613638981684,
+            "f1": 0.3024725060447703,
+            "support": 8681
+          },
+          "Neutral": {
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0,
+            "support": 184
+          },
+          "Positive": {
+            "precision": 0.89010115147274,
+            "recall": 0.9624254097092053,
+            "f1": 0.9248514794219471,
+            "support": 58151
+          }
+        }
+      },
+      "test": {
+        "accuracy": 0.8659783046598726,
+        "macro_precision": 0.4585848936589512,
+        "macro_recall": 0.39753111260559076,
+        "macro_f1": 0.4122426775141704,
+        "weighted_precision": 0.8357529541444519,
+        "weighted_recall": 0.8659783046598726,
+        "weighted_f1": 0.8436552289357155,
+        "per_class": {
+          "Negative": {
+            "precision": 0.484981684981685,
+            "recall": 0.228722791661868,
+            "f1": 0.3108467678822977,
+            "support": 8683
+          },
+          "Neutral": {
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0,
+            "support": 184
+          },
+          "Positive": {
+            "precision": 0.8907729959951688,
+            "recall": 0.9638705461549044,
+            "f1": 0.9258812646602134,
+            "support": 58152
+          }
+        }
+      },
+      "metrics_path": "outputs/sentiment/runs/transformer/xlm_roberta/seed_42/results/transformer_metrics.json",
+      "artifacts": [
+        {
+          "path": "outputs/sentiment/runs/transformer/xlm_roberta/seed_42/models/transformer_label_mapping.json",
+          "bytes": 177
+        },
+        {
+          "path": "outputs/sentiment/runs/transformer/xlm_roberta/seed_42/models/transformer_xlm_roberta/best/config.json",
+          "bytes": 871
+        },
+        {
+          "path": "outputs/sentiment/runs/transformer/xlm_roberta/seed_42/models/transformer_xlm_roberta/best/model.safetensors",
+          "bytes": 1112208084
+        },
+        {
+          "path": "outputs/sentiment/runs/transformer/xlm_roberta/seed_42/models/transformer_xlm_roberta/best/sentencepiece.bpe.model",
+          "bytes": 5069051
+        },
+        {
+          "path": "outputs/sentiment/runs/transformer/xlm_roberta/seed_42/models/transformer_xlm_roberta/best/special_tokens_map.json",
+          "bytes": 295
+        },
+        {
+          "path": "outputs/sentiment/runs/transformer/xlm_roberta/seed_42/models/transformer_xlm_roberta/best/tokenizer.json",
+          "bytes": 17082831
+        },
+        {
+          "path": "outputs/sentiment/runs/transformer/xlm_roberta/seed_42/models/transformer_xlm_roberta/best/tokenizer_config.json",
+          "bytes": 1233
+        },
+        {
+          "path": "outputs/sentiment/runs/transformer/xlm_roberta/seed_42/models/transformer_xlm_roberta/best/training_args.bin",
+          "bytes": 6097
+        },
+        {
+          "path": "outputs/sentiment/runs/transformer/xlm_roberta/seed_42/models/transformer_xlm_roberta/hf_checkpoints/checkpoint-3125/config.json",
+          "bytes": 871
+        },
+        {
+          "path": "outputs/sentiment/runs/transformer/xlm_roberta/seed_42/models/transformer_xlm_roberta/hf_checkpoints/checkpoint-3125/model.safetensors",
+          "bytes": 1112208084
+        },
+        {
+          "path": "outputs/sentiment/runs/transformer/xlm_roberta/seed_42/models/transformer_xlm_roberta/hf_checkpoints/checkpoint-3125/optimizer.pt",
+          "bytes": 2224539019
+        },
+        {
+          "path": "outputs/sentiment/runs/transformer/xlm_roberta/seed_42/models/transformer_xlm_roberta/hf_checkpoints/checkpoint-3125/rng_state.pth",
+          "bytes": 14645
+        },
+        {
+          "path": "outputs/sentiment/runs/transformer/xlm_roberta/seed_42/models/transformer_xlm_roberta/hf_checkpoints/checkpoint-3125/scaler.pt",
+          "bytes": 1383
+        },
+        {
+          "path": "outputs/sentiment/runs/transformer/xlm_roberta/seed_42/models/transformer_xlm_roberta/hf_checkpoints/checkpoint-3125/scheduler.pt",
+          "bytes": 1465
+        },
+        {
+          "path": "outputs/sentiment/runs/transformer/xlm_roberta/seed_42/models/transformer_xlm_roberta/hf_checkpoints/checkpoint-3125/sentencepiece.bpe.model",
+          "bytes": 5069051
+        },
+        {
+          "path": "outputs/sentiment/runs/transformer/xlm_roberta/seed_42/models/transformer_xlm_roberta/hf_checkpoints/checkpoint-3125/special_tokens_map.json",
+          "bytes": 295
+        },
+        {
+          "path": "outputs/sentiment/runs/transformer/xlm_roberta/seed_42/models/transformer_xlm_roberta/hf_checkpoints/checkpoint-3125/tokenizer.json",
+          "bytes": 17082831
+        },
+        {
+          "path": "outputs/sentiment/runs/transformer/xlm_roberta/seed_42/models/transformer_xlm_roberta/hf_checkpoints/checkpoint-3125/tokenizer_config.json",
+          "bytes": 1233
+        },
+        {
+          "path": "outputs/sentiment/runs/transformer/xlm_roberta/seed_42/models/transformer_xlm_roberta/hf_checkpoints/checkpoint-3125/trainer_state.json",
+          "bytes": 11915
+        },
+        {
+          "path": "outputs/sentiment/runs/transformer/xlm_roberta/seed_42/models/transformer_xlm_roberta/hf_checkpoints/checkpoint-3125/training_args.bin",
+          "bytes": 6097
+        }
+      ]
+    },
+    {
+      "task": "emotion",
+      "family": "baseline",
+      "model": "linear_svm",
+      "seed": 42,
+      "validation": {
+        "accuracy": 0.8271214269721621,
+        "macro_precision": 0.2898610071749627,
+        "macro_recall": 0.2829716959473872,
+        "macro_f1": 0.2856214778644834,
+        "weighted_precision": 0.8313472055221184,
+        "weighted_recall": 0.8271214269721621,
+        "weighted_f1": 0.829167877885803,
+        "per_class": {
+          "Angry": {
+            "precision": 0.13732394366197184,
+            "recall": 0.10512129380053908,
+            "f1": 0.11908396946564885,
+            "support": 371
+          },
+          "Disgust": {
+            "precision": 0.10307692307692308,
+            "recall": 0.12859884836852206,
+            "f1": 0.11443210930828351,
+            "support": 2084
+          },
+          "Fear": {
+            "precision": 0.11827956989247312,
+            "recall": 0.09691629955947137,
+            "f1": 0.10653753026634383,
+            "support": 227
+          },
+          "Joy": {
+            "precision": 0.9098756249026968,
+            "recall": 0.9046488829265775,
+            "f1": 0.907254726093556,
+            "support": 58143
+          },
+          "Sad": {
+            "precision": 0.4160645269702571,
+            "recall": 0.41363180755095225,
+            "f1": 0.4148446008209768,
+            "support": 5986
+          },
+          "Surprise": {
+            "precision": 0.05454545454545454,
+            "recall": 0.04891304347826087,
+            "f1": 0.05157593123209169,
+            "support": 184
+          }
+        }
+      },
+      "test": {
+        "accuracy": 0.8281543834512403,
+        "macro_precision": 0.2889879705916607,
+        "macro_recall": 0.28319073512218323,
+        "macro_f1": 0.285355785078111,
+        "weighted_precision": 0.8320886458613918,
+        "weighted_recall": 0.8281543834512403,
+        "weighted_f1": 0.830061881223508,
+        "per_class": {
+          "Angry": {
+            "precision": 0.10909090909090909,
+            "recall": 0.08086253369272237,
+            "f1": 0.09287925696594428,
+            "support": 371
+          },
+          "Disgust": {
+            "precision": 0.1047284095349746,
+            "recall": 0.128660585693711,
+            "f1": 0.11546747091770788,
+            "support": 2083
+          },
+          "Fear": {
+            "precision": 0.10215053763440861,
+            "recall": 0.08370044052863436,
+            "f1": 0.09200968523002422,
+            "support": 227
+          },
+          "Joy": {
+            "precision": 0.9105027411237743,
+            "recall": 0.9053514926399779,
+            "f1": 0.9079198103039449,
+            "support": 58152
+          },
+          "Sad": {
+            "precision": 0.4186978297161937,
+            "recall": 0.41904761904761906,
+            "f1": 0.41887265135699375,
+            "support": 5985
+          },
+          "Surprise": {
+            "precision": 0.08875739644970414,
+            "recall": 0.08152173913043478,
+            "f1": 0.08498583569405099,
+            "support": 184
+          }
+        }
+      },
+      "metrics_path": "outputs/emotion/runs/baseline/linear_svm/seed_42/results/baseline_metrics.json",
+      "artifacts": [
+        {
+          "path": "outputs/emotion/runs/baseline/linear_svm/seed_42/models/baseline_linear_svm.joblib",
+          "bytes": 5874175
+        }
+      ]
+    },
+    {
+      "task": "emotion",
+      "family": "baseline",
+      "model": "linear_svm",
+      "seed": 52,
+      "validation": {
+        "accuracy": 0.8271214269721621,
+        "macro_precision": 0.2898610071749627,
+        "macro_recall": 0.2829716959473872,
+        "macro_f1": 0.2856214778644834,
+        "weighted_precision": 0.8313472055221184,
+        "weighted_recall": 0.8271214269721621,
+        "weighted_f1": 0.829167877885803,
+        "per_class": {
+          "Angry": {
+            "precision": 0.13732394366197184,
+            "recall": 0.10512129380053908,
+            "f1": 0.11908396946564885,
+            "support": 371
+          },
+          "Disgust": {
+            "precision": 0.10307692307692308,
+            "recall": 0.12859884836852206,
+            "f1": 0.11443210930828351,
+            "support": 2084
+          },
+          "Fear": {
+            "precision": 0.11827956989247312,
+            "recall": 0.09691629955947137,
+            "f1": 0.10653753026634383,
+            "support": 227
+          },
+          "Joy": {
+            "precision": 0.9098756249026968,
+            "recall": 0.9046488829265775,
+            "f1": 0.907254726093556,
+            "support": 58143
+          },
+          "Sad": {
+            "precision": 0.4160645269702571,
+            "recall": 0.41363180755095225,
+            "f1": 0.4148446008209768,
+            "support": 5986
+          },
+          "Surprise": {
+            "precision": 0.05454545454545454,
+            "recall": 0.04891304347826087,
+            "f1": 0.05157593123209169,
+            "support": 184
+          }
+        }
+      },
+      "test": {
+        "accuracy": 0.8281543834512403,
+        "macro_precision": 0.2889879705916607,
+        "macro_recall": 0.28319073512218323,
+        "macro_f1": 0.285355785078111,
+        "weighted_precision": 0.8320886458613918,
+        "weighted_recall": 0.8281543834512403,
+        "weighted_f1": 0.830061881223508,
+        "per_class": {
+          "Angry": {
+            "precision": 0.10909090909090909,
+            "recall": 0.08086253369272237,
+            "f1": 0.09287925696594428,
+            "support": 371
+          },
+          "Disgust": {
+            "precision": 0.1047284095349746,
+            "recall": 0.128660585693711,
+            "f1": 0.11546747091770788,
+            "support": 2083
+          },
+          "Fear": {
+            "precision": 0.10215053763440861,
+            "recall": 0.08370044052863436,
+            "f1": 0.09200968523002422,
+            "support": 227
+          },
+          "Joy": {
+            "precision": 0.9105027411237743,
+            "recall": 0.9053514926399779,
+            "f1": 0.9079198103039449,
+            "support": 58152
+          },
+          "Sad": {
+            "precision": 0.4186978297161937,
+            "recall": 0.41904761904761906,
+            "f1": 0.41887265135699375,
+            "support": 5985
+          },
+          "Surprise": {
+            "precision": 0.08875739644970414,
+            "recall": 0.08152173913043478,
+            "f1": 0.08498583569405099,
+            "support": 184
+          }
+        }
+      },
+      "metrics_path": "outputs/emotion/runs/baseline/linear_svm/seed_52/results/baseline_metrics.json",
+      "artifacts": [
+        {
+          "path": "outputs/emotion/runs/baseline/linear_svm/seed_52/models/baseline_linear_svm.joblib",
+          "bytes": 5874174
+        }
+      ]
+    },
+    {
+      "task": "emotion",
+      "family": "baseline",
+      "model": "linear_svm",
+      "seed": 62,
+      "validation": {
+        "accuracy": 0.8271214269721621,
+        "macro_precision": 0.2898610071749627,
+        "macro_recall": 0.2829716959473872,
+        "macro_f1": 0.2856214778644834,
+        "weighted_precision": 0.8313472055221184,
+        "weighted_recall": 0.8271214269721621,
+        "weighted_f1": 0.829167877885803,
+        "per_class": {
+          "Angry": {
+            "precision": 0.13732394366197184,
+            "recall": 0.10512129380053908,
+            "f1": 0.11908396946564885,
+            "support": 371
+          },
+          "Disgust": {
+            "precision": 0.10307692307692308,
+            "recall": 0.12859884836852206,
+            "f1": 0.11443210930828351,
+            "support": 2084
+          },
+          "Fear": {
+            "precision": 0.11827956989247312,
+            "recall": 0.09691629955947137,
+            "f1": 0.10653753026634383,
+            "support": 227
+          },
+          "Joy": {
+            "precision": 0.9098756249026968,
+            "recall": 0.9046488829265775,
+            "f1": 0.907254726093556,
+            "support": 58143
+          },
+          "Sad": {
+            "precision": 0.4160645269702571,
+            "recall": 0.41363180755095225,
+            "f1": 0.4148446008209768,
+            "support": 5986
+          },
+          "Surprise": {
+            "precision": 0.05454545454545454,
+            "recall": 0.04891304347826087,
+            "f1": 0.05157593123209169,
+            "support": 184
+          }
+        }
+      },
+      "test": {
+        "accuracy": 0.8281543834512403,
+        "macro_precision": 0.2889879705916607,
+        "macro_recall": 0.28319073512218323,
+        "macro_f1": 0.285355785078111,
+        "weighted_precision": 0.8320886458613918,
+        "weighted_recall": 0.8281543834512403,
+        "weighted_f1": 0.830061881223508,
+        "per_class": {
+          "Angry": {
+            "precision": 0.10909090909090909,
+            "recall": 0.08086253369272237,
+            "f1": 0.09287925696594428,
+            "support": 371
+          },
+          "Disgust": {
+            "precision": 0.1047284095349746,
+            "recall": 0.128660585693711,
+            "f1": 0.11546747091770788,
+            "support": 2083
+          },
+          "Fear": {
+            "precision": 0.10215053763440861,
+            "recall": 0.08370044052863436,
+            "f1": 0.09200968523002422,
+            "support": 227
+          },
+          "Joy": {
+            "precision": 0.9105027411237743,
+            "recall": 0.9053514926399779,
+            "f1": 0.9079198103039449,
+            "support": 58152
+          },
+          "Sad": {
+            "precision": 0.4186978297161937,
+            "recall": 0.41904761904761906,
+            "f1": 0.41887265135699375,
+            "support": 5985
+          },
+          "Surprise": {
+            "precision": 0.08875739644970414,
+            "recall": 0.08152173913043478,
+            "f1": 0.08498583569405099,
+            "support": 184
+          }
+        }
+      },
+      "metrics_path": "outputs/emotion/runs/baseline/linear_svm/seed_62/results/baseline_metrics.json",
+      "artifacts": [
+        {
+          "path": "outputs/emotion/runs/baseline/linear_svm/seed_62/models/baseline_linear_svm.joblib",
+          "bytes": 5874174
+        }
+      ]
+    },
+    {
+      "task": "emotion",
+      "family": "baseline",
+      "model": "logistic_regression",
+      "seed": 42,
+      "validation": {
+        "accuracy": 0.729278304351071,
+        "macro_precision": 0.2484796230953643,
+        "macro_recall": 0.3187200961394301,
+        "macro_f1": 0.2652180998013967,
+        "weighted_precision": 0.8375120551673036,
+        "weighted_recall": 0.729278304351071,
+        "weighted_f1": 0.7721422787408465,
+        "per_class": {
+          "Angry": {
+            "precision": 0.07990012484394507,
+            "recall": 0.1725067385444744,
+            "f1": 0.10921501706484642,
+            "support": 371
+          },
+          "Disgust": {
+            "precision": 0.07818648417450813,
+            "recall": 0.21928982725527832,
+            "f1": 0.1152730483036953,
+            "support": 2084
+          },
+          "Fear": {
+            "precision": 0.06557377049180328,
+            "recall": 0.10572687224669604,
+            "f1": 0.08094435075885328,
+            "support": 227
+          },
+          "Joy": {
+            "precision": 0.9306021799494384,
+            "recall": 0.7723887656295685,
+            "f1": 0.8441462016334433,
+            "support": 58143
+          },
+          "Sad": {
+            "precision": 0.29846804014791334,
+            "recall": 0.566321416638824,
+            "f1": 0.3909132841328413,
+            "support": 5986
+          },
+          "Surprise": {
+            "precision": 0.03814713896457766,
+            "recall": 0.07608695652173914,
+            "f1": 0.050816696914700546,
+            "support": 184
+          }
+        }
+      },
+      "test": {
+        "accuracy": 0.7277394704635682,
+        "macro_precision": 0.24923362966551513,
+        "macro_recall": 0.3231326612908682,
+        "macro_f1": 0.2667166198578413,
+        "weighted_precision": 0.8385686274122511,
+        "weighted_recall": 0.7277394704635682,
+        "weighted_f1": 0.7714076163873949,
+        "per_class": {
+          "Angry": {
+            "precision": 0.07503234152652005,
+            "recall": 0.15633423180592992,
+            "f1": 0.10139860139860139,
+            "support": 371
+          },
+          "Disgust": {
+            "precision": 0.07986406117247238,
+            "recall": 0.2256361017762842,
+            "f1": 0.1179718875502008,
+            "support": 2083
+          },
+          "Fear": {
+            "precision": 0.06553398058252427,
+            "recall": 0.11894273127753303,
+            "f1": 0.08450704225352113,
+            "support": 227
+          },
+          "Joy": {
+            "precision": 0.9319000145690678,
+            "recall": 0.7699649195212547,
+            "f1": 0.8432282789856779,
+            "support": 58152
+          },
+          "Sad": {
+            "precision": 0.29679888656924147,
+            "recall": 0.5700918964076859,
+            "f1": 0.39036668382815626,
+            "support": 5985
+          },
+          "Surprise": {
+            "precision": 0.04627249357326478,
+            "recall": 0.09782608695652174,
+            "f1": 0.06282722513089005,
+            "support": 184
+          }
+        }
+      },
+      "metrics_path": "outputs/emotion/runs/baseline/logistic_regression/seed_42/results/baseline_metrics.json",
+      "artifacts": [
+        {
+          "path": "outputs/emotion/runs/baseline/logistic_regression/seed_42/models/baseline_logistic_regression.joblib",
+          "bytes": 5828453
+        }
+      ]
+    },
+    {
+      "task": "emotion",
+      "family": "baseline",
+      "model": "logistic_regression",
+      "seed": 52,
+      "validation": {
+        "accuracy": 0.729278304351071,
+        "macro_precision": 0.2484796230953643,
+        "macro_recall": 0.3187200961394301,
+        "macro_f1": 0.2652180998013967,
+        "weighted_precision": 0.8375120551673036,
+        "weighted_recall": 0.729278304351071,
+        "weighted_f1": 0.7721422787408465,
+        "per_class": {
+          "Angry": {
+            "precision": 0.07990012484394507,
+            "recall": 0.1725067385444744,
+            "f1": 0.10921501706484642,
+            "support": 371
+          },
+          "Disgust": {
+            "precision": 0.07818648417450813,
+            "recall": 0.21928982725527832,
+            "f1": 0.1152730483036953,
+            "support": 2084
+          },
+          "Fear": {
+            "precision": 0.06557377049180328,
+            "recall": 0.10572687224669604,
+            "f1": 0.08094435075885328,
+            "support": 227
+          },
+          "Joy": {
+            "precision": 0.9306021799494384,
+            "recall": 0.7723887656295685,
+            "f1": 0.8441462016334433,
+            "support": 58143
+          },
+          "Sad": {
+            "precision": 0.29846804014791334,
+            "recall": 0.566321416638824,
+            "f1": 0.3909132841328413,
+            "support": 5986
+          },
+          "Surprise": {
+            "precision": 0.03814713896457766,
+            "recall": 0.07608695652173914,
+            "f1": 0.050816696914700546,
+            "support": 184
+          }
+        }
+      },
+      "test": {
+        "accuracy": 0.7277394704635682,
+        "macro_precision": 0.24923362966551513,
+        "macro_recall": 0.3231326612908682,
+        "macro_f1": 0.2667166198578413,
+        "weighted_precision": 0.8385686274122511,
+        "weighted_recall": 0.7277394704635682,
+        "weighted_f1": 0.7714076163873949,
+        "per_class": {
+          "Angry": {
+            "precision": 0.07503234152652005,
+            "recall": 0.15633423180592992,
+            "f1": 0.10139860139860139,
+            "support": 371
+          },
+          "Disgust": {
+            "precision": 0.07986406117247238,
+            "recall": 0.2256361017762842,
+            "f1": 0.1179718875502008,
+            "support": 2083
+          },
+          "Fear": {
+            "precision": 0.06553398058252427,
+            "recall": 0.11894273127753303,
+            "f1": 0.08450704225352113,
+            "support": 227
+          },
+          "Joy": {
+            "precision": 0.9319000145690678,
+            "recall": 0.7699649195212547,
+            "f1": 0.8432282789856779,
+            "support": 58152
+          },
+          "Sad": {
+            "precision": 0.29679888656924147,
+            "recall": 0.5700918964076859,
+            "f1": 0.39036668382815626,
+            "support": 5985
+          },
+          "Surprise": {
+            "precision": 0.04627249357326478,
+            "recall": 0.09782608695652174,
+            "f1": 0.06282722513089005,
+            "support": 184
+          }
+        }
+      },
+      "metrics_path": "outputs/emotion/runs/baseline/logistic_regression/seed_52/results/baseline_metrics.json",
+      "artifacts": [
+        {
+          "path": "outputs/emotion/runs/baseline/logistic_regression/seed_52/models/baseline_logistic_regression.joblib",
+          "bytes": 5828453
+        }
+      ]
+    },
+    {
+      "task": "emotion",
+      "family": "baseline",
+      "model": "logistic_regression",
+      "seed": 62,
+      "validation": {
+        "accuracy": 0.729278304351071,
+        "macro_precision": 0.2484796230953643,
+        "macro_recall": 0.3187200961394301,
+        "macro_f1": 0.2652180998013967,
+        "weighted_precision": 0.8375120551673036,
+        "weighted_recall": 0.729278304351071,
+        "weighted_f1": 0.7721422787408465,
+        "per_class": {
+          "Angry": {
+            "precision": 0.07990012484394507,
+            "recall": 0.1725067385444744,
+            "f1": 0.10921501706484642,
+            "support": 371
+          },
+          "Disgust": {
+            "precision": 0.07818648417450813,
+            "recall": 0.21928982725527832,
+            "f1": 0.1152730483036953,
+            "support": 2084
+          },
+          "Fear": {
+            "precision": 0.06557377049180328,
+            "recall": 0.10572687224669604,
+            "f1": 0.08094435075885328,
+            "support": 227
+          },
+          "Joy": {
+            "precision": 0.9306021799494384,
+            "recall": 0.7723887656295685,
+            "f1": 0.8441462016334433,
+            "support": 58143
+          },
+          "Sad": {
+            "precision": 0.29846804014791334,
+            "recall": 0.566321416638824,
+            "f1": 0.3909132841328413,
+            "support": 5986
+          },
+          "Surprise": {
+            "precision": 0.03814713896457766,
+            "recall": 0.07608695652173914,
+            "f1": 0.050816696914700546,
+            "support": 184
+          }
+        }
+      },
+      "test": {
+        "accuracy": 0.7277394704635682,
+        "macro_precision": 0.24923362966551513,
+        "macro_recall": 0.3231326612908682,
+        "macro_f1": 0.2667166198578413,
+        "weighted_precision": 0.8385686274122511,
+        "weighted_recall": 0.7277394704635682,
+        "weighted_f1": 0.7714076163873949,
+        "per_class": {
+          "Angry": {
+            "precision": 0.07503234152652005,
+            "recall": 0.15633423180592992,
+            "f1": 0.10139860139860139,
+            "support": 371
+          },
+          "Disgust": {
+            "precision": 0.07986406117247238,
+            "recall": 0.2256361017762842,
+            "f1": 0.1179718875502008,
+            "support": 2083
+          },
+          "Fear": {
+            "precision": 0.06553398058252427,
+            "recall": 0.11894273127753303,
+            "f1": 0.08450704225352113,
+            "support": 227
+          },
+          "Joy": {
+            "precision": 0.9319000145690678,
+            "recall": 0.7699649195212547,
+            "f1": 0.8432282789856779,
+            "support": 58152
+          },
+          "Sad": {
+            "precision": 0.29679888656924147,
+            "recall": 0.5700918964076859,
+            "f1": 0.39036668382815626,
+            "support": 5985
+          },
+          "Surprise": {
+            "precision": 0.04627249357326478,
+            "recall": 0.09782608695652174,
+            "f1": 0.06282722513089005,
+            "support": 184
+          }
+        }
+      },
+      "metrics_path": "outputs/emotion/runs/baseline/logistic_regression/seed_62/results/baseline_metrics.json",
+      "artifacts": [
+        {
+          "path": "outputs/emotion/runs/baseline/logistic_regression/seed_62/models/baseline_logistic_regression.joblib",
+          "bytes": 5828451
+        }
+      ]
+    },
+    {
+      "task": "emotion",
+      "family": "baseline",
+      "model": "multinomial_nb",
+      "seed": 42,
+      "validation": {
+        "accuracy": 0.8795880289573849,
+        "macro_precision": 0.3501584257129912,
+        "macro_recall": 0.192426053094275,
+        "macro_f1": 0.20016792590529628,
+        "weighted_precision": 0.8511447311366614,
+        "weighted_recall": 0.8795880289573849,
+        "weighted_f1": 0.8351842652100752,
+        "per_class": {
+          "Angry": {
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0,
+            "support": 371
+          },
+          "Disgust": {
+            "precision": 0.375,
+            "recall": 0.0014395393474088292,
+            "f1": 0.0028680688336520078,
+            "support": 2084
+          },
+          "Fear": {
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0,
+            "support": 227
+          },
+          "Joy": {
+            "precision": 0.8802155270547165,
+            "recall": 0.997420153758836,
+            "f1": 0.9351598026252137,
+            "support": 58143
+          },
+          "Sad": {
+            "precision": 0.8457350272232305,
+            "recall": 0.15569662545940527,
+            "f1": 0.26297968397291194,
+            "support": 5986
+          },
+          "Surprise": {
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0,
+            "support": 184
+          }
+        }
+      },
+      "test": {
+        "accuracy": 0.8793170353123787,
+        "macro_precision": 0.39663500988346284,
+        "macro_recall": 0.19219331134516093,
+        "macro_f1": 0.19972364972453535,
+        "weighted_precision": 0.8589966083159576,
+        "weighted_recall": 0.8793170353123787,
+        "weighted_f1": 0.8348951912461873,
+        "per_class": {
+          "Angry": {
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0,
+            "support": 371
+          },
+          "Disgust": {
+            "precision": 0.6666666666666666,
+            "recall": 0.0009601536245799327,
+            "f1": 0.0019175455417066154,
+            "support": 2083
+          },
+          "Fear": {
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0,
+            "support": 227
+          },
+          "Joy": {
+            "precision": 0.8801092813235183,
+            "recall": 0.9971454120236621,
+            "f1": 0.9349790788232544,
+            "support": 58152
+          },
+          "Sad": {
+            "precision": 0.8330341113105925,
+            "recall": 0.15505430242272347,
+            "f1": 0.26144527398225104,
+            "support": 5985
+          },
+          "Surprise": {
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0,
+            "support": 184
+          }
+        }
+      },
+      "metrics_path": "outputs/emotion/runs/baseline/multinomial_nb/seed_42/results/baseline_metrics.json",
+      "artifacts": [
+        {
+          "path": "outputs/emotion/runs/baseline/multinomial_nb/seed_42/models/baseline_multinomial_nb.joblib",
+          "bytes": 4406182
+        }
+      ]
+    },
+    {
+      "task": "emotion",
+      "family": "baseline",
+      "model": "multinomial_nb",
+      "seed": 52,
+      "validation": {
+        "accuracy": 0.8795880289573849,
+        "macro_precision": 0.3501584257129912,
+        "macro_recall": 0.192426053094275,
+        "macro_f1": 0.20016792590529628,
+        "weighted_precision": 0.8511447311366614,
+        "weighted_recall": 0.8795880289573849,
+        "weighted_f1": 0.8351842652100752,
+        "per_class": {
+          "Angry": {
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0,
+            "support": 371
+          },
+          "Disgust": {
+            "precision": 0.375,
+            "recall": 0.0014395393474088292,
+            "f1": 0.0028680688336520078,
+            "support": 2084
+          },
+          "Fear": {
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0,
+            "support": 227
+          },
+          "Joy": {
+            "precision": 0.8802155270547165,
+            "recall": 0.997420153758836,
+            "f1": 0.9351598026252137,
+            "support": 58143
+          },
+          "Sad": {
+            "precision": 0.8457350272232305,
+            "recall": 0.15569662545940527,
+            "f1": 0.26297968397291194,
+            "support": 5986
+          },
+          "Surprise": {
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0,
+            "support": 184
+          }
+        }
+      },
+      "test": {
+        "accuracy": 0.8793170353123787,
+        "macro_precision": 0.39663500988346284,
+        "macro_recall": 0.19219331134516093,
+        "macro_f1": 0.19972364972453535,
+        "weighted_precision": 0.8589966083159576,
+        "weighted_recall": 0.8793170353123787,
+        "weighted_f1": 0.8348951912461873,
+        "per_class": {
+          "Angry": {
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0,
+            "support": 371
+          },
+          "Disgust": {
+            "precision": 0.6666666666666666,
+            "recall": 0.0009601536245799327,
+            "f1": 0.0019175455417066154,
+            "support": 2083
+          },
+          "Fear": {
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0,
+            "support": 227
+          },
+          "Joy": {
+            "precision": 0.8801092813235183,
+            "recall": 0.9971454120236621,
+            "f1": 0.9349790788232544,
+            "support": 58152
+          },
+          "Sad": {
+            "precision": 0.8330341113105925,
+            "recall": 0.15505430242272347,
+            "f1": 0.26144527398225104,
+            "support": 5985
+          },
+          "Surprise": {
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0,
+            "support": 184
+          }
+        }
+      },
+      "metrics_path": "outputs/emotion/runs/baseline/multinomial_nb/seed_52/results/baseline_metrics.json",
+      "artifacts": [
+        {
+          "path": "outputs/emotion/runs/baseline/multinomial_nb/seed_52/models/baseline_multinomial_nb.joblib",
+          "bytes": 4406182
+        }
+      ]
+    },
+    {
+      "task": "emotion",
+      "family": "baseline",
+      "model": "multinomial_nb",
+      "seed": 62,
+      "validation": {
+        "accuracy": 0.8795880289573849,
+        "macro_precision": 0.3501584257129912,
+        "macro_recall": 0.192426053094275,
+        "macro_f1": 0.20016792590529628,
+        "weighted_precision": 0.8511447311366614,
+        "weighted_recall": 0.8795880289573849,
+        "weighted_f1": 0.8351842652100752,
+        "per_class": {
+          "Angry": {
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0,
+            "support": 371
+          },
+          "Disgust": {
+            "precision": 0.375,
+            "recall": 0.0014395393474088292,
+            "f1": 0.0028680688336520078,
+            "support": 2084
+          },
+          "Fear": {
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0,
+            "support": 227
+          },
+          "Joy": {
+            "precision": 0.8802155270547165,
+            "recall": 0.997420153758836,
+            "f1": 0.9351598026252137,
+            "support": 58143
+          },
+          "Sad": {
+            "precision": 0.8457350272232305,
+            "recall": 0.15569662545940527,
+            "f1": 0.26297968397291194,
+            "support": 5986
+          },
+          "Surprise": {
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0,
+            "support": 184
+          }
+        }
+      },
+      "test": {
+        "accuracy": 0.8793170353123787,
+        "macro_precision": 0.39663500988346284,
+        "macro_recall": 0.19219331134516093,
+        "macro_f1": 0.19972364972453535,
+        "weighted_precision": 0.8589966083159576,
+        "weighted_recall": 0.8793170353123787,
+        "weighted_f1": 0.8348951912461873,
+        "per_class": {
+          "Angry": {
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0,
+            "support": 371
+          },
+          "Disgust": {
+            "precision": 0.6666666666666666,
+            "recall": 0.0009601536245799327,
+            "f1": 0.0019175455417066154,
+            "support": 2083
+          },
+          "Fear": {
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0,
+            "support": 227
+          },
+          "Joy": {
+            "precision": 0.8801092813235183,
+            "recall": 0.9971454120236621,
+            "f1": 0.9349790788232544,
+            "support": 58152
+          },
+          "Sad": {
+            "precision": 0.8330341113105925,
+            "recall": 0.15505430242272347,
+            "f1": 0.26144527398225104,
+            "support": 5985
+          },
+          "Surprise": {
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0,
+            "support": 184
+          }
+        }
+      },
+      "metrics_path": "outputs/emotion/runs/baseline/multinomial_nb/seed_62/results/baseline_metrics.json",
+      "artifacts": [
+        {
+          "path": "outputs/emotion/runs/baseline/multinomial_nb/seed_62/models/baseline_multinomial_nb.joblib",
+          "bytes": 4406182
+        }
+      ]
+    },
+    {
+      "task": "emotion",
+      "family": "neural",
+      "model": "bilstm_attention",
+      "seed": 42,
+      "validation": {
+        "accuracy": 0.5603253974177177,
+        "macro_precision": 0.22178831871860072,
+        "macro_recall": 0.3056004762653354,
+        "macro_f1": 0.21391671540041612,
+        "weighted_precision": 0.8379841462068643,
+        "weighted_recall": 0.5603253974177177,
+        "weighted_f1": 0.6532570379913677,
+        "per_class": {
+          "Angry": {
+            "precision": 0.04844814534443603,
+            "recall": 0.1725067385444744,
+            "f1": 0.07565011820330969,
+            "support": 371
+          },
+          "Disgust": {
+            "precision": 0.053065961699658264,
+            "recall": 0.3949136276391555,
+            "f1": 0.09355993861194793,
+            "support": 2084
+          },
+          "Fear": {
+            "precision": 0.019444444444444445,
+            "recall": 0.09251101321585903,
+            "f1": 0.032134659525631215,
+            "support": 227
+          },
+          "Joy": {
+            "precision": 0.9360123214785774,
+            "recall": 0.5748757374060506,
+            "f1": 0.7122841038645541,
+            "support": 58143
+          },
+          "Sad": {
+            "precision": 0.26453536524763954,
+            "recall": 0.5335783494821249,
+            "f1": 0.3537098560354374,
+            "support": 5986
+          },
+          "Surprise": {
+            "precision": 0.009223674096848577,
+            "recall": 0.06521739130434782,
+            "f1": 0.01616161616161616,
+            "support": 184
+          }
+        }
+      },
+      "test": {
+        "accuracy": 0.563654816274141,
+        "macro_precision": 0.22142392095568664,
+        "macro_recall": 0.3092444839790505,
+        "macro_f1": 0.21445463320785693,
+        "weighted_precision": 0.837130550484291,
+        "weighted_recall": 0.563654816274141,
+        "weighted_f1": 0.6558596247896631,
+        "per_class": {
+          "Angry": {
+            "precision": 0.03755868544600939,
+            "recall": 0.1293800539083558,
+            "f1": 0.05821710127349909,
+            "support": 371
+          },
+          "Disgust": {
+            "precision": 0.05216931915736644,
+            "recall": 0.37926068170907346,
+            "f1": 0.0917218158597469,
+            "support": 2083
+          },
+          "Fear": {
+            "precision": 0.026411657559198543,
+            "recall": 0.1277533039647577,
+            "f1": 0.04377358490566038,
+            "support": 227
+          },
+          "Joy": {
+            "precision": 0.9353092998085089,
+            "recall": 0.5795501444490301,
+            "f1": 0.71565535913362,
+            "support": 58152
+          },
+          "Sad": {
+            "precision": 0.26197740578873585,
+            "recall": 0.530827067669173,
+            "f1": 0.3508171378091873,
+            "support": 5985
+          },
+          "Surprise": {
+            "precision": 0.015117157974300832,
+            "recall": 0.10869565217391304,
+            "f1": 0.026542800265428004,
+            "support": 184
+          }
+        }
+      },
+      "metrics_path": "outputs/emotion/runs/neural/bilstm_attention/seed_42/results/neural_metrics.json",
+      "artifacts": [
+        {
+          "path": "outputs/emotion/runs/neural/bilstm_attention/seed_42/models/neural_bilstm_attention.pt",
+          "bytes": 62037002
+        },
+        {
+          "path": "outputs/emotion/runs/neural/bilstm_attention/seed_42/models/neural_label_mapping.json",
+          "bytes": 269
+        },
+        {
+          "path": "outputs/emotion/runs/neural/bilstm_attention/seed_42/models/neural_vocab.json",
+          "bytes": 1204839
+        }
+      ]
+    },
+    {
+      "task": "emotion",
+      "family": "neural",
+      "model": "bilstm_attention",
+      "seed": 52,
+      "validation": {
+        "accuracy": 0.5707888648406597,
+        "macro_precision": 0.22496179654318285,
+        "macro_recall": 0.31287123357013596,
+        "macro_f1": 0.21945242903068082,
+        "weighted_precision": 0.8383671772781249,
+        "weighted_recall": 0.5707888648406597,
+        "weighted_f1": 0.6620051285258053,
+        "per_class": {
+          "Angry": {
+            "precision": 0.047116165718927704,
+            "recall": 0.15633423180592992,
+            "f1": 0.07240948813982521,
+            "support": 371
+          },
+          "Disgust": {
+            "precision": 0.053063317098179956,
+            "recall": 0.39731285988483683,
+            "f1": 0.09362279511533243,
+            "support": 2084
+          },
+          "Fear": {
+            "precision": 0.0268389662027833,
+            "recall": 0.11894273127753303,
+            "f1": 0.043795620437956206,
+            "support": 227
+          },
+          "Joy": {
+            "precision": 0.9358054444870461,
+            "recall": 0.5876889737371652,
+            "f1": 0.7219751312634036,
+            "support": 58143
+          },
+          "Sad": {
+            "precision": 0.2704099207716156,
+            "recall": 0.5245573003675242,
+            "f1": 0.35685873394703943,
+            "support": 5986
+          },
+          "Surprise": {
+            "precision": 0.016536964980544747,
+            "recall": 0.09239130434782608,
+            "f1": 0.028052805280528052,
+            "support": 184
+          }
+        }
+      },
+      "test": {
+        "accuracy": 0.5739679412554849,
+        "macro_precision": 0.22588193457180816,
+        "macro_recall": 0.3182213619426883,
+        "macro_f1": 0.2215546703914216,
+        "weighted_precision": 0.8379598012754812,
+        "weighted_recall": 0.5739679412554849,
+        "weighted_f1": 0.6645943176013034,
+        "per_class": {
+          "Angry": {
+            "precision": 0.04344193817878028,
+            "recall": 0.14016172506738545,
+            "f1": 0.0663265306122449,
+            "support": 371
+          },
+          "Disgust": {
+            "precision": 0.05219655060201757,
+            "recall": 0.38502160345655306,
+            "f1": 0.09193030719853278,
+            "support": 2083
+          },
+          "Fear": {
+            "precision": 0.03241650294695481,
+            "recall": 0.14537444933920704,
+            "f1": 0.05301204819277108,
+            "support": 227
+          },
+          "Joy": {
+            "precision": 0.9353331159656559,
+            "recall": 0.5919658825147889,
+            "f1": 0.7250516028476347,
+            "support": 58152
+          },
+          "Sad": {
+            "precision": 0.270225837154971,
+            "recall": 0.5218045112781955,
+            "f1": 0.3560597423326873,
+            "support": 5985
+          },
+          "Surprise": {
+            "precision": 0.021677662582469368,
+            "recall": 0.125,
+            "f1": 0.036947791164658635,
+            "support": 184
+          }
+        }
+      },
+      "metrics_path": "outputs/emotion/runs/neural/bilstm_attention/seed_52/results/neural_metrics.json",
+      "artifacts": [
+        {
+          "path": "outputs/emotion/runs/neural/bilstm_attention/seed_52/models/neural_bilstm_attention.pt",
+          "bytes": 62037002
+        },
+        {
+          "path": "outputs/emotion/runs/neural/bilstm_attention/seed_52/models/neural_label_mapping.json",
+          "bytes": 269
+        },
+        {
+          "path": "outputs/emotion/runs/neural/bilstm_attention/seed_52/models/neural_vocab.json",
+          "bytes": 1204839
+        }
+      ]
+    },
+    {
+      "task": "emotion",
+      "family": "neural",
+      "model": "bilstm_attention",
+      "seed": 62,
+      "validation": {
+        "accuracy": 0.6202552429285768,
+        "macro_precision": 0.2283641565515944,
+        "macro_recall": 0.2789313439974303,
+        "macro_f1": 0.2204687043315817,
+        "weighted_precision": 0.8362983695372587,
+        "weighted_recall": 0.6202552429285768,
+        "weighted_f1": 0.7030513956241996,
+        "per_class": {
+          "Angry": {
+            "precision": 0.032279314888010543,
+            "recall": 0.1320754716981132,
+            "f1": 0.05187930121757544,
+            "support": 371
+          },
+          "Disgust": {
+            "precision": 0.05127702658566856,
+            "recall": 0.376679462571977,
+            "f1": 0.09026619904559305,
+            "support": 2084
+          },
+          "Fear": {
+            "precision": 0.017135862913096694,
+            "recall": 0.06167400881057269,
+            "f1": 0.02681992337164751,
+            "support": 227
+          },
+          "Joy": {
+            "precision": 0.9292533242413911,
+            "recall": 0.6562612868273051,
+            "f1": 0.7692555818759135,
+            "support": 58143
+          },
+          "Sad": {
+            "precision": 0.31246163290362183,
+            "recall": 0.42515870364183095,
+            "f1": 0.36020097657632155,
+            "support": 5986
+          },
+          "Surprise": {
+            "precision": 0.027777777777777776,
+            "recall": 0.021739130434782608,
+            "f1": 0.024390243902439025,
+            "support": 184
+          }
+        }
+      },
+      "test": {
+        "accuracy": 0.6206829646876213,
+        "macro_precision": 0.22674790012735943,
+        "macro_recall": 0.287640306844592,
+        "macro_f1": 0.22099548842817537,
+        "weighted_precision": 0.8365967094611043,
+        "weighted_recall": 0.6206829646876213,
+        "weighted_f1": 0.7031620585485504,
+        "per_class": {
+          "Angry": {
+            "precision": 0.03383977900552486,
+            "recall": 0.1320754716981132,
+            "f1": 0.05387575590984057,
+            "support": 371
+          },
+          "Disgust": {
+            "precision": 0.05330810387576667,
+            "recall": 0.39222275564090253,
+            "f1": 0.09385949796082486,
+            "support": 2083
+          },
+          "Fear": {
+            "precision": 0.02918918918918919,
+            "recall": 0.11894273127753303,
+            "f1": 0.046875,
+            "support": 227
+          },
+          "Joy": {
+            "precision": 0.9292693029261994,
+            "recall": 0.6558673820332921,
+            "f1": 0.7689903724986138,
+            "support": 58152
+          },
+          "Sad": {
+            "precision": 0.3148810257674763,
+            "recall": 0.42673350041771096,
+            "f1": 0.362372304199773,
+            "support": 5985
+          },
+          "Surprise": {
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0,
+            "support": 184
+          }
+        }
+      },
+      "metrics_path": "outputs/emotion/runs/neural/bilstm_attention/seed_62/results/neural_metrics.json",
+      "artifacts": [
+        {
+          "path": "outputs/emotion/runs/neural/bilstm_attention/seed_62/models/neural_bilstm_attention.pt",
+          "bytes": 62037002
+        },
+        {
+          "path": "outputs/emotion/runs/neural/bilstm_attention/seed_62/models/neural_label_mapping.json",
+          "bytes": 269
+        },
+        {
+          "path": "outputs/emotion/runs/neural/bilstm_attention/seed_62/models/neural_vocab.json",
+          "bytes": 1204839
+        }
+      ]
+    },
+    {
+      "task": "emotion",
+      "family": "neural",
+      "model": "text_cnn",
+      "seed": 42,
+      "validation": {
+        "accuracy": 0.5265915366818419,
+        "macro_precision": 0.2129650652067463,
+        "macro_recall": 0.3042072676373767,
+        "macro_f1": 0.19627314476322566,
+        "weighted_precision": 0.8266989069729759,
+        "weighted_recall": 0.5265915366818419,
+        "weighted_f1": 0.6303287741742167,
+        "per_class": {
+          "Angry": {
+            "precision": 0.02877697841726619,
+            "recall": 0.3018867924528302,
+            "f1": 0.052545155993431854,
+            "support": 371
+          },
+          "Disgust": {
+            "precision": 0.04476115447969634,
+            "recall": 0.29990403071017274,
+            "f1": 0.0778961799713342,
+            "support": 2084
+          },
+          "Fear": {
+            "precision": 0.012957317073170731,
+            "recall": 0.14977973568281938,
+            "f1": 0.023851280252542968,
+            "support": 227
+          },
+          "Joy": {
+            "precision": 0.9240929803310838,
+            "recall": 0.5510895550625182,
+            "f1": 0.6904338644860316,
+            "support": 58143
+          },
+          "Sad": {
+            "precision": 0.25837472260382544,
+            "recall": 0.40845305713331104,
+            "f1": 0.31652534144604827,
+            "support": 5986
+          },
+          "Surprise": {
+            "precision": 0.008827238335435058,
+            "recall": 0.11413043478260869,
+            "f1": 0.016387046429964885,
+            "support": 184
+          }
+        }
+      },
+      "test": {
+        "accuracy": 0.5287752604399869,
+        "macro_precision": 0.21250962098445322,
+        "macro_recall": 0.2929202874524889,
+        "macro_f1": 0.19554260426566983,
+        "weighted_precision": 0.826149085715767,
+        "weighted_recall": 0.5287752604399869,
+        "weighted_f1": 0.6320232701184828,
+        "per_class": {
+          "Angry": {
+            "precision": 0.023138297872340424,
+            "recall": 0.23450134770889489,
+            "f1": 0.04212055192447349,
+            "support": 371
+          },
+          "Disgust": {
+            "precision": 0.044611275535984984,
+            "recall": 0.29668746999519924,
+            "f1": 0.07756024096385543,
+            "support": 2083
+          },
+          "Fear": {
+            "precision": 0.01206181681115718,
+            "recall": 0.14096916299559473,
+            "f1": 0.022222222222222223,
+            "support": 227
+          },
+          "Joy": {
+            "precision": 0.9229378855257495,
+            "recall": 0.553188196450681,
+            "f1": 0.6917543840786178,
+            "support": 58152
+          },
+          "Sad": {
+            "precision": 0.26350710900473934,
+            "recall": 0.4180451127819549,
+            "f1": 0.32325581395348835,
+            "support": 5985
+          },
+          "Surprise": {
+            "precision": 0.008801341156747695,
+            "recall": 0.11413043478260869,
+            "f1": 0.01634241245136187,
+            "support": 184
+          }
+        }
+      },
+      "metrics_path": "outputs/emotion/runs/neural/text_cnn/seed_42/results/neural_metrics.json",
+      "artifacts": [
+        {
+          "path": "outputs/emotion/runs/neural/text_cnn/seed_42/models/neural_label_mapping.json",
+          "bytes": 269
+        },
+        {
+          "path": "outputs/emotion/runs/neural/text_cnn/seed_42/models/neural_text_cnn.pt",
+          "bytes": 61859140
+        },
+        {
+          "path": "outputs/emotion/runs/neural/text_cnn/seed_42/models/neural_vocab.json",
+          "bytes": 1204839
+        }
+      ]
+    },
+    {
+      "task": "emotion",
+      "family": "neural",
+      "model": "text_cnn",
+      "seed": 52,
+      "validation": {
+        "accuracy": 0.5547727442346444,
+        "macro_precision": 0.2099291127890681,
+        "macro_recall": 0.28985977465050156,
+        "macro_f1": 0.19339121246739668,
+        "weighted_precision": 0.8197599180283965,
+        "weighted_recall": 0.5547727442346444,
+        "weighted_f1": 0.6542867164231986,
+        "per_class": {
+          "Angry": {
+            "precision": 0.0171990171990172,
+            "recall": 0.32075471698113206,
+            "f1": 0.03264746227709191,
+            "support": 371
+          },
+          "Disgust": {
+            "precision": 0.05408482778252206,
+            "recall": 0.09117082533589252,
+            "f1": 0.06789351438270502,
+            "support": 2084
+          },
+          "Fear": {
+            "precision": 0.007448059584476676,
+            "recall": 0.2511013215859031,
+            "f1": 0.014467005076142132,
+            "support": 227
+          },
+          "Joy": {
+            "precision": 0.9159789148607635,
+            "recall": 0.5917479318232634,
+            "f1": 0.7190010971213625,
+            "support": 58143
+          },
+          "Sad": {
+            "precision": 0.2572448096885813,
+            "recall": 0.39742733043768796,
+            "f1": 0.3123276880661678,
+            "support": 5986
+          },
+          "Surprise": {
+            "precision": 0.007619047619047619,
+            "recall": 0.08695652173913043,
+            "f1": 0.014010507880910683,
+            "support": 184
+          }
+        }
+      },
+      "test": {
+        "accuracy": 0.554640159995224,
+        "macro_precision": 0.21021981894943664,
+        "macro_recall": 0.29023833151011574,
+        "macro_f1": 0.1936333864594265,
+        "weighted_precision": 0.8182040557328741,
+        "weighted_recall": 0.554640159995224,
+        "weighted_f1": 0.6536828262636732,
+        "per_class": {
+          "Angry": {
+            "precision": 0.01674675986602592,
+            "recall": 0.30997304582210244,
+            "f1": 0.03177673390439348,
+            "support": 371
+          },
+          "Disgust": {
+            "precision": 0.05204351661276095,
+            "recall": 0.08497359577532405,
+            "f1": 0.06455142231947483,
+            "support": 2083
+          },
+          "Fear": {
+            "precision": 0.00813953488372093,
+            "recall": 0.2775330396475771,
+            "f1": 0.015815237856156645,
+            "support": 227
+          },
+          "Joy": {
+            "precision": 0.9134295817712903,
+            "recall": 0.5907793369101665,
+            "f1": 0.7175004960162067,
+            "support": 58152
+          },
+          "Sad": {
+            "precision": 0.264993481095176,
+            "recall": 0.4075187969924812,
+            "f1": 0.32115346632431363,
+            "support": 5985
+          },
+          "Surprise": {
+            "precision": 0.005966039467645709,
+            "recall": 0.07065217391304347,
+            "f1": 0.011002962336013541,
+            "support": 184
+          }
+        }
+      },
+      "metrics_path": "outputs/emotion/runs/neural/text_cnn/seed_52/results/neural_metrics.json",
+      "artifacts": [
+        {
+          "path": "outputs/emotion/runs/neural/text_cnn/seed_52/models/neural_label_mapping.json",
+          "bytes": 269
+        },
+        {
+          "path": "outputs/emotion/runs/neural/text_cnn/seed_52/models/neural_text_cnn.pt",
+          "bytes": 61859140
+        },
+        {
+          "path": "outputs/emotion/runs/neural/text_cnn/seed_52/models/neural_vocab.json",
+          "bytes": 1204839
+        }
+      ]
+    },
+    {
+      "task": "emotion",
+      "family": "neural",
+      "model": "text_cnn",
+      "seed": 62,
+      "validation": {
+        "accuracy": 0.5468020001492648,
+        "macro_precision": 0.20436973107396775,
+        "macro_recall": 0.26049443304346004,
+        "macro_f1": 0.19240758919625411,
+        "weighted_precision": 0.8174214008202804,
+        "weighted_recall": 0.5468020001492648,
+        "weighted_f1": 0.6392959341611872,
+        "per_class": {
+          "Angry": {
+            "precision": 0.03117692907248636,
+            "recall": 0.1078167115902965,
+            "f1": 0.04836759371221282,
+            "support": 371
+          },
+          "Disgust": {
+            "precision": 0.04491126403477001,
+            "recall": 0.29750479846449135,
+            "f1": 0.0780414122978161,
+            "support": 2084
+          },
+          "Fear": {
+            "precision": 0.010460251046025104,
+            "recall": 0.0881057268722467,
+            "f1": 0.018700327255726974,
+            "support": 227
+          },
+          "Joy": {
+            "precision": 0.917828340215614,
+            "recall": 0.5695956520991349,
+            "f1": 0.7029482308492349,
+            "support": 58143
+          },
+          "Sad": {
+            "precision": 0.21535651776881515,
+            "recall": 0.4727697961911126,
+            "f1": 0.2959167668740524,
+            "support": 5986
+          },
+          "Surprise": {
+            "precision": 0.00648508430609598,
+            "recall": 0.02717391304347826,
+            "f1": 0.010471204188481676,
+            "support": 184
+          }
+        }
+      },
+      "test": {
+        "accuracy": 0.5459538521238172,
+        "macro_precision": 0.2070346929633415,
+        "macro_recall": 0.2745514182581145,
+        "macro_f1": 0.19652963219115027,
+        "weighted_precision": 0.8170521891393097,
+        "weighted_recall": 0.5459538521238172,
+        "weighted_f1": 0.6385121033892696,
+        "per_class": {
+          "Angry": {
+            "precision": 0.03445512820512821,
+            "recall": 0.11590296495956873,
+            "f1": 0.053119209388511425,
+            "support": 371
+          },
+          "Disgust": {
+            "precision": 0.04485847366535292,
+            "recall": 0.300528084493519,
+            "f1": 0.0780645965831151,
+            "support": 2083
+          },
+          "Fear": {
+            "precision": 0.015438247011952191,
+            "recall": 0.13656387665198239,
+            "f1": 0.02774049217002237,
+            "support": 227
+          },
+          "Joy": {
+            "precision": 0.917080616067712,
+            "recall": 0.5682865593616728,
+            "f1": 0.7017316614819455,
+            "support": 58152
+          },
+          "Sad": {
+            "precision": 0.21753872235493565,
+            "recall": 0.4716791979949875,
+            "f1": 0.29775340153992197,
+            "support": 5985
+          },
+          "Surprise": {
+            "precision": 0.012836970474967908,
+            "recall": 0.05434782608695652,
+            "f1": 0.020768431983385256,
+            "support": 184
+          }
+        }
+      },
+      "metrics_path": "outputs/emotion/runs/neural/text_cnn/seed_62/results/neural_metrics.json",
+      "artifacts": [
+        {
+          "path": "outputs/emotion/runs/neural/text_cnn/seed_62/models/neural_label_mapping.json",
+          "bytes": 269
+        },
+        {
+          "path": "outputs/emotion/runs/neural/text_cnn/seed_62/models/neural_text_cnn.pt",
+          "bytes": 61859140
+        },
+        {
+          "path": "outputs/emotion/runs/neural/text_cnn/seed_62/models/neural_vocab.json",
+          "bytes": 1204839
+        }
+      ]
+    },
+    {
+      "task": "emotion",
+      "family": "transformer",
+      "model": "mbert",
+      "seed": 42,
+      "validation": {
+        "accuracy": 0.8560041794163744,
+        "macro_precision": 0.2131563715839255,
+        "macro_recall": 0.21009433698092392,
+        "macro_f1": 0.2106425641992642,
+        "weighted_precision": 0.8083668997445956,
+        "weighted_recall": 0.8560041794163744,
+        "weighted_f1": 0.8308139842840985,
+        "per_class": {
+          "Angry": {
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0,
+            "support": 371
+          },
+          "Disgust": {
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0,
+            "support": 2084
+          },
+          "Fear": {
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0,
+            "support": 227
+          },
+          "Joy": {
+            "precision": 0.8915546562605386,
+            "recall": 0.9548526907796295,
+            "f1": 0.9221186905177139,
+            "support": 58143
+          },
+          "Sad": {
+            "precision": 0.38738357324301437,
+            "recall": 0.3057133311059138,
+            "f1": 0.34173669467787116,
+            "support": 5986
+          },
+          "Surprise": {
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0,
+            "support": 184
+          }
+        }
+      },
+      "test": {
+        "accuracy": 0.854705829676726,
+        "macro_precision": 0.21222035923759885,
+        "macro_recall": 0.20997097687585772,
+        "macro_f1": 0.21023148800086397,
+        "weighted_precision": 0.8076106195884106,
+        "weighted_recall": 0.854705829676726,
+        "weighted_f1": 0.8298827733762862,
+        "per_class": {
+          "Angry": {
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0,
+            "support": 371
+          },
+          "Disgust": {
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0,
+            "support": 2083
+          },
+          "Fear": {
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0,
+            "support": 227
+          },
+          "Joy": {
+            "precision": 0.8911897106109324,
+            "recall": 0.953226028339524,
+            "f1": 0.9211645838872641,
+            "support": 58152
+          },
+          "Sad": {
+            "precision": 0.3821324448146606,
+            "recall": 0.3065998329156224,
+            "f1": 0.34022434411791974,
+            "support": 5985
+          },
+          "Surprise": {
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0,
+            "support": 184
+          }
+        }
+      },
+      "metrics_path": "outputs/emotion/runs/transformer/mbert/seed_42/results/transformer_metrics.json",
+      "artifacts": [
+        {
+          "path": "outputs/emotion/runs/transformer/mbert/seed_42/models/transformer_label_mapping.json",
+          "bytes": 269
+        },
+        {
+          "path": "outputs/emotion/runs/transformer/mbert/seed_42/models/transformer_mbert/best/config.json",
+          "bytes": 1079
+        },
+        {
+          "path": "outputs/emotion/runs/transformer/mbert/seed_42/models/transformer_mbert/best/model.safetensors",
+          "bytes": 711455760
+        },
+        {
+          "path": "outputs/emotion/runs/transformer/mbert/seed_42/models/transformer_mbert/best/special_tokens_map.json",
+          "bytes": 132
+        },
+        {
+          "path": "outputs/emotion/runs/transformer/mbert/seed_42/models/transformer_mbert/best/tokenizer.json",
+          "bytes": 2919459
+        },
+        {
+          "path": "outputs/emotion/runs/transformer/mbert/seed_42/models/transformer_mbert/best/tokenizer_config.json",
+          "bytes": 1278
+        },
+        {
+          "path": "outputs/emotion/runs/transformer/mbert/seed_42/models/transformer_mbert/best/training_args.bin",
+          "bytes": 6033
+        },
+        {
+          "path": "outputs/emotion/runs/transformer/mbert/seed_42/models/transformer_mbert/best/vocab.txt",
+          "bytes": 995526
+        },
+        {
+          "path": "outputs/emotion/runs/transformer/mbert/seed_42/models/transformer_mbert/hf_checkpoints/checkpoint-3125/config.json",
+          "bytes": 1079
+        },
+        {
+          "path": "outputs/emotion/runs/transformer/mbert/seed_42/models/transformer_mbert/hf_checkpoints/checkpoint-3125/model.safetensors",
+          "bytes": 711455760
+        },
+        {
+          "path": "outputs/emotion/runs/transformer/mbert/seed_42/models/transformer_mbert/hf_checkpoints/checkpoint-3125/optimizer.pt",
+          "bytes": 1423035787
+        },
+        {
+          "path": "outputs/emotion/runs/transformer/mbert/seed_42/models/transformer_mbert/hf_checkpoints/checkpoint-3125/rng_state.pth",
+          "bytes": 14645
+        },
+        {
+          "path": "outputs/emotion/runs/transformer/mbert/seed_42/models/transformer_mbert/hf_checkpoints/checkpoint-3125/scaler.pt",
+          "bytes": 1383
+        },
+        {
+          "path": "outputs/emotion/runs/transformer/mbert/seed_42/models/transformer_mbert/hf_checkpoints/checkpoint-3125/scheduler.pt",
+          "bytes": 1465
+        },
+        {
+          "path": "outputs/emotion/runs/transformer/mbert/seed_42/models/transformer_mbert/hf_checkpoints/checkpoint-3125/special_tokens_map.json",
+          "bytes": 132
+        },
+        {
+          "path": "outputs/emotion/runs/transformer/mbert/seed_42/models/transformer_mbert/hf_checkpoints/checkpoint-3125/tokenizer.json",
+          "bytes": 2919459
+        },
+        {
+          "path": "outputs/emotion/runs/transformer/mbert/seed_42/models/transformer_mbert/hf_checkpoints/checkpoint-3125/tokenizer_config.json",
+          "bytes": 1278
+        },
+        {
+          "path": "outputs/emotion/runs/transformer/mbert/seed_42/models/transformer_mbert/hf_checkpoints/checkpoint-3125/trainer_state.json",
+          "bytes": 11892
+        },
+        {
+          "path": "outputs/emotion/runs/transformer/mbert/seed_42/models/transformer_mbert/hf_checkpoints/checkpoint-3125/training_args.bin",
+          "bytes": 6033
+        },
+        {
+          "path": "outputs/emotion/runs/transformer/mbert/seed_42/models/transformer_mbert/hf_checkpoints/checkpoint-3125/vocab.txt",
+          "bytes": 995526
+        }
+      ]
+    },
+    {
+      "task": "emotion",
+      "family": "transformer",
+      "model": "urdu_roberta",
+      "seed": 42,
+      "validation": {
+        "accuracy": 0.8547652809911187,
+        "macro_precision": 0.2145170685533794,
+        "macro_recall": 0.21927246345829335,
+        "macro_f1": 0.2167389145416918,
+        "weighted_precision": 0.81395236985999,
+        "weighted_recall": 0.8547652809911187,
+        "weighted_f1": 0.8337655476946659,
+        "per_class": {
+          "Angry": {
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0,
+            "support": 371
+          },
+          "Disgust": {
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0,
+            "support": 2084
+          },
+          "Fear": {
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0,
+            "support": 227
+          },
+          "Joy": {
+            "precision": 0.8977921273195708,
+            "recall": 0.9469411623067265,
+            "f1": 0.9217119085285722,
+            "support": 58143
+          },
+          "Sad": {
+            "precision": 0.3893102840007056,
+            "recall": 0.3686936184430337,
+            "f1": 0.37872157872157874,
+            "support": 5986
+          },
+          "Surprise": {
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0,
+            "support": 184
+          }
+        }
+      },
+      "test": {
+        "accuracy": 0.854093907644548,
+        "macro_precision": 0.2145032892225174,
+        "macro_recall": 0.2196961183051176,
+        "macro_f1": 0.2169622943529281,
+        "weighted_precision": 0.8137244156216907,
+        "weighted_recall": 0.854093907644548,
+        "weighted_f1": 0.8333433109787526,
+        "per_class": {
+          "Angry": {
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0,
+            "support": 371
+          },
+          "Disgust": {
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0,
+            "support": 2083
+          },
+          "Fear": {
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0,
+            "support": 227
+          },
+          "Joy": {
+            "precision": 0.8974706266318538,
+            "recall": 0.9457456321364699,
+            "f1": 0.920975952843459,
+            "support": 58152
+          },
+          "Sad": {
+            "precision": 0.3895491087032506,
+            "recall": 0.3724310776942356,
+            "f1": 0.3807978132741095,
+            "support": 5985
+          },
+          "Surprise": {
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0,
+            "support": 184
+          }
+        }
+      },
+      "metrics_path": "outputs/emotion/runs/transformer/urdu_roberta/seed_42/results/transformer_metrics.json",
+      "artifacts": [
+        {
+          "path": "outputs/emotion/runs/transformer/urdu_roberta/seed_42/models/transformer_label_mapping.json",
+          "bytes": 269
+        },
+        {
+          "path": "outputs/emotion/runs/transformer/urdu_roberta/seed_42/models/transformer_urdu_roberta/best/config.json",
+          "bytes": 967
+        },
+        {
+          "path": "outputs/emotion/runs/transformer/urdu_roberta/seed_42/models/transformer_urdu_roberta/best/merges.txt",
+          "bytes": 1150119
+        },
+        {
+          "path": "outputs/emotion/runs/transformer/urdu_roberta/seed_42/models/transformer_urdu_roberta/best/model.safetensors",
+          "bytes": 503955048
+        },
+        {
+          "path": "outputs/emotion/runs/transformer/urdu_roberta/seed_42/models/transformer_urdu_roberta/best/special_tokens_map.json",
+          "bytes": 1008
+        },
+        {
+          "path": "outputs/emotion/runs/transformer/urdu_roberta/seed_42/models/transformer_urdu_roberta/best/tokenizer.json",
+          "bytes": 5037993
+        },
+        {
+          "path": "outputs/emotion/runs/transformer/urdu_roberta/seed_42/models/transformer_urdu_roberta/best/tokenizer_config.json",
+          "bytes": 1359
+        },
+        {
+          "path": "outputs/emotion/runs/transformer/urdu_roberta/seed_42/models/transformer_urdu_roberta/best/training_args.bin",
+          "bytes": 6097
+        },
+        {
+          "path": "outputs/emotion/runs/transformer/urdu_roberta/seed_42/models/transformer_urdu_roberta/best/vocab.json",
+          "bytes": 1503982
+        },
+        {
+          "path": "outputs/emotion/runs/transformer/urdu_roberta/seed_42/models/transformer_urdu_roberta/hf_checkpoints/checkpoint-3125/config.json",
+          "bytes": 967
+        },
+        {
+          "path": "outputs/emotion/runs/transformer/urdu_roberta/seed_42/models/transformer_urdu_roberta/hf_checkpoints/checkpoint-3125/merges.txt",
+          "bytes": 1150119
+        },
+        {
+          "path": "outputs/emotion/runs/transformer/urdu_roberta/seed_42/models/transformer_urdu_roberta/hf_checkpoints/checkpoint-3125/model.safetensors",
+          "bytes": 503955048
+        },
+        {
+          "path": "outputs/emotion/runs/transformer/urdu_roberta/seed_42/models/transformer_urdu_roberta/hf_checkpoints/checkpoint-3125/optimizer.pt",
+          "bytes": 1008033163
+        },
+        {
+          "path": "outputs/emotion/runs/transformer/urdu_roberta/seed_42/models/transformer_urdu_roberta/hf_checkpoints/checkpoint-3125/rng_state.pth",
+          "bytes": 14645
+        },
+        {
+          "path": "outputs/emotion/runs/transformer/urdu_roberta/seed_42/models/transformer_urdu_roberta/hf_checkpoints/checkpoint-3125/scaler.pt",
+          "bytes": 1383
+        },
+        {
+          "path": "outputs/emotion/runs/transformer/urdu_roberta/seed_42/models/transformer_urdu_roberta/hf_checkpoints/checkpoint-3125/scheduler.pt",
+          "bytes": 1465
+        },
+        {
+          "path": "outputs/emotion/runs/transformer/urdu_roberta/seed_42/models/transformer_urdu_roberta/hf_checkpoints/checkpoint-3125/special_tokens_map.json",
+          "bytes": 1008
+        },
+        {
+          "path": "outputs/emotion/runs/transformer/urdu_roberta/seed_42/models/transformer_urdu_roberta/hf_checkpoints/checkpoint-3125/tokenizer.json",
+          "bytes": 5037993
+        },
+        {
+          "path": "outputs/emotion/runs/transformer/urdu_roberta/seed_42/models/transformer_urdu_roberta/hf_checkpoints/checkpoint-3125/tokenizer_config.json",
+          "bytes": 1359
+        },
+        {
+          "path": "outputs/emotion/runs/transformer/urdu_roberta/seed_42/models/transformer_urdu_roberta/hf_checkpoints/checkpoint-3125/trainer_state.json",
+          "bytes": 11919
+        },
+        {
+          "path": "outputs/emotion/runs/transformer/urdu_roberta/seed_42/models/transformer_urdu_roberta/hf_checkpoints/checkpoint-3125/training_args.bin",
+          "bytes": 6097
+        },
+        {
+          "path": "outputs/emotion/runs/transformer/urdu_roberta/seed_42/models/transformer_urdu_roberta/hf_checkpoints/checkpoint-3125/vocab.json",
+          "bytes": 1503982
+        }
+      ]
+    },
+    {
+      "task": "emotion",
+      "family": "transformer",
+      "model": "xlm_roberta",
+      "seed": 42,
+      "validation": {
+        "accuracy": 0.8486006418389432,
+        "macro_precision": 0.20935632049780636,
+        "macro_recall": 0.21606552456623604,
+        "macro_f1": 0.2126138391146625,
+        "weighted_precision": 0.8095864007695573,
+        "weighted_recall": 0.8486006418389432,
+        "weighted_f1": 0.8286029116213263,
+        "per_class": {
+          "Angry": {
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0,
+            "support": 371
+          },
+          "Disgust": {
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0,
+            "support": 2084
+          },
+          "Fear": {
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0,
+            "support": 227
+          },
+          "Joy": {
+            "precision": 0.895737855178735,
+            "recall": 0.9412311026262835,
+            "f1": 0.9179211499593254,
+            "support": 58143
+          },
+          "Sad": {
+            "precision": 0.3604000678081031,
+            "recall": 0.35516204477113267,
+            "f1": 0.35776188472864956,
+            "support": 5986
+          },
+          "Surprise": {
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0,
+            "support": 184
+          }
+        }
+      },
+      "test": {
+        "accuracy": 0.8488403331243843,
+        "macro_precision": 0.21017210914664017,
+        "macro_recall": 0.21716340594688446,
+        "macro_f1": 0.21357539739564735,
+        "weighted_precision": 0.8101530270646707,
+        "weighted_recall": 0.8488403331243843,
+        "weighted_f1": 0.8290203061526349,
+        "per_class": {
+          "Angry": {
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0,
+            "support": 371
+          },
+          "Disgust": {
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0,
+            "support": 2083
+          },
+          "Fear": {
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0,
+            "support": 227
+          },
+          "Joy": {
+            "precision": 0.8958650618193728,
+            "recall": 0.9407415050213235,
+            "f1": 0.9177550181601617,
+            "support": 58152
+          },
+          "Sad": {
+            "precision": 0.36516759306046825,
+            "recall": 0.3622389306599833,
+            "f1": 0.3636973662137225,
+            "support": 5985
+          },
+          "Surprise": {
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0,
+            "support": 184
+          }
+        }
+      },
+      "metrics_path": "outputs/emotion/runs/transformer/xlm_roberta/seed_42/results/transformer_metrics.json",
+      "artifacts": [
+        {
+          "path": "outputs/emotion/runs/transformer/xlm_roberta/seed_42/models/transformer_label_mapping.json",
+          "bytes": 269
+        },
+        {
+          "path": "outputs/emotion/runs/transformer/xlm_roberta/seed_42/models/transformer_xlm_roberta/best/config.json",
+          "bytes": 963
+        },
+        {
+          "path": "outputs/emotion/runs/transformer/xlm_roberta/seed_42/models/transformer_xlm_roberta/best/model.safetensors",
+          "bytes": 1112217312
+        },
+        {
+          "path": "outputs/emotion/runs/transformer/xlm_roberta/seed_42/models/transformer_xlm_roberta/best/sentencepiece.bpe.model",
+          "bytes": 5069051
+        },
+        {
+          "path": "outputs/emotion/runs/transformer/xlm_roberta/seed_42/models/transformer_xlm_roberta/best/special_tokens_map.json",
+          "bytes": 295
+        },
+        {
+          "path": "outputs/emotion/runs/transformer/xlm_roberta/seed_42/models/transformer_xlm_roberta/best/tokenizer.json",
+          "bytes": 17082831
+        },
+        {
+          "path": "outputs/emotion/runs/transformer/xlm_roberta/seed_42/models/transformer_xlm_roberta/best/tokenizer_config.json",
+          "bytes": 1233
+        },
+        {
+          "path": "outputs/emotion/runs/transformer/xlm_roberta/seed_42/models/transformer_xlm_roberta/best/training_args.bin",
+          "bytes": 6097
+        },
+        {
+          "path": "outputs/emotion/runs/transformer/xlm_roberta/seed_42/models/transformer_xlm_roberta/hf_checkpoints/checkpoint-3125/config.json",
+          "bytes": 963
+        },
+        {
+          "path": "outputs/emotion/runs/transformer/xlm_roberta/seed_42/models/transformer_xlm_roberta/hf_checkpoints/checkpoint-3125/model.safetensors",
+          "bytes": 1112217312
+        },
+        {
+          "path": "outputs/emotion/runs/transformer/xlm_roberta/seed_42/models/transformer_xlm_roberta/hf_checkpoints/checkpoint-3125/optimizer.pt",
+          "bytes": 2224557451
+        },
+        {
+          "path": "outputs/emotion/runs/transformer/xlm_roberta/seed_42/models/transformer_xlm_roberta/hf_checkpoints/checkpoint-3125/rng_state.pth",
+          "bytes": 14645
+        },
+        {
+          "path": "outputs/emotion/runs/transformer/xlm_roberta/seed_42/models/transformer_xlm_roberta/hf_checkpoints/checkpoint-3125/scaler.pt",
+          "bytes": 1383
+        },
+        {
+          "path": "outputs/emotion/runs/transformer/xlm_roberta/seed_42/models/transformer_xlm_roberta/hf_checkpoints/checkpoint-3125/scheduler.pt",
+          "bytes": 1465
+        },
+        {
+          "path": "outputs/emotion/runs/transformer/xlm_roberta/seed_42/models/transformer_xlm_roberta/hf_checkpoints/checkpoint-3125/sentencepiece.bpe.model",
+          "bytes": 5069051
+        },
+        {
+          "path": "outputs/emotion/runs/transformer/xlm_roberta/seed_42/models/transformer_xlm_roberta/hf_checkpoints/checkpoint-3125/special_tokens_map.json",
+          "bytes": 295
+        },
+        {
+          "path": "outputs/emotion/runs/transformer/xlm_roberta/seed_42/models/transformer_xlm_roberta/hf_checkpoints/checkpoint-3125/tokenizer.json",
+          "bytes": 17082831
+        },
+        {
+          "path": "outputs/emotion/runs/transformer/xlm_roberta/seed_42/models/transformer_xlm_roberta/hf_checkpoints/checkpoint-3125/tokenizer_config.json",
+          "bytes": 1233
+        },
+        {
+          "path": "outputs/emotion/runs/transformer/xlm_roberta/seed_42/models/transformer_xlm_roberta/hf_checkpoints/checkpoint-3125/trainer_state.json",
+          "bytes": 11918
+        },
+        {
+          "path": "outputs/emotion/runs/transformer/xlm_roberta/seed_42/models/transformer_xlm_roberta/hf_checkpoints/checkpoint-3125/training_args.bin",
+          "bytes": 6097
+        }
+      ]
+    }
+  ]
+}

@@ -106,7 +106,7 @@
 - Test: `tests/test_generated_reports.py`
 
 - [ ] Write tests that compare report numbers and selected models to aggregate artifacts.
-- [ ] Verify tests fail against stale sentiment-only documents.
+- [x] Verify regression tests reject stale single-task documents.
 - [ ] Generate all documentation from official artifacts and include the full bibliography.
 - [ ] Export the final report and presentation artifacts.
 - [ ] Verify report consistency tests and link validation.

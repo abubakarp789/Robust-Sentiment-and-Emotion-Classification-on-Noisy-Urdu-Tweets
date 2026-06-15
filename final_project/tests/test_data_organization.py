@@ -120,5 +120,6 @@ def test_final_validator_includes_data_asset_checks() -> None:
 
     assert "check_data_assets" in final_source
     assert "validate_data_assets(config)" in final_source
-    assert "processed_sentiment_dataset.csv" in pipeline_source
-    assert "annotation_sample.csv" in pipeline_source
+    assert "processed_filename" in pipeline_source
+    assert "clean_text" in pipeline_source
+    assert "overlap" in pipeline_source

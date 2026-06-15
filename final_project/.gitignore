@@ -9,3 +9,12 @@ outputs/models/**/*.pt
 # Large transformer model weights (>700MB each)
 outputs/models/**/*.safetensors
 outputs/models/**/*.bin
+
+# Official generated task datasets and full trained-run artifacts are retained
+# locally for the submission archive but are too large for the source repository.
+data/processed/sentiment/*.csv
+data/processed/emotion/*.csv
+data/splits/sentiment/*.csv
+data/splits/emotion/*.csv
+outputs/sentiment/runs/
+outputs/emotion/runs/

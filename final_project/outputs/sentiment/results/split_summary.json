@@ -1,0 +1,47 @@
+{
+  "total_rows_loaded": 1048000,
+  "rows_with_missing_raw_labels": 514571,
+  "rows_with_missing_required_labels": 514571,
+  "rows_removed_empty_or_short_clean_text": 15463,
+  "rows_after_filtering": 446745,
+  "processed_dataset_path": "data/processed/sentiment/dataset.csv",
+  "processed_dataset_rows": 446745,
+  "number_of_classes": 3,
+  "class_distribution_before_split": {
+    "Negative": 57874,
+    "Neutral": 1228,
+    "Positive": 387643
+  },
+  "train_size": 312710,
+  "validation_size": 67016,
+  "test_size": 67019,
+  "train_class_distribution": {
+    "Negative": 40510,
+    "Neutral": 860,
+    "Positive": 271340
+  },
+  "validation_class_distribution": {
+    "Negative": 8681,
+    "Neutral": 184,
+    "Positive": 58151
+  },
+  "test_class_distribution": {
+    "Negative": 8683,
+    "Neutral": 184,
+    "Positive": 58152
+  },
+  "random_seed": 42,
+  "split_ratios": {
+    "train_size": 0.7,
+    "validation_size": 0.15,
+    "test_size": 0.15
+  },
+  "task": "sentiment",
+  "min_text_length_tokens": 2,
+  "group_safety": {
+    "duplicate_groups": 447583,
+    "conflicting_groups_removed": 2198,
+    "rows_removed_in_conflicting_groups": 14069,
+    "rows_removed_as_duplicate": 57152
+  }
+}

@@ -1,4 +1,4 @@
-"""Validate the final-project preprocessing and split pipeline."""
+"""Validate one task-specific preprocessing and group-safe split pipeline."""
 
 from __future__ import annotations
 
@@ -8,188 +8,75 @@ from pathlib import Path
 import pandas as pd
 
 try:
-    from .label_mapping import map_to_sentiment, normalize_label
     from .preprocessing import preprocess_text
-    from .utils import load_config
-except ImportError:  # Support direct execution: python src/validate_pipeline.py
-    from label_mapping import map_to_sentiment, normalize_label
+    from .utils import load_config, resolve_task_paths
+except ImportError:
     from preprocessing import preprocess_text
-    from utils import load_config
+    from utils import load_config, resolve_task_paths
 
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
-EXPECTED_RAW_ROWS = 1_048_000
-EXPECTED_PROCESSED_ROWS = 517_966
-EXPECTED_SPLIT_ROWS = {"train": 362_576, "validation": 77_695, "test": 77_695}
 RAW_REQUIRED_COLUMNS = {"Id", "Text", "Category"}
-PROCESSED_REQUIRED_COLUMNS = {
-    "id",
-    "raw_text",
-    "clean_text",
-    "raw_label",
-    "normalized_label",
-    "task_label",
-    "text_length",
-}
-ANNOTATION_REQUIRED_COLUMNS = {
-    "id",
-    "raw_text",
-    "clean_text",
-    "current_label",
-    "manual_label",
-    "annotator_notes",
-}
+PROCESSED_REQUIRED_COLUMNS = {"id", "raw_text", "clean_text", "raw_label", "normalized_label", "task_label", "text_length"}
 
 
-def _resolve_project_path(path_value: str | Path) -> Path:
+def _resolve(path_value: str | Path) -> Path:
     path = Path(path_value)
-    if path.is_absolute():
-        return path
-    return (PROJECT_ROOT / path).resolve()
+    return path if path.is_absolute() else (PROJECT_ROOT / path).resolve()
 
 
-def _csv_row_count(path: Path, usecols: list[str] | None = None) -> int:
-    return sum(
-        len(chunk)
-        for chunk in pd.read_csv(path, usecols=usecols, encoding="utf-8", chunksize=100_000)
-    )
-
-
-def _warn_count(name: str, actual: int, expected: int) -> None:
-    if actual != expected:
-        print(f"WARNING: {name} has {actual:,} rows; current project expectation is {expected:,}.")
-
-
-def validate_data_assets(cfg: dict) -> None:
-    """Validate raw, processed, annotation, and data-documentation artifacts."""
-    data_cfg = cfg["data"]
-    raw_path = _resolve_project_path(data_cfg["raw_dataset_path"])
+def validate_data_assets(config: dict) -> None:
+    """Validate raw data and the task-owned processed/split artifacts."""
+    raw_path = _resolve(config["data"]["raw_dataset_path"])
     if not raw_path.is_file():
-        raise FileNotFoundError(f"Raw dataset does not exist: {raw_path}")
+        raise FileNotFoundError(f"Raw dataset is missing: {raw_path}")
     raw_header = pd.read_csv(raw_path, nrows=0, encoding="utf-8")
-    missing_raw = sorted(RAW_REQUIRED_COLUMNS.difference(raw_header.columns))
+    missing_raw = RAW_REQUIRED_COLUMNS.difference(raw_header.columns)
     if missing_raw:
-        raise ValueError(f"Raw dataset is missing columns: {missing_raw}")
-    raw_rows = _csv_row_count(raw_path, usecols=[data_cfg["id_column"]])
-    _warn_count("Raw dataset", raw_rows, EXPECTED_RAW_ROWS)
-    print(f"Raw dataset validated: {raw_rows:,} rows")
+        raise ValueError(f"Raw dataset is missing columns: {sorted(missing_raw)}")
 
-    processed_path = PROJECT_ROOT / "data" / "processed" / "processed_sentiment_dataset.csv"
+    task = config["labels"]["task"]
+    processed_dir = _resolve(config["data"].get("processed_dir", f"data/processed/{task}"))
+    processed_path = processed_dir / config["data"].get("processed_filename", "dataset.csv")
     if not processed_path.is_file():
-        raise FileNotFoundError(f"Processed dataset does not exist: {processed_path}")
+        raise FileNotFoundError(f"Processed {task} dataset is missing: {processed_path}")
     processed_header = pd.read_csv(processed_path, nrows=0, encoding="utf-8")
-    missing_processed = sorted(PROCESSED_REQUIRED_COLUMNS.difference(processed_header.columns))
+    missing_processed = PROCESSED_REQUIRED_COLUMNS.difference(processed_header.columns)
     if missing_processed:
-        raise ValueError(f"Processed dataset is missing columns: {missing_processed}")
-    processed_rows = 0
-    for chunk in pd.read_csv(
-        processed_path,
-        usecols=["clean_text", "task_label"],
-        encoding="utf-8",
-        chunksize=100_000,
-    ):
-        processed_rows += len(chunk)
-        if chunk["clean_text"].fillna("").astype(str).str.strip().eq("").any():
-            raise ValueError("Processed dataset contains empty clean_text values.")
-        if chunk["task_label"].fillna("").astype(str).str.strip().eq("").any():
-            raise ValueError("Processed dataset contains empty task_label values.")
-    _warn_count("Processed dataset", processed_rows, EXPECTED_PROCESSED_ROWS)
-    print(f"Processed dataset validated: {processed_rows:,} rows")
+        raise ValueError(f"Processed {task} dataset is missing columns: {sorted(missing_processed)}")
 
-    annotation_path = PROJECT_ROOT / "data" / "annotation" / "annotation_sample.csv"
-    if not annotation_path.is_file():
-        raise FileNotFoundError(f"Annotation sample does not exist: {annotation_path}")
-    annotation = pd.read_csv(annotation_path, encoding="utf-8")
-    missing_annotation = sorted(ANNOTATION_REQUIRED_COLUMNS.difference(annotation.columns))
-    if missing_annotation:
-        raise ValueError(f"Annotation sample is missing columns: {missing_annotation}")
-    if not annotation["manual_label"].fillna("").astype(str).str.strip().eq("").all():
-        raise ValueError("Annotation sample manual_label must remain empty before human review.")
-    if not annotation["annotator_notes"].fillna("").astype(str).str.strip().eq("").all():
-        raise ValueError("Annotation sample annotator_notes must remain empty before human review.")
-    counts = annotation["current_label"].value_counts()
-    if not {"Positive", "Negative", "Neutral"}.issubset(counts.index):
-        raise ValueError("Annotation sample must include Positive, Negative, and Neutral rows.")
-    if int(counts.max() - counts.min()) > 5:
-        print(f"WARNING: Annotation sample is not approximately balanced: {counts.to_dict()}")
-    print(f"Annotation sample validated: {len(annotation):,} rows; {counts.to_dict()}")
+    split_dir = _resolve(config["data"]["output_dir"])
+    frames: dict[str, pd.DataFrame] = {}
+    for split in ("train", "validation", "test"):
+        path = split_dir / f"{split}.csv"
+        if not path.is_file():
+            raise FileNotFoundError(f"Missing {task} {split} split: {path}")
+        frame = pd.read_csv(path, usecols=["id", "clean_text", "task_label"], encoding="utf-8")
+        if frame.empty or frame.isna().any().any():
+            raise ValueError(f"{task} {split} is empty or contains missing required values.")
+        frames[split] = frame
 
-    readmes = [
-        PROJECT_ROOT / "data" / "raw" / "README.md",
-        PROJECT_ROOT / "data" / "processed" / "README.md",
-        PROJECT_ROOT / "data" / "annotation" / "README.md",
-        PROJECT_ROOT / "data" / "annotation" / "annotation_readme.md",
-        PROJECT_ROOT / "data" / "splits" / "README.md",
-    ]
-    missing_readmes = [str(path) for path in readmes if not path.is_file()]
-    if missing_readmes:
-        raise FileNotFoundError(f"Data README files are missing: {missing_readmes}")
-    print("Data folder README files validated.")
+    for left, right in (("train", "validation"), ("train", "test"), ("validation", "test")):
+        for column in ("id", "clean_text"):
+            overlap = set(frames[left][column].astype(str)).intersection(frames[right][column].astype(str))
+            if overlap:
+                raise ValueError(f"{task} {column} overlap between {left} and {right}: {len(overlap)}")
 
 
-def validate_pipeline(config_path: str | Path | None = None) -> None:
-    """Run lightweight validation checks for config, data, preprocessing, and splits."""
-    cfg = load_config(config_path or PROJECT_ROOT / "config.yaml")
-    print("Config loaded.")
-
-    data_cfg = cfg["data"]
-    raw_dataset_path = _resolve_project_path(data_cfg["raw_dataset_path"])
-    if not raw_dataset_path.exists():
-        raise FileNotFoundError(f"Raw dataset path does not exist: {raw_dataset_path}")
-    print(f"Raw dataset path exists: {raw_dataset_path}")
-
-    sample = pd.read_csv(raw_dataset_path, nrows=5, encoding="utf-8")
-    required_columns = [
-        data_cfg["id_column"],
-        data_cfg["text_column"],
-        data_cfg["label_column"],
-    ]
-    missing_columns = [col for col in required_columns if col not in sample.columns]
-    if missing_columns:
-        raise ValueError(f"Required columns missing from dataset: {missing_columns}")
-    print(f"Required columns exist: {required_columns}")
-
-    validate_data_assets(cfg)
-
-    sample_text = "Assalam Alikum 😊 @user https://example.com #Urdu 123!"
-    cleaned = preprocess_text(sample_text, cfg["preprocessing"])
-    if not cleaned:
-        raise ValueError("Preprocessing produced empty text for the sample.")
-    print(f"Sample preprocessing output: {cleaned}")
-
-    sample_label = " Joy, Sad"
-    normalized = normalize_label(sample_label)
-    sentiment = map_to_sentiment(sample_label)
-    if normalized is None or sentiment is None:
-        raise ValueError("Label normalization failed for sample label.")
-    print(f"Sample label normalization: {sample_label!r} -> {normalized} -> {sentiment}")
-
-    split_dir = _resolve_project_path(data_cfg["output_dir"])
-    split_files = {
-        "train": split_dir / "train.csv",
-        "validation": split_dir / "validation.csv",
-        "test": split_dir / "test.csv",
-    }
-    for name, path in split_files.items():
-        if not path.exists():
-            raise FileNotFoundError(f"{name} split does not exist: {path}")
-        split_df = pd.read_csv(path, encoding="utf-8")
-        if split_df.empty:
-            raise ValueError(f"{name} split is empty: {path}")
-        if split_df["clean_text"].fillna("").str.strip().eq("").any():
-            raise ValueError(f"{name} split contains empty clean_text values.")
-        if split_df["task_label"].fillna("").str.strip().eq("").any():
-            raise ValueError(f"{name} split contains empty task_label values.")
-        _warn_count(f"{name} split", len(split_df), EXPECTED_SPLIT_ROWS[name])
-        print(f"\n{name} split: {len(split_df):,} rows")
-        print(split_df["task_label"].value_counts().sort_index().to_string())
-
-    print("\nPipeline validation passed.")
+def validate_pipeline(config_path: str | Path) -> None:
+    config_file = Path(config_path).resolve()
+    config = load_config(config_file)
+    validate_data_assets(config)
+    paths = resolve_task_paths(config_file)
+    sample = preprocess_text("Assalam Alikum @user https://example.com #Urdu 123!", config["preprocessing"])
+    if not sample:
+        raise ValueError("Sample preprocessing unexpectedly produced empty text.")
+    print(f"[SUCCESS] {paths['task']} pipeline validation passed: {paths['split_dir']}")
 
 
 def main() -> None:
-    parser = argparse.ArgumentParser(description="Validate final-project data pipeline.")
-    parser.add_argument("--config", default=None, help="Path to config.yaml")
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--config", required=True)
     args = parser.parse_args()
     validate_pipeline(args.config)
 

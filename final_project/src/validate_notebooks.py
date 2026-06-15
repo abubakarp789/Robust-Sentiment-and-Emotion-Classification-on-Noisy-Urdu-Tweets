@@ -14,51 +14,50 @@ EXPECTED_NOTEBOOKS = {
     "01_dataset_analysis.ipynb": {
         "title": "# 01 Dataset Analysis and Preprocessing",
         "artifacts": [
-            "outputs/results/split_summary.json",
-            "outputs/results/label_mapping_summary.json",
-            "data/splits/train.csv",
-            "data/splits/validation.csv",
-            "data/splits/test.csv",
+            "outputs/sentiment/results/split_summary.json",
+            "outputs/emotion/results/split_summary.json",
+            "data/splits/sentiment/train.csv",
+            "data/splits/sentiment/validation.csv",
+            "data/splits/sentiment/test.csv",
+            "data/splits/emotion/train.csv",
+            "data/splits/emotion/validation.csv",
+            "data/splits/emotion/test.csv",
         ],
     },
     "02_baseline_models.ipynb": {
         "title": "# 02 Baseline Statistical Models",
         "artifacts": [
-            "outputs/results/baseline_leaderboard.csv",
-            "outputs/results/baseline_metrics.json",
-            "outputs/results/model_comparison_leaderboard.csv",
-            "outputs/error_analysis/baseline_error_summary.json",
+            "outputs/sentiment/results/aggregate_metrics.json",
+            "outputs/emotion/results/aggregate_metrics.json",
+            "outputs/sentiment/results/model_comparison_leaderboard.csv",
+            "outputs/emotion/results/model_comparison_leaderboard.csv",
         ],
     },
     "03_neural_models.ipynb": {
         "title": "# 03 Neural Models",
         "artifacts": [
-            "outputs/results/neural_leaderboard.csv",
-            "outputs/results/neural_metrics.json",
-            "outputs/results/neural_text_cnn_training_history.csv",
-            "outputs/results/neural_bilstm_attention_training_history.csv",
-            "outputs/results/model_comparison_leaderboard.csv",
+            "outputs/sentiment/results/aggregate_metrics.json",
+            "outputs/emotion/results/aggregate_metrics.json",
+            "outputs/sentiment/runs/neural/text_cnn/seed_42/results/neural_metrics.json",
+            "outputs/emotion/runs/neural/bilstm_attention/seed_42/results/neural_metrics.json",
         ],
     },
     "04_transformer_models.ipynb": {
         "title": "# 04 Transformer Models and Explanation Assistant",
         "artifacts": [
-            "outputs/results/transformer_leaderboard.csv",
-            "outputs/results/transformer_metrics.json",
-            "outputs/results/model_comparison_leaderboard.csv",
-            "outputs/error_analysis/explanation_samples.json",
+            "outputs/sentiment/results/model_comparison_leaderboard.csv",
+            "outputs/emotion/results/model_comparison_leaderboard.csv",
+            "outputs/sentiment/runs/transformer/urdu_roberta/seed_42/results/transformer_metrics.json",
+            "outputs/emotion/runs/transformer/urdu_roberta/seed_42/results/transformer_metrics.json",
         ],
     },
     "05_error_analysis.ipynb": {
         "title": "# 05 Error Analysis",
         "artifacts": [
-            "outputs/error_analysis/baseline_error_summary.json",
-            "outputs/error_analysis/baseline_linear_svm_test_misclassified.csv",
-            "outputs/error_analysis/baseline_linear_svm_test_confusion_pairs.csv",
-            "outputs/error_analysis/baseline_linear_svm_test_class_errors.csv",
-            "outputs/error_analysis/baseline_linear_svm_test_high_confidence_wrong.csv",
-            "outputs/error_analysis/baseline_linear_svm_test_minority_class_errors.csv",
-            "outputs/results/model_comparison_leaderboard.csv",
+            "outputs/sentiment/runs/baseline/linear_svm/seed_42/predictions/baseline_linear_svm_test_predictions.csv",
+            "outputs/emotion/runs/baseline/linear_svm/seed_42/predictions/baseline_linear_svm_test_predictions.csv",
+            "outputs/sentiment/runs/baseline/linear_svm/seed_42/results/confusion_matrix_baseline_linear_svm_test.csv",
+            "outputs/emotion/runs/baseline/linear_svm/seed_42/results/confusion_matrix_baseline_linear_svm_test.csv",
         ],
     },
 }
@@ -120,8 +119,7 @@ def validate_notebook(path: Path, expected: dict[str, Any], project_root: Path) 
         if not artifact_path.is_file():
             errors.append(f"{path.name}: required artifact is missing: {relative_path}")
 
-        artifact_name = Path(relative_path).name
-        if artifact_name not in complete_text:
+        if relative_path not in complete_text:
             errors.append(f"{path.name}: does not reference required artifact: {relative_path}")
 
     return errors
