@@ -1,0 +1,31 @@
+extends: config.yaml
+
+project:
+  name: "Group-Safe Urdu Tweet Sentiment Classification"
+
+data:
+  processed_dir: "data/processed/sentiment"
+  processed_filename: "dataset.csv"
+  output_dir: "data/splits/sentiment"
+
+labels:
+  task: "sentiment"
+
+outputs:
+  results_dir: "outputs/sentiment/results"
+  figures_dir: "outputs/sentiment/figures"
+  predictions_dir: "outputs/sentiment/predictions"
+  models_dir: "outputs/sentiment/models"
+  error_analysis_dir: "outputs/sentiment/error_analysis"
+
+experiments:
+  repeated_seeds: [42, 52, 62]
+  transformer_seeds: [42]
+  transformer_sample_size: 50000
+  transformer_epochs: 1
+
+transformer_models:
+  models:
+    urdu_roberta:
+      enabled: true
+

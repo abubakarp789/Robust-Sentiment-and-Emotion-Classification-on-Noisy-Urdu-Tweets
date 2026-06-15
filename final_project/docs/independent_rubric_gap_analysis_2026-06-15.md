@@ -109,8 +109,8 @@ Recommended presentation improvement:
 
 Implemented well:
 
-- `Assignment#02` contains the reviewed research-paper collection.
-- `Assignment#03/report/Assignment3_TechnicalReport.md` includes 20 references and comparative discussion.
+- The earlier coursework folders contain the reviewed research-paper collection.
+- The earlier technical report includes 20 references and comparative discussion.
 - Classical, neural, Transformer, multilingual, weak-supervision, Urdu-specific, and Twitter-oriented approaches are represented.
 - The research gap is connected to emoji-derived shortcut leakage, shared evaluation, class imbalance, and low-resource Urdu modeling.
 

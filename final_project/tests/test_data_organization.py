@@ -30,7 +30,7 @@ def _write_test_config(root: Path, raw_path: Path) -> Path:
             "remove_mentions": True,
             "clean_hashtags": True,
             "remove_emojis": True,
-            "remove_numbers": True,
+            "remove_numbers": False,
             "remove_punctuation": True,
             "normalize_whitespace": True,
             "min_text_length": 2,

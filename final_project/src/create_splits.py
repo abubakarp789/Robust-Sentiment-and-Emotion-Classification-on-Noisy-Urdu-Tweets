@@ -49,38 +49,109 @@ def _distribution(series: pd.Series) -> dict[str, int]:
     return {str(key): int(value) for key, value in series.value_counts().sort_index().items()}
 
 
-def _split_data(df: pd.DataFrame, cfg: dict[str, Any]) -> tuple[pd.DataFrame, pd.DataFrame, pd.DataFrame]:
-    split_cfg = cfg["split"]
-    seed = int(cfg["project"]["random_seed"])
-    train_size = float(split_cfg["train_size"])
-    validation_size = float(split_cfg["validation_size"])
-    test_size = float(split_cfg["test_size"])
+def build_group_safe_frame(df: pd.DataFrame) -> tuple[pd.DataFrame, dict[str, int]]:
+    """Group rows linked by ID or normalized text and remove unsafe duplicates."""
+    frame = df.reset_index(drop=True).copy()
+    row_count = len(frame)
+    parent = list(range(row_count))
+
+    def find(index: int) -> int:
+        while parent[index] != index:
+            parent[index] = parent[parent[index]]
+            index = parent[index]
+        return index
+
+    def union(left: int, right: int) -> None:
+        left_root = find(left)
+        right_root = find(right)
+        if left_root != right_root:
+            parent[right_root] = left_root
+
+    first_id: dict[str, int] = {}
+    first_text: dict[str, int] = {}
+    for index, (row_id, text) in enumerate(zip(frame["id"], frame["clean_text"])):
+        id_key = "" if pd.isna(row_id) else str(row_id).strip()
+        text_key = str(text)
+        if id_key:
+            if id_key in first_id:
+                union(index, first_id[id_key])
+            else:
+                first_id[id_key] = index
+        if text_key in first_text:
+            union(index, first_text[text_key])
+        else:
+            first_text[text_key] = index
+
+    roots = [find(index) for index in range(row_count)]
+    root_to_group = {root: group for group, root in enumerate(dict.fromkeys(roots))}
+    frame["group_id"] = [root_to_group[root] for root in roots]
+    conflicting = set(
+        frame.groupby("group_id")["task_label"].nunique().loc[lambda values: values > 1].index
+    )
+    conflicting_mask = frame["group_id"].isin(conflicting)
+    rows_removed_in_conflicting_groups = int(conflicting_mask.sum())
+    frame = frame.loc[~conflicting_mask].copy()
+
+    rows_before_deduplication = len(frame)
+    frame = frame.drop_duplicates(subset=["clean_text"], keep="first").reset_index(drop=True)
+    rows_removed_as_duplicate = rows_before_deduplication - len(frame)
+    return frame, {
+        "duplicate_groups": int(len(root_to_group)),
+        "conflicting_groups_removed": int(len(conflicting)),
+        "rows_removed_in_conflicting_groups": rows_removed_in_conflicting_groups,
+        "rows_removed_as_duplicate": int(rows_removed_as_duplicate),
+    }
+
+
+def split_group_safe(
+    df: pd.DataFrame,
+    *,
+    train_size: float,
+    validation_size: float,
+    test_size: float,
+    random_seed: int,
+    stratify: bool = True,
+) -> tuple[pd.DataFrame, pd.DataFrame, pd.DataFrame]:
+    """Split complete duplicate groups while preserving task-label distributions."""
 
     total = train_size + validation_size + test_size
     if abs(total - 1.0) > 1e-6:
         raise ValueError(f"Split ratios must sum to 1.0; got {total}")
 
-    stratify = df["task_label"] if split_cfg.get("stratify", True) else None
-    train_df, temp_df = train_test_split(
-        df,
+    groups = df.groupby("group_id", as_index=False).agg(task_label=("task_label", "first"))
+    group_stratify = groups["task_label"] if stratify else None
+    train_groups, temp_groups = train_test_split(
+        groups,
         train_size=train_size,
-        random_state=seed,
-        stratify=stratify,
+        random_state=random_seed,
+        stratify=group_stratify,
     )
 
-    temp_stratify = temp_df["task_label"] if split_cfg.get("stratify", True) else None
+    temp_stratify = temp_groups["task_label"] if stratify else None
     validation_fraction_of_temp = validation_size / (validation_size + test_size)
-    validation_df, test_df = train_test_split(
-        temp_df,
+    validation_groups, test_groups = train_test_split(
+        temp_groups,
         train_size=validation_fraction_of_temp,
-        random_state=seed,
+        random_state=random_seed,
         stratify=temp_stratify,
     )
 
-    return (
-        train_df.reset_index(drop=True),
-        validation_df.reset_index(drop=True),
-        test_df.reset_index(drop=True),
+    def select(group_frame: pd.DataFrame) -> pd.DataFrame:
+        selected = df[df["group_id"].isin(group_frame["group_id"])].copy()
+        return selected.reset_index(drop=True)
+
+    return select(train_groups), select(validation_groups), select(test_groups)
+
+
+def _split_data(df: pd.DataFrame, cfg: dict[str, Any]) -> tuple[pd.DataFrame, pd.DataFrame, pd.DataFrame]:
+    split_cfg = cfg["split"]
+    return split_group_safe(
+        df,
+        train_size=float(split_cfg["train_size"]),
+        validation_size=float(split_cfg["validation_size"]),
+        test_size=float(split_cfg["test_size"]),
+        random_seed=int(cfg["project"]["random_seed"]),
+        stratify=bool(split_cfg.get("stratify", True)),
     )
 
 
@@ -96,7 +167,10 @@ def create_splits(config_path: str | Path | None = None) -> dict[str, Any]:
 
     raw_dataset_path = _resolve_project_path(data_cfg["raw_dataset_path"])
     split_dir = _resolve_project_path(data_cfg["output_dir"])
-    processed_path = _resolve_project_path("data/processed/processed_sentiment_dataset.csv")
+    task = labels_cfg.get("task", "sentiment")
+    processed_dir = _resolve_project_path(data_cfg.get("processed_dir", "data/processed"))
+    processed_name = data_cfg.get("processed_filename", f"processed_{task}_dataset.csv")
+    processed_path = processed_dir / processed_name
     results_dir = _resolve_project_path(outputs_cfg["results_dir"])
     split_dir.mkdir(parents=True, exist_ok=True)
     processed_path.parent.mkdir(parents=True, exist_ok=True)
@@ -105,7 +179,6 @@ def create_splits(config_path: str | Path | None = None) -> dict[str, Any]:
     id_col = data_cfg["id_column"]
     text_col = data_cfg["text_column"]
     label_col = data_cfg["label_column"]
-    task = labels_cfg.get("task", "sentiment")
 
     df = _read_dataset(raw_dataset_path, [id_col, text_col, label_col])
     total_rows = int(len(df))
@@ -148,13 +221,14 @@ def create_splits(config_path: str | Path | None = None) -> dict[str, Any]:
     if df.empty:
         raise ValueError("No rows remain after label and text filtering.")
 
-    df.to_csv(processed_path, index=False, encoding="utf-8")
+    df, group_summary = build_group_safe_frame(df)
+    df[output_columns].to_csv(processed_path, index=False, encoding="utf-8")
 
     train_df, validation_df, test_df = _split_data(df, cfg)
 
-    train_df.to_csv(split_dir / "train.csv", index=False, encoding="utf-8")
-    validation_df.to_csv(split_dir / "validation.csv", index=False, encoding="utf-8")
-    test_df.to_csv(split_dir / "test.csv", index=False, encoding="utf-8")
+    train_df[output_columns].to_csv(split_dir / "train.csv", index=False, encoding="utf-8")
+    validation_df[output_columns].to_csv(split_dir / "validation.csv", index=False, encoding="utf-8")
+    test_df[output_columns].to_csv(split_dir / "test.csv", index=False, encoding="utf-8")
 
     summary = {
         "total_rows_loaded": total_rows,
@@ -162,7 +236,7 @@ def create_splits(config_path: str | Path | None = None) -> dict[str, Any]:
         "rows_with_missing_required_labels": missing_required_labels,
         "rows_removed_empty_or_short_clean_text": rows_removed_empty_or_short,
         "rows_after_filtering": int(len(df)),
-        "processed_dataset_path": "data/processed/processed_sentiment_dataset.csv",
+        "processed_dataset_path": str(processed_path.relative_to(PROJECT_ROOT)).replace("\\", "/"),
         "processed_dataset_rows": int(len(df)),
         "number_of_classes": int(df["task_label"].nunique()),
         "class_distribution_before_split": _distribution(df["task_label"]),
@@ -180,6 +254,7 @@ def create_splits(config_path: str | Path | None = None) -> dict[str, Any]:
         },
         "task": task,
         "min_text_length_tokens": min_text_length,
+        "group_safety": group_summary,
     }
 
     (results_dir / "split_summary.json").write_text(
