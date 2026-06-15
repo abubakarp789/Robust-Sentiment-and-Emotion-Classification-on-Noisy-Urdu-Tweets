@@ -22,13 +22,13 @@ def build_comparison_rows(
     neural_metrics: Mapping[str, Any] | None,
     transformer_metrics: Mapping[str, Any] | None = None,
 ) -> list[dict[str, Any]]:
-    """Build comparison rows sorted by descending test macro-F1."""
+    """Build comparison rows sorted by descending validation macro-F1."""
     rows: list[dict[str, Any]] = []
     
-    # Extract Linear SVM baseline test macro F1 for the beats_linear_svm column
+    # Validation metrics drive all model-comparison and selection decisions.
     svm_f1 = None
     if baseline_metrics and "models" in baseline_metrics and "linear_svm" in baseline_metrics["models"]:
-        svm_f1 = baseline_metrics["models"]["linear_svm"]["test"].get("macro_f1")
+        svm_f1 = baseline_metrics["models"]["linear_svm"]["validation"].get("macro_f1")
         
     families = [
         ("baseline", baseline_metrics),
@@ -43,15 +43,16 @@ def build_comparison_rows(
             validation = splits["validation"]
             test = splits["test"]
             per_class = test["per_class"]
+            validation_macro_f1 = validation["macro_f1"]
             test_macro_f1 = test["macro_f1"]
-            beats_svm = bool(test_macro_f1 > svm_f1) if svm_f1 is not None else False
+            beats_svm = bool(validation_macro_f1 > svm_f1) if svm_f1 is not None else False
             
             rows.append(
                 {
                     "model_family": family,
                     "model_name": model_name,
                     "validation_accuracy": validation["accuracy"],
-                    "validation_macro_f1": validation["macro_f1"],
+                    "validation_macro_f1": validation_macro_f1,
                     "test_accuracy": test["accuracy"],
                     "test_macro_f1": test_macro_f1,
                     "test_weighted_f1": test["weighted_f1"],
@@ -61,7 +62,7 @@ def build_comparison_rows(
                     "beats_linear_svm": beats_svm,
                 }
             )
-    return sorted(rows, key=lambda row: row["test_macro_f1"], reverse=True)
+    return sorted(rows, key=lambda row: row["validation_macro_f1"], reverse=True)
 
 
 def compare_models(config_path: str | Path = "config.yaml") -> pd.DataFrame:

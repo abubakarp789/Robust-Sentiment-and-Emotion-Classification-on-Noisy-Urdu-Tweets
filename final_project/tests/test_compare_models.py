@@ -24,10 +24,13 @@ def _metrics(model_name: str, macro_f1: float) -> dict:
     }
 
 
-def test_build_comparison_rows_combines_families_and_sorts_test_macro_f1() -> None:
-    rows = build_comparison_rows(
-        _metrics("linear_svm", 0.50), _metrics("text_cnn", 0.55)
-    )
+def test_build_comparison_rows_sorts_validation_macro_f1_not_test_macro_f1() -> None:
+    baseline = _metrics("linear_svm", 0.60)
+    neural = _metrics("text_cnn", 0.55)
+    baseline["models"]["linear_svm"]["validation"]["macro_f1"] = 0.40
+    neural["models"]["text_cnn"]["validation"]["macro_f1"] = 0.50
+
+    rows = build_comparison_rows(baseline, neural)
 
     assert rows[0]["model_family"] == "neural"
     assert rows[0]["model_name"] == "text_cnn"
@@ -47,4 +50,3 @@ def test_beats_linear_svm_is_correct() -> None:
             assert r["beats_linear_svm"] is False
         elif r["model_name"] == "linear_svm":
             assert r["beats_linear_svm"] is False
-
