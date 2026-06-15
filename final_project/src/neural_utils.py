@@ -3,7 +3,10 @@
 from __future__ import annotations
 
 import json
+import os
 import random
+import tempfile
+import time
 from collections import Counter
 from pathlib import Path
 from typing import Iterable, Mapping, Sequence, Type
@@ -91,10 +94,28 @@ def get_device(device_config: str) -> torch.device:
 
 
 def save_checkpoint(model: nn.Module, path: str | Path, metadata: dict) -> None:
-    """Save model state and JSON-compatible metadata."""
+    """Atomically save model state, retrying transient Windows file locks."""
     checkpoint_path = Path(path)
     checkpoint_path.parent.mkdir(parents=True, exist_ok=True)
-    torch.save({"state_dict": model.state_dict(), "metadata": metadata}, checkpoint_path)
+    with tempfile.NamedTemporaryFile(
+        dir=checkpoint_path.parent,
+        prefix=f".{checkpoint_path.name}.",
+        suffix=".tmp",
+        delete=False,
+    ) as handle:
+        temporary_path = Path(handle.name)
+    try:
+        torch.save({"state_dict": model.state_dict(), "metadata": metadata}, temporary_path)
+        for attempt in range(10):
+            try:
+                os.replace(temporary_path, checkpoint_path)
+                break
+            except OSError:
+                if attempt == 9:
+                    raise
+                time.sleep(0.5)
+    finally:
+        temporary_path.unlink(missing_ok=True)
 
 
 def load_checkpoint(

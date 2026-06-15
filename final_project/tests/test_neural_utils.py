@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import json
+import os
 
 import pytest
 import torch
@@ -83,6 +84,29 @@ def test_checkpoint_round_trip_preserves_metadata(tmp_path) -> None:
     assert isinstance(loaded, TextCNN)
     assert metadata["model_name"] == "text_cnn"
     assert path.exists()
+
+
+def test_save_checkpoint_retries_atomic_replace(tmp_path, monkeypatch) -> None:
+    model = torch.nn.Linear(2, 2)
+    checkpoint = tmp_path / "model.pt"
+    real_replace = os.replace
+    attempts = {"count": 0}
+
+    def flaky_replace(source, destination):
+        attempts["count"] += 1
+        if attempts["count"] < 3:
+            raise OSError(1224, "mapped file is temporarily locked")
+        return real_replace(source, destination)
+
+    monkeypatch.setattr("src.neural_utils.os.replace", flaky_replace)
+    monkeypatch.setattr("src.neural_utils.time.sleep", lambda _: None)
+
+    save_checkpoint(model, checkpoint, {"best_epoch": 1})
+
+    assert checkpoint.is_file()
+    assert attempts["count"] == 3
+    payload = torch.load(checkpoint, weights_only=True)
+    assert payload["metadata"]["best_epoch"] == 1
 
 
 def test_get_device_rejects_unavailable_cuda() -> None:
