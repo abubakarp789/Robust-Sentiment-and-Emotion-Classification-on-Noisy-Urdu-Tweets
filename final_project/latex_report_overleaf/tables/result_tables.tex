@@ -1,0 +1,173 @@
+% Class Distribution Tables
+\begin{table}[t]
+\caption{Canonical Emotion Class Distribution (SentiUrdu-1M Labeled Set)}
+\label{tab:emotion-dist}
+\centering
+\small
+\begin{tabular}{lrr}
+\toprule
+Class & Count & Share (\%) \\
+\midrule
+Joy      & 459,728 & 86.2 \\
+Sad      & 50,417  & 9.5  \\
+Disgust  & 17,083  & 3.2  \\
+Angry    & 2,802   & 0.5  \\
+Fear     & 1,847   & 0.3  \\
+Surprise & 1,552   & 0.3  \\
+\midrule
+Total    & 533,429 & 100.0 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{table}[t]
+\caption{Sentiment Class Distribution (Derived from Canonical Emotions)}
+\label{tab:sentiment-dist}
+\centering
+\small
+\begin{tabular}{llrr}
+\toprule
+Sentiment & Mapped Emotions & Count & Share (\%) \\
+\midrule
+Positive & Joy & 459,728 & 86.2 \\
+Negative & Sad, Disgust, Angry, Fear & 72,149 & 13.5 \\
+Neutral  & Surprise & 1,552 & 0.3 \\
+\midrule
+Total    & -- & 533,429 & 100.0 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+% Label Mapping Examples
+\begin{table}[t]
+\caption{Label Canonicalization Examples from Raw Social Media Data}
+\label{tab:label-mapping}
+\centering
+\footnotesize
+\begin{tabular}{lp{5.5cm}}
+\toprule
+Canonical Target & Representative Raw Categories in Corpus \\
+\midrule
+\textbf{Joy} & Joy, Happy, Love, positive, smile, laugh, excited \\
+\textbf{Sad} & Sad, Sorrow, negative, grief, cry, hurt, painful \\
+\textbf{Disgust} & Disgust, Hate, dislike, abuse, trash, worst \\
+\textbf{Angry} & Angry, Anger, mad, rage, annoyed \\
+\textbf{Fear} & Fear, Scared, panic, afraid, horror \\
+\textbf{Surprise} & Surprise, Shock, Surprice, wonder, amazed \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+% Original Assignment 4 results (Dual-Task)
+\begin{table*}[t]
+\caption{Original Dual-Task Sentiment Classification Results on Shared 70/15/15 Test Split}
+\label{tab:orig-sentiment-results}
+\centering
+\footnotesize
+\setlength{\tabcolsep}{7pt}
+\begin{tabular}{lccccc}
+\toprule
+Model & Accuracy & Macro Precision & Macro Recall & Macro F1 & Weighted F1 \\
+\midrule
+Logistic Regression & 0.6598 & 0.4046 & 0.4372 & 0.3852 & 0.7107 \\
+Linear SVM          & \textbf{0.8783} & \textbf{0.5620} & 0.3848 & 0.4004 & \textbf{0.8409} \\
+Text-CNN            & 0.7848 & 0.4407 & 0.5413 & 0.4533 & 0.8117 \\
+BiLSTM-Attention    & 0.7762 & 0.4350 & \textbf{0.5424} & 0.4500 & 0.8040 \\
+mBERT               & 0.8054 & 0.4748 & 0.4807 & 0.4526 & 0.8217 \\
+XLM-R               & 0.7897 & 0.5120 & 0.4894 & 0.4475 & 0.8118 \\
+Urdu-RoBERTa        & 0.7750 & 0.4492 & 0.5019 & \textbf{0.4573} & 0.8011 \\
+\bottomrule
+\end{tabular}
+\end{table*}
+
+\begin{table*}[t]
+\caption{Original Dual-Task Emotion Classification Results on Shared 70/15/15 Test Split}
+\label{tab:orig-emotion-results}
+\centering
+\footnotesize
+\setlength{\tabcolsep}{7pt}
+\begin{tabular}{lccccc}
+\toprule
+Model & Accuracy & Macro Precision & Macro Recall & Macro F1 & Weighted F1 \\
+\midrule
+Logistic Regression & 0.3601 & 0.2530 & 0.2994 & 0.1632 & 0.4959 \\
+Linear SVM          & \textbf{0.8773} & \textbf{0.4517} & 0.1989 & 0.2087 & \textbf{0.8347} \\
+Text-CNN            & 0.6476 & 0.2435 & 0.3700 & 0.2499 & 0.7215 \\
+BiLSTM-Attention    & 0.6064 & 0.2420 & \textbf{0.3721} & 0.2428 & 0.6910 \\
+mBERT               & 0.6922 & 0.2635 & 0.3219 & \textbf{0.2703} & 0.7467 \\
+XLM-R               & 0.6907 & 0.2545 & 0.3043 & 0.2535 & 0.7462 \\
+Urdu-RoBERTa        & 0.6153 & 0.2503 & 0.3500 & 0.2539 & 0.6971 \\
+\bottomrule
+\end{tabular}
+\end{table*}
+
+% Packaged Sentiment Rerun Leaderboard
+\begin{table*}[t]
+\caption{Packaged Sentiment Rerun Results (Cleaned 517,966 Labeled Rows, 2-Token Filter)}
+\label{tab:packaged-rerun-results}
+\centering
+\footnotesize
+\setlength{\tabcolsep}{6pt}
+\begin{tabular}{lcccccccc}
+\toprule
+Model & Test Acc & Macro Prec & Macro Rec & Macro F1 & Weighted F1 & Neutral F1 & Negative F1 & Positive F1 \\
+\midrule
+Multinomial NB      & \textbf{0.8787} & \textbf{0.5605} & 0.3854 & 0.4014 & 0.8417 & 0.0000 & 0.2702 & \textbf{0.9339} \\
+Linear SVM          & 0.8531 & 0.5005 & 0.5090 & \textbf{0.5040} & \textbf{0.8527} & \textbf{0.1303} & \textbf{0.4662} & 0.9156 \\
+Logistic Regression & 0.7740 & 0.4416 & \textbf{0.5367} & 0.4613 & 0.8013 & 0.0828 & 0.4409 & 0.8601 \\
+BiLSTM-Attention    & 0.7408 & 0.4385 & 0.5285 & 0.4506 & 0.7763 & 0.0991 & 0.4181 & 0.8346 \\
+Text-CNN            & 0.7582 & 0.4401 & 0.5290 & 0.4476 & 0.7882 & 0.0777 & 0.4164 & 0.8488 \\
+XLM-RoBERTa         & 0.8528 & 0.4950 & 0.4630 & 0.4346 & 0.8426 & 0.0000 & 0.3873 & 0.9166 \\
+mBERT               & 0.8520 & 0.4912 & 0.4532 & 0.4240 & 0.8382 & 0.0000 & 0.3553 & 0.9165 \\
+\bottomrule
+\end{tabular}
+\end{table*}
+
+% Detailed Per-Class Prediction Table
+\begin{table*}[t]
+\caption{Detailed Per-Class Behavior for the Best Macro-F1 Models}
+\label{tab:best-model-per-class}
+\centering
+\footnotesize
+\setlength{\tabcolsep}{5pt}
+\begin{tabular}{llrrrrp{5.3cm}}
+\toprule
+Task & Best Model & Class & Test Support & Recall & Class F1 & Main Error Pattern \\
+\midrule
+Sentiment & Urdu-RoBERTa & Positive & 68,856 & 0.82 & 0.87 & Most correctly retained as Positive; remaining errors mostly Negative. \\
+Sentiment & Urdu-RoBERTa & Negative & 10,812 & 0.62 & 0.49 & Confused with Positive when sarcasm, negation, or weak labels obscure polarity. \\
+Sentiment & Urdu-RoBERTa & Neutral  & 232    & 0.06 & 0.01 & Only a small fraction predicted Neutral; most mapped to Negative or Positive. \\
+\midrule
+Emotion & mBERT & Joy      & 68,856 & 0.73 & 0.86 & Majority class is learned reliably but absorbs many minority examples. \\
+Emotion & mBERT & Sad      & 7,544  & 0.58 & 0.38 & Often confused with Joy when weak labels conflict with language cues. \\
+Emotion & mBERT & Angry    & 420    & 0.17 & 0.10 & Many Angry cases collapse to Joy or Sad due to scarce support. \\
+Emotion & mBERT & Fear     & 276    & 0.10 & 0.06 & Fear cues are sparse and frequently overlap with Sad language. \\
+Emotion & mBERT & Disgust  & 2,555  & 0.31 & 0.21 & Better than Fear/Surprise but still confused with Sad and Joy. \\
+Emotion & mBERT & Surprise & 232    & 0.05 & 0.03 & The rarest effective class; mostly predicted as Joy. \\
+\bottomrule
+\end{tabular}
+\end{table*}
+
+% Qualitative Error Table
+\begin{table*}[t]
+\caption{Representative Linguistic Errors in Sentiment and Emotion Predictions}
+\label{tab:error-analysis}
+\centering
+\footnotesize
+\setlength{\tabcolsep}{4pt}
+\renewcommand{\arraystretch}{1.15}
+\begin{tabularx}{\textwidth}{p{0.13\textwidth}X p{0.16\textwidth} p{0.27\textwidth}}
+\toprule
+Error Type & Roman Urdu Tweet with English Translation & Labels and Prediction & Linguistic Mechanism \& Description \\
+\midrule
+\textbf{Sarcasm} & \emph{Petrol 300 rupees fe litre karne par hukumat ka dil se shukriya.} (Heartfelt thanks to the government for making petrol 300 rupees per liter.) & Truth: Joy; sentiment: Positive; predicted: Negative (SVM). & Sarcasm expresses negative frustration using the word ``shukriya'' (thanks) after a price increase, so surface-positive wording conflicts with intent. \\
+\midrule
+\textbf{Negation Scope} & \emph{Mein aap ki policies se bilkul mutafiq nahi hoon, awam tang aa chuki hai.} (I do not agree with your policies at all; the public is fed up.) & Truth: Sad; sentiment: Negative; predicted: Positive (NB). & The negation marker ``nahi'' (not) reverses ``mutafiq'' (agree). Bag-of-words models can miss this scope relation. \\
+\midrule
+\textbf{Code-Mixing} & \emph{ye class bohot bad thi, bilkul maza nahi aya.} (This class was very bad; did not enjoy it at all.) & Truth: Sad; sentiment: Negative; predicted: Positive (NB). & Roman Urdu and English are mixed in one short tweet. Sparse lexical models are sensitive to spelling variation and context loss. \\
+\midrule
+\textbf{Ambiguous Weak Label} & \emph{Ya Allah hamare haal par rehm farma aur azab se bacha le.} (O Allah, have mercy on our state and save us from punishment.) & Truth: Joy; sentiment: Positive; predicted: Sad (CNN). & The prayer contains fear and plea semantics but is weakly labeled as Joy, likely because of positive or devotional cues in the labeling heuristic. \\
+\bottomrule
+\end{tabularx}
+\renewcommand{\arraystretch}{1.0}
+\end{table*}
